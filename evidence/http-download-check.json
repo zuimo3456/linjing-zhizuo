@@ -1,0 +1,24 @@
+{
+  "checks": [
+    {
+      "file": "模拟技术样片.mp4",
+      "http_status": 200,
+      "bytes": 233820,
+      "sha256": "9da42bdb1e2952243b2038993cdb749299f7b82d6774e92640a102f86d1e4b7b"
+    },
+    {
+      "file": "剪辑与运行报告.json",
+      "http_status": 200,
+      "bytes": 3428,
+      "sha256": "05551a3ee3afc18112f90825b54d1dd90614c48e12282ad3a47e65af258b0304"
+    },
+    {
+      "file": "剪辑证据包.zip",
+      "http_status": 200,
+      "bytes": 27571,
+      "sha256": "491d898ecb1da6aa37c54c360ed7c9805ceb9c1f978870b5c76c77849a646146"
+    }
+  ],
+  "range_request": true,
+  "browser_download": "canceled_by_browser_tool"
+}

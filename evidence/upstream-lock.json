@@ -1,0 +1,119 @@
+[
+  {
+    "repository": "harry0703/MoneyPrinterTurbo",
+    "url": "https://github.com/harry0703/MoneyPrinterTurbo",
+    "checked_at_utc": "2026-10-23T02:23:01.683428+00:00",
+    "execution": "not_installed_or_executed",
+    "files": [
+      {
+        "name": "README.md",
+        "bytes": 38358,
+        "sha256": "80f3338c092ebee3b2bc7a4b8b2d9e306e20ea47d90d6cd4126c68ad16fc4aac",
+        "url": "https://github.com/harry0703/MoneyPrinterTurbo/blob/33dde166da7f75287ea727c10e37243f03d167c8/README.md"
+      },
+      {
+        "name": "LICENSE",
+        "bytes": 1061,
+        "sha256": "87dd19b6a0779e14a91c1b06423ef251df37e89666160c031130a26bae68c229",
+        "url": "https://github.com/harry0703/MoneyPrinterTurbo/blob/33dde166da7f75287ea727c10e37243f03d167c8/LICENSE"
+      },
+      {
+        "name": "app/services/video.py",
+        "bytes": 88132,
+        "sha256": "7f7ebac91126c3f854534e453c8e215b6cdde9b192857bdfc890d308b654e8fa",
+        "url": "https://github.com/harry0703/MoneyPrinterTurbo/blob/33dde166da7f75287ea727c10e37243f03d167c8/app/services/video.py"
+      }
+    ],
+    "sha": "33dde166da7f75287ea727c10e37243f03d167c8"
+  },
+  {
+    "repository": "modelscope/FunClip",
+    "url": "https://github.com/modelscope/FunClip",
+    "checked_at_utc": "2026-10-23T02:23:10.434131+00:00",
+    "execution": "not_installed_or_executed",
+    "files": [
+      {
+        "name": "README.md",
+        "bytes": 18299,
+        "sha256": "8a8e16d85ef7506abafcc8c6910fddd5431b674ec02fb92e513e60ae84ba8ef4",
+        "url": "https://github.com/modelscope/FunClip/blob/36acf72e2add3c4af33fd35d373574a5dee96482/README.md"
+      },
+      {
+        "name": "LICENSE",
+        "bytes": 1064,
+        "sha256": "20c1066ace6131723d842b0370f56a0ff9bd83372f4399a877cfdf0da065f25b",
+        "url": "https://github.com/modelscope/FunClip/blob/36acf72e2add3c4af33fd35d373574a5dee96482/LICENSE"
+      },
+      {
+        "name": "funclip/videoclipper.py",
+        "bytes": 24893,
+        "sha256": "a47a56903251ffc25aaf985d4e115fd79f39af9efa042fe7282edd2738cdb00c",
+        "url": "https://github.com/modelscope/FunClip/blob/36acf72e2add3c4af33fd35d373574a5dee96482/funclip/videoclipper.py"
+      }
+    ],
+    "sha": "36acf72e2add3c4af33fd35d373574a5dee96482"
+  },
+  {
+    "repository": "QwenLM/Qwen3-VL",
+    "url": "https://github.com/QwenLM/Qwen3-VL",
+    "checked_at_utc": "2026-10-23T02:23:16.947388+00:00",
+    "execution": "not_installed_or_executed",
+    "files": [
+      {
+        "name": "README.md",
+        "bytes": 52828,
+        "sha256": "fc21106258c51e0b91a652eef12f5925becb146ea8b8c79a4251ac2e89a2f1ac",
+        "url": "https://github.com/QwenLM/Qwen3-VL/blob/96588727e44c78b25ba03ea03b8e12f7e64fd0da/README.md"
+      },
+      {
+        "name": "LICENSE",
+        "bytes": 11357,
+        "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "url": "https://github.com/QwenLM/Qwen3-VL/blob/96588727e44c78b25ba03ea03b8e12f7e64fd0da/LICENSE"
+      }
+    ],
+    "sha": "96588727e44c78b25ba03ea03b8e12f7e64fd0da"
+  },
+  {
+    "repository": "Breakthrough/PySceneDetect",
+    "url": "https://github.com/Breakthrough/PySceneDetect",
+    "checked_at_utc": "2026-10-23T02:23:22.226974+00:00",
+    "execution": "not_installed_or_executed",
+    "files": [
+      {
+        "name": "README.md",
+        "bytes": 7770,
+        "sha256": "ff45f6f05b01cfd5e6e796e494e5fb5ee83741925da7b6485d4a18c53b755ba7",
+        "url": "https://github.com/Breakthrough/PySceneDetect/blob/faa3d974709aa15dcf6bb3340df918360e338b92/README.md"
+      },
+      {
+        "name": "LICENSE",
+        "bytes": 1505,
+        "sha256": "e855ca89e457a7d0b6b7c92ad475d1120a9a5b5bf4e5048c706b1b3889fbc349",
+        "url": "https://github.com/Breakthrough/PySceneDetect/blob/faa3d974709aa15dcf6bb3340df918360e338b92/LICENSE"
+      }
+    ],
+    "sha": "faa3d974709aa15dcf6bb3340df918360e338b92"
+  },
+  {
+    "repository": "SYSTRAN/faster-whisper",
+    "url": "https://github.com/SYSTRAN/faster-whisper",
+    "checked_at_utc": "2026-10-23T02:23:27.718257+00:00",
+    "execution": "not_installed_or_executed",
+    "files": [
+      {
+        "name": "README.md",
+        "bytes": 15249,
+        "sha256": "43efe4a6eb9046d5ba4dcdcf2abcc27ad9e021f3edfc00bd6eb4913a9abe065b",
+        "url": "https://github.com/SYSTRAN/faster-whisper/blob/9e472ae9de8bb374552f531f752654554b76b2d6/README.md"
+      },
+      {
+        "name": "LICENSE",
+        "bytes": 1064,
+        "sha256": "af6798135e729f8aa6c853936d037dfdea449734d26b8ea6a89805fca758c0d5",
+        "url": "https://github.com/SYSTRAN/faster-whisper/blob/9e472ae9de8bb374552f531f752654554b76b2d6/LICENSE"
+      }
+    ],
+    "sha": "9e472ae9de8bb374552f531f752654554b76b2d6"
+  }
+]

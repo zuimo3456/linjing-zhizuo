@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+data/
+evidence/*.jpg
+evidence/source-before.json
+evidence/source-integrity.json
+evidence/ui-*.png
+evidence/ui-*.jpg
+evidence/*.mp4
+交付/
+evidence/open-source-snapshots/
+.env
+.env.*
+*.log

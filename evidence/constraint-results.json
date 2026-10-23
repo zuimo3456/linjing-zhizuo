@@ -1,0 +1,131 @@
+{
+  "created_at": "2026-10-23T02:38:09.929261+00:00",
+  "scope": "人工设计的合成约束回归测试，不能外推到真实模型或商户效果",
+  "total": 30,
+  "passed": 30,
+  "cases": [
+    {
+      "name": "test_attract_order",
+      "passed": true
+    },
+    {
+      "name": "test_chronological_baseline",
+      "passed": true
+    },
+    {
+      "name": "test_conflicting_fact",
+      "passed": true
+    },
+    {
+      "name": "test_duplicate_shot",
+      "passed": true
+    },
+    {
+      "name": "test_end_beyond_source",
+      "passed": true
+    },
+    {
+      "name": "test_goal_tamper",
+      "passed": true
+    },
+    {
+      "name": "test_hallucinated_price",
+      "passed": true
+    },
+    {
+      "name": "test_infinite_time",
+      "passed": true
+    },
+    {
+      "name": "test_labels_invalid_confidence",
+      "passed": true
+    },
+    {
+      "name": "test_labels_invalid_tag",
+      "passed": true
+    },
+    {
+      "name": "test_labels_remain_candidates",
+      "passed": true
+    },
+    {
+      "name": "test_labels_unknown_id",
+      "passed": true
+    },
+    {
+      "name": "test_low_quality",
+      "passed": true
+    },
+    {
+      "name": "test_missing_address",
+      "passed": true
+    },
+    {
+      "name": "test_missing_interior",
+      "passed": true
+    },
+    {
+      "name": "test_nan_time",
+      "passed": true
+    },
+    {
+      "name": "test_negative_start",
+      "passed": true
+    },
+    {
+      "name": "test_no_source_attestation",
+      "passed": true
+    },
+    {
+      "name": "test_promo_requirements",
+      "passed": true
+    },
+    {
+      "name": "test_short_clip",
+      "passed": true
+    },
+    {
+      "name": "test_suffix_hallucination",
+      "passed": true
+    },
+    {
+      "name": "test_synthetic_marker_tamper",
+      "passed": true
+    },
+    {
+      "name": "test_unconfirmed_fact_not_used",
+      "passed": true
+    },
+    {
+      "name": "test_unconfirmed_source",
+      "passed": true
+    },
+    {
+      "name": "test_unknown_fact",
+      "passed": true
+    },
+    {
+      "name": "test_unknown_shot",
+      "passed": true
+    },
+    {
+      "name": "test_unsupported_role",
+      "passed": true
+    },
+    {
+      "name": "test_valid_plan",
+      "passed": true
+    },
+    {
+      "name": "test_versatile_shot_not_greedily_consumed",
+      "passed": true
+    },
+    {
+      "name": "test_visit_order",
+      "passed": true
+    }
+  ],
+  "real_merchants": 0,
+  "real_videos": 0,
+  "model_comparison": "not_run"
+}

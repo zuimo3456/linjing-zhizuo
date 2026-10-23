@@ -1,0 +1,56 @@
+const $=id=>document.getElementById(id);
+const names={shop:'店名',product:'商品名称',address:'门店地址',offer:'优惠及完整使用条件',validity:'有效期'};
+const tags={storefront:'门头 / 路线',product:'商品',process:'制作过程',interior:'环境',person:'人物',other:'待判断 / 其他'};
+const cta={visit:'到店前，请确认营业情况。',attract:'感兴趣可以先收藏。',promo:'参与前，请核对活动条件。'};
+let project=blank(),plan=null,busy=false,statusTimer,reviewRecords=JSON.parse(localStorage.getItem('linjing-reviews')||'[]');
+function blank(){return {name:'真实店铺项目',goal:'visit',synthetic:false,facts:Object.keys(names).map(k=>({id:k,kind:k,value:'',source:'',confirmed:false})),shots:[]};}
+const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function status(text,error=false,sticky=false){clearTimeout(statusTimer);$('status').textContent=text;$('status').className='status'+(error?' error':'');$('status').hidden=false;if(!sticky)statusTimer=setTimeout(()=>$('status').hidden=true,6500);}
+async function request(path,obj){const r=await fetch(path,obj===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(obj)});const result=await r.json();if(!r.ok)throw Error(result.error||'请求未成功');return result;}
+async function task(path,obj){if(busy)throw Error('请等待当前任务完成。');busy=true;buttons();try{const res=await request(path,obj);return await watch(res.job_id);}finally{busy=false;buttons();}}
+async function watch(id){for(;;){const j=await request('/api/jobs/'+id);if(j.status==='done'){status('处理完成');return j.result;}if(j.status==='error')throw Error(j.message);status(j.message,false,true);await new Promise(r=>setTimeout(r,1000));}}
+function buttons(){$('demoBtn').disabled=busy;$('planBtn').disabled=busy;$('newBtn').disabled=busy;$('renderBtn').disabled=busy||!plan?.renderable;}
+function invalidate(){plan=null;$('result').hidden=true;$('preview').pause();$('preview').removeAttribute('src');$('preview').load();renderPlan();}
+function draw(){
+ $('projectName').textContent=project.name;$('syntheticBadge').hidden=!project.synthetic;$('goal').value=project.goal;
+ $('facts').innerHTML=project.facts.map((f,i)=>`<div class="fact"><div class="fact-top"><span>${esc(names[f.kind])}</span><label><input type="checkbox" data-confirm="${i}" ${f.confirmed?'checked':''}>已确认</label></div><input aria-label="${esc(names[f.kind])}" value="${esc(f.value)}" data-value="${i}" maxlength="100" placeholder="填写真实信息"><input class="source" aria-label="${esc(names[f.kind])}来源" data-source="${i}" value="${esc(f.source)}" placeholder="来源，例如店主当面确认 / 价目表"></div>`).join('');
+ $('facts').querySelectorAll('[data-value]').forEach(el=>el.oninput=()=>{const i=+el.dataset.value;project.facts[i].value=el.value;project.facts[i].confirmed=false;$('facts').querySelector(`[data-confirm="${i}"]`).checked=false;invalidate();});
+ $('facts').querySelectorAll('[data-source]').forEach(el=>el.oninput=()=>{const i=+el.dataset.source;project.facts[i].source=el.value;project.facts[i].confirmed=false;$('facts').querySelector(`[data-confirm="${i}"]`).checked=false;invalidate();});
+ $('facts').querySelectorAll('[data-confirm]').forEach(el=>el.onchange=()=>{const f=project.facts[+el.dataset.confirm];if(el.checked&&(!f.value.trim()||!f.source.trim())){el.checked=false;return status('确认前请填写信息和来源。',true);}f.confirmed=el.checked;invalidate();});
+ drawShots();renderPlan();
+}
+function drawShots(){
+ $('shotCount').textContent=project.shots.length+' 个镜头';
+ if(!project.shots.length){$('shots').innerHTML='<div class="empty"><span>▧</span><p>真实画面，是创作的起点。</p><small>添加素材，或先体验一个明确标记的模拟案例。</small></div>';return;}
+ $('shots').innerHTML=project.shots.map((s,i)=>`<article class="shot"><img src="${esc(s.thumb)}" alt="${esc(s.name)}的抽帧"><div class="shot-body"><div class="shot-name" title="${esc(s.name)}">${esc(s.name)}</div><div class="shot-meta">${s.start.toFixed(1)}–${s.end.toFixed(1)}s · 质量 ${Math.round(s.quality*100)}/100</div><select aria-label="镜头${i+1}标签" data-tag="${i}">${Object.entries(tags).map(([k,n])=>`<option value="${k}" ${s.tags.includes(k)?'selected':''}>${n}</option>`).join('')}</select>${s.label_source==='model_candidate'?`<p class="candidate">模型候选 · 置信度 ${s.confidence??'未提供'}<br>${esc(s.description||'')}</p>`:''}<label class="shot-confirm"><input type="checkbox" data-shot-confirm="${i}" ${s.confirmed?'checked':''}>我已查看并确认标签</label></div></article>`).join('');
+ $('shots').querySelectorAll('[data-tag]').forEach(el=>el.onchange=()=>{const s=project.shots[+el.dataset.tag];s.tags=[el.value];s.confirmed=false;s.label_source='human_candidate';invalidate();drawShots();});
+ $('shots').querySelectorAll('[data-shot-confirm]').forEach(el=>el.onchange=()=>{project.shots[+el.dataset.shotConfirm].confirmed=el.checked;invalidate();});
+}
+function renderPlan(){
+ if(!plan){$('plan').innerHTML='<div class="empty compact"><p>每段文案都会关联事实，<br>每个镜头都会关联用途。</p></div>';buttons();return;}
+ $('plan').innerHTML=plan.segments.map((s,i)=>`<article class="plan-segment"><div class="seg-top"><span>${String(i+1).padStart(2,'0')} / ${esc(tags[s.role])}</span><span><button aria-label="上移第${i+1}段" data-up="${i}" ${i===0?'disabled':''}>↑</button><button aria-label="下移第${i+1}段" data-down="${i}" ${i===plan.segments.length-1?'disabled':''}>↓</button></span></div><p>${esc(s.text)}</p><div class="evidence">${esc(s.reason)}<br>事实引用：${s.fact_ids.map(x=>esc(names[project.facts.find(f=>f.id===x)?.kind]||x)).join('、')||'通用引导语，不增加商户事实'}</div></article>`).join('')+(plan.missing.length?`<div class="warning"><strong>还差这些证据</strong><br>${plan.missing.map(esc).join('<br>')}</div>`:'<div class="ok">✓ 必需信息与镜头齐全，可进入人工确认和渲染。</div>');
+ $('plan').querySelectorAll('[data-up]').forEach(b=>b.onclick=()=>reorder(+b.dataset.up,-1));$('plan').querySelectorAll('[data-down]').forEach(b=>b.onclick=()=>reorder(+b.dataset.down,1));buttons();
+}
+function reorder(i,delta){const line=cta[plan.goal];const last=plan.segments.at(-1);if(last.text.endsWith(line))last.text=last.text.slice(0,-line.length);[plan.segments[i],plan.segments[i+delta]]=[plan.segments[i+delta],plan.segments[i]];plan.segments.at(-1).text+=line;$('result').hidden=true;renderPlan();}
+function download(name,content,type='application/json'){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
+function guard(fn){return async(...a)=>{try{await fn(...a);}catch(e){status(e.message,true);}};}
+$('goal').onchange=()=>{project.goal=$('goal').value;invalidate();};$('method').onchange=invalidate;
+$('demoBtn').onclick=guard(async()=>{project=await task('/api/demo',{});invalidate();draw();status('模拟案例已载入。可以切换目标、检查顺序，再生成视频。');});
+$('newBtn').onclick=()=>{project=blank();invalidate();draw();status('已开始空白真实项目。之前保存的项目可通过导入恢复。');};
+$('planBtn').onclick=guard(async()=>{plan=await request('/api/plan',{project,method:$('method').value});renderPlan();status(plan.renderable?'剪辑方案已生成，请检查事实引用和镜头用途。':'发现缺失信息，请查看补拍与确认建议。');});
+$('renderBtn').onclick=guard(async()=>{const data=await task('/api/render',{project,plan});showResult(data);});
+function showResult(data){$('result').hidden=false;$('preview').src=data.video;$('preview').poster=data.cover;$('videoDownload').href=data.video;$('reportDownload').href=data.report;$('bundleDownload').href=data.bundle;
+ const m=data.metrics;$('resultMeta').textContent=`${m.synthetic?'模拟技术样片 · ':''}${m.metadata.duration.toFixed(1)} 秒 · ${m.metadata.width} × ${m.metadata.height} · 本次处理 ${m.elapsed_seconds.toFixed(1)} 秒 · 付费 API 调用 ${m.api_calls} 次`;
+ $('timings').innerHTML=m.timings.map(t=>`<div class="timing">${t.start.toFixed(1)}–${t.end.toFixed(1)}s / ${esc(t.text)}${t.held_frame_seconds>0?` / 末帧停留 ${t.held_frame_seconds}s`:''}</div>`).join('');$('result').scrollIntoView({behavior:'smooth',block:'start'});}
+$('saveBtn').onclick=guard(async()=>{await request('/api/save',{project});status('项目已保存到本机，重新打开页面可恢复。');});
+$('exportProjectBtn').onclick=()=>download('linjing-project.json',JSON.stringify(project,null,2));
+$('projectFile').onchange=guard(async e=>{const f=e.target.files[0];if(!f)return;const p=JSON.parse(await f.text());await request('/api/plan',{project:p});project=p;invalidate();draw();status('项目已导入；原始视频需在本电脑仍然存在。');e.target.value='';});
+$('videoFiles').onchange=guard(async e=>{const files=[...e.target.files];if(!files.length)return;if(busy)throw Error('请等待当前处理完成。');if(project.synthetic){project=blank();invalidate();draw();status('上传真实素材时已新建真实项目，避免混入模拟事实。');}busy=true;buttons();try{for(const f of files){if(f.size>200*1024*1024)throw Error(f.name+'超过200MB');status('正在上传：'+f.name,false,true);const r=await fetch('/api/upload?name='+encodeURIComponent(f.name),{method:'POST',headers:{'Content-Type':'application/octet-stream'},body:f});const res=await r.json();if(!r.ok)throw Error(res.error);const asset=await watch(res.job_id);project.shots.push(...asset.shots);invalidate();draw();}status('素材分析完成，请检查抽帧并确认标签。');}finally{busy=false;buttons();e.target.value='';}});
+$('contextBtn').onclick=guard(async()=>{if(!project.shots.length)throw Error('请先添加素材。');const res=await request('/api/context',{project});const a=document.createElement('a');a.href=res.url;a.download='linjing-context.zip';a.click();status(`已导出 ${res.frames} 张抽帧及标注提示词。发给模型前，请确认素材可以分享。`);});
+$('labelsFile').onchange=guard(async e=>{const f=e.target.files[0];if(!f)return;const labels=JSON.parse(await f.text());const res=await request('/api/labels',{project,candidates:labels});for(const item of res.labels){const s=project.shots.find(s=>s.id===item.shot_id);Object.assign(s,item,{label_source:'model_candidate',confirmed:false});}invalidate();drawShots();status('候选标签已导入，需要逐个查看并确认。');e.target.value='';});
+function switchTab(which){$('workspace').hidden=which!=='work';$('research').hidden=which!=='research';$('workTab').classList.toggle('active',which==='work');$('researchTab').classList.toggle('active',which==='research');}
+$('workTab').onclick=()=>switchTab('work');$('researchTab').onclick=guard(async()=>{switchTab('research');const b=await request('/api/benchmark');$('benchmark').innerHTML=b.cases?`<div class="bench-big">${b.passed}<small> / ${b.total} 个用例通过</small></div><p class="hint">${esc(b.scope)} · ${esc(b.created_at)}</p><div class="case-list">${b.cases.map(c=>`${c.passed?'✓':'✗'} ${esc(c.name)}`).join('<br>')}</div>`:'尚未运行约束测试';updateReviews();});
+function updateReviews(){$('reviewCount').textContent=`当前浏览器已保存 ${reviewRecords.length} 条复核记录。保存于浏览器，建议及时导出。`;}
+$('reviewForm').onsubmit=e=>{e.preventDefault();const record=Object.fromEntries(new FormData(e.target));record.created_at=new Date().toISOString();reviewRecords.push(record);localStorage.setItem('linjing-reviews',JSON.stringify(reviewRecords));updateReviews();status('复核记录已保存。');};
+$('exportReviewsBtn').onclick=()=>{const keys=['sample_id','reviewer_id','data_type','correctness','alignment','naturalness','edit_seconds','publish','notes','created_at'];const quote=x=>'"'+String(x??'').replace(/^[=+@-]/,"'$&").replace(/"/g,'""')+'"';download('linjing-reviews.csv','\ufeff'+[keys.join(','),...reviewRecords.map(r=>keys.map(k=>quote(r[k])).join(','))].join('\r\n'),'text/csv;charset=utf-8');};
+guard(async()=>{const saved=await request('/api/saved');if(saved){project=saved;status('已恢复上次保存的本地项目。');}draw();})();

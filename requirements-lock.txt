@@ -1,0 +1,8 @@
+click==8.5.0
+colorama==0.4.6
+numpy==2.5.4
+opencv-python==4.11.0.86
+pillow==11.3.0
+platformdirs==4.13.5
+scenedetect==0.7.1
+tqdm==4.70.1
