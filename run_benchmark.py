@@ -11,7 +11,7 @@ class Recorder(unittest.TextTestResult):
     def addFailure(self,test,err):super().addFailure(test,err);self.records.append({'name':test._testMethodName,'passed':False})
     def addError(self,test,err):super().addError(test,err);self.records.append({'name':test._testMethodName,'passed':False})
 if __name__=='__main__':
-    result=unittest.TextTestRunner(verbosity=2,resultclass=Recorder).run(unittest.defaultTestLoader.loadTestsFromModule(test_invariants))
+    result=unittest.TextTestRunner(verbosity=2,resultclass=Recorder).run(unittest.defaultTestLoader.discover(str(ROOT/'tests')))
     doc={'created_at':datetime.now(timezone.utc).isoformat(),'scope':'人工设计的合成约束回归测试，不能外推到真实模型或商户效果',
          'total':result.testsRun,'passed':sum(x['passed'] for x in result.records),'cases':result.records,
          'real_merchants':0,'real_videos':0,'model_comparison':'not_run'}

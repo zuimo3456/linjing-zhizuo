@@ -1,0 +1,4 @@
+-r requirements.txt
+# Install CPU torch first with the official PyTorch index; see setup-local-ai.ps1.
+onnxruntime==1.23.2
+tokenizers==0.22.1

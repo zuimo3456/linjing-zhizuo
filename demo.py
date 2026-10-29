@@ -6,7 +6,21 @@ from media import DATA,FFMPEG,run,analyze
 
 def create_demo(progress=lambda _:None):
     cache=DATA/'demo-project.json'
-    if cache.exists(): return json.loads(cache.read_text(encoding='utf8'))
+    if cache.exists():
+        p=json.loads(cache.read_text(encoding='utf8'))
+        updated=[]
+        for shot in p['shots']:
+            if shot.get('analysis_version')!=2:
+                progress('升级模拟案例的多时刻抽帧')
+                fresh=analyze(DATA/shot['media_id']/'source.mp4',shot['media_id'],shot['name'])
+                for item in fresh['shots']:
+                    item.update(tags=shot['tags'],confirmed=True,label_source='synthetic_ground_truth',quality=max(.6,item['quality']))
+                    updated.append(item)
+            else:updated.append(shot)
+        p['shots']=updated
+        bind_demo_product(p)
+        cache.write_text(json.dumps(p,ensure_ascii=False,indent=2),encoding='utf8')
+        return p
     fontpath='C:/Windows/Fonts/msyh.ttc'
     def font(n): return ImageFont.truetype(fontpath,n)
     shots=[]
@@ -56,5 +70,12 @@ def create_demo(progress=lambda _:None):
     facts=[{'id':k,'kind':k,'value':v,'confirmed':True,'source':'程序构造的模拟事实，不对应真实商户'} for k,v in
            [('shop','街角咖啡'),('product','手冲咖啡'),('address','示例街道18号'),('offer','第二杯半价，限同款商品'),('validity','2026年10月23日至10月30日')]]
     p={'name':'街角咖啡 · 模拟案例','goal':'visit','synthetic':True,'facts':facts,'shots':shots}
+    bind_demo_product(p)
     cache.write_text(json.dumps(p,ensure_ascii=False,indent=2),encoding='utf8')
     return p
+
+def bind_demo_product(project):
+    f=next(f for f in project['facts'] if f['kind']=='product')
+    for shot in project['shots']:
+        if 'product' in shot['tags']:
+            shot['product_binding']={'fact_id':f['id'],'value':f['value'],'confirmed':True,'source':'synthetic_ground_truth'}

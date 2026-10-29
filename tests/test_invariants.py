@@ -11,7 +11,8 @@ def sample():
         {'id':'f3','kind':'address','value':'测试地址','confirmed':True,'source':'模拟'},
         {'id':'f4','kind':'offer','value':'第二杯半价，限同款','confirmed':True,'source':'模拟'},
         {'id':'f5','kind':'validity','value':'2026年10月23日至30日','confirmed':True,'source':'模拟'}],
-        'shots':[{'id':f's{i}','media_id':'a'*32,'start':0.,'end':6.,'quality':.8,'tags':[tag],'confirmed':True}
+        'shots':[{'id':f's{i}','media_id':'a'*32,'start':0.,'end':6.,'quality':.8,'tags':[tag],'confirmed':True,
+                  'product_binding':{'fact_id':'f2','value':'测试商品','confirmed':True}}
                  for i,tag in enumerate(['interior','product','storefront','process'])]}
 
 class Constraints(unittest.TestCase):

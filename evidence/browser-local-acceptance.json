@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-29",
+  "scope": "Browser technical acceptance with original illustrated fixtures, no real merchant footage",
+  "local_analyze_button": "verified",
+  "all_labels_require_confirmation": true,
+  "unconfirmed_plan_blocks_render": true,
+  "product_binding_confirmed_before_render": true,
+  "render_job": "b90523a8fd90464e87f9e9700f69245f",
+  "playback": {
+    "readyState": 4,
+    "first_currentTime": 0.109207,
+    "final_currentTime": 9.533042,
+    "ended": true,
+    "width": 720,
+    "height": 1280
+  },
+  "filechooser_upload": "verified one synthetic source.mp4",
+  "demo_facts_cleared_on_upload": true,
+  "uploaded_model_candidate_remains_unconfirmed": true,
+  "human_audio_quality": "pending_user",
+  "merchant_validation": "not_measured",
+  "browser_download": "not_verified",
+  "screenshot": "evidence/ui-local-ai-preview.png"
+}

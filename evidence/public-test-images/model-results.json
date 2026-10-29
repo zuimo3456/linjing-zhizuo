@@ -1,0 +1,56 @@
+{
+  "scope": "Two CC0 static photos repeated three times; inference smoke only, not video or merchant accuracy",
+  "results": {
+    "coffee": {
+      "tags": [
+        "product"
+      ],
+      "suggested_tag": "product",
+      "confirmed": false,
+      "needs_review": true,
+      "abstained": false,
+      "review_reasons": [],
+      "description": "候选用途，需查看视频确认。",
+      "relative_scores": {
+        "product": 39.2495,
+        "interior": 37.1996,
+        "process": 34.2207,
+        "other": 32.7023,
+        "storefront": 31.8836,
+        "person": 31.8703
+      },
+      "margin": 2.0499,
+      "frame_votes": {
+        "product": 3
+      },
+      "threshold_note": "三帧一致、logit差值≥1.5的启发式门槛；尚未用真实店铺数据校准。"
+    },
+    "chelsea": {
+      "tags": [
+        "other"
+      ],
+      "suggested_tag": "person",
+      "confirmed": false,
+      "needs_review": true,
+      "abstained": true,
+      "review_reasons": [
+        "候选用途区分不明显",
+        "未识别到稳定的门店用途"
+      ],
+      "description": "暂不判定用途：候选用途区分不明显；未识别到稳定的门店用途。",
+      "relative_scores": {
+        "person": 36.4254,
+        "other": 36.3405,
+        "product": 35.9364,
+        "process": 32.4748,
+        "interior": 31.0358,
+        "storefront": 27.9109
+      },
+      "margin": 0.0849,
+      "frame_votes": {
+        "person": 3
+      },
+      "threshold_note": "三帧一致、logit差值≥1.5的启发式门槛；尚未用真实店铺数据校准。"
+    }
+  }
+}

@@ -44,8 +44,9 @@ class Handler(BaseHTTPRequestHandler):
         try:
             url=urlsplit(self.path); path=unquote(url.path)
             if path=='/api/health':
+                from local_vision import status as local_status
                 return self.reply({'ok':bool(FFMPEG and FFPROBE),'ffmpeg':bool(FFMPEG),'ffprobe':bool(FFPROBE),
-                                   'version':'research-prototype-1','vision_configured':False,'tts':'offline_windows'})
+                                   'version':'local-ai-prototype-2','vision_configured':False,'local_vision':local_status(),'tts':'offline_windows'})
             if path.startswith('/api/jobs/'):
                 with jobs_lock: item=jobs.get(path.rsplit('/',1)[-1])
                 return self.reply(item or {'error':'任务不存在'},200 if item else 404)
@@ -60,7 +61,7 @@ class Handler(BaseHTTPRequestHandler):
             if path.startswith('/media/'):
                 parts=path.split('/')[2:]
                 if len(parts)!=2 or not re.fullmatch('[a-f0-9]{32}',parts[0]): return self.reply({'error':'无效素材路径'},404)
-                if not (re.fullmatch(r'thumb-\d+\.jpg',parts[1]) or parts[1] in ('source.mp4','result.mp4','cover.jpg','report.json','project.json','evidence.zip','context.zip')):
+                if not (re.fullmatch(r'(thumb-\d+|frame-\d+-\d+)\.jpg',parts[1]) or parts[1] in ('source.mp4','result.mp4','cover.jpg','report.json','project.json','evidence.zip','context.zip')):
                     return self.reply({'error':'文件不可访问'},404)
                 return self.file(DATA/parts[0]/parts[1])
             return self.reply({'error':'页面不存在'},404)
@@ -116,6 +117,11 @@ class Handler(BaseHTTPRequestHandler):
                 from demo import create_demo
                 return self.reply(job(lambda jid,progress:create_demo(progress)),202)
             obj=self.body()
+            if path=='/api/local-analyze':
+                from local_vision import analyze_project
+                from planner import clean_project
+                project=clean_project(obj['project'])
+                return self.reply(job(lambda jid,progress:analyze_project(project,progress)),202)
             if path=='/api/plan': return self.reply(make_plan(obj['project'],obj.get('method','evidence')))
             if path=='/api/labels':
                 from vision_adapter import parse_labels

@@ -58,16 +58,25 @@ def caption_for(role, facts, goal):
         kinds=['shop','product','offer','validity']
     refs=[by_kind[k]['id'] for k in kinds if k in by_kind]
     if role=='product':
-        text='，'.join(by_kind[k]['value'] for k in kinds if k in by_kind)+'。'
+        if 'shop' in by_kind and 'product' in by_kind and goal!='promo':
+            text=f"{by_kind['shop']['value']}，带你看看{by_kind['product']['value']}。"
+        else:
+            text='。'.join(by_kind[k]['value'] for k in kinds if k in by_kind)+'。'
     elif role=='storefront':
-        text=(by_kind['address']['value']+'。') if 'address' in by_kind else '出发前，请确认门店位置。'
+        text=('门店地址：'+by_kind['address']['value']+'。') if 'address' in by_kind else '出发前，请确认门店位置。'
     elif role=='process':
-        text='看看制作的过程。'
+        text='这是制作过程。'
     elif role=='interior':
-        text='再看看店里的环境。'
+        text='这是店内环境。'
     else:
         text=CTA[goal]
     return text,refs
+
+def product_matches(shot,facts):
+    product=next((f for f in facts if f['kind']=='product' and f.get('confirmed') is True),None)
+    binding=shot.get('product_binding')
+    return bool(product and isinstance(binding,dict) and binding.get('confirmed') is True
+                and binding.get('fact_id')==product['id'] and binding.get('value')==product['value'])
 
 def make_plan(project, method='evidence'):
     p=clean_project(project)
@@ -86,6 +95,7 @@ def make_plan(project, method='evidence'):
             for index,role in enumerate(roles):
                 bit=1<<index
                 if mask&bit or role not in shot['tags']:continue
+                if role=='product' and not product_matches(shot,facts):continue
                 newmask=mask|bit
                 value=score+shot['quality']+min(shot['end']-shot['start'],8)*0.01
                 if newmask not in updated or value>updated[newmask][0]:
@@ -109,6 +119,8 @@ def make_plan(project, method='evidence'):
         last=segments[-1]
         last['text']+=CTA[goal]
     missing=[f'请确认{FACT_NAMES[k]}' for k in missing_facts]+[f'请补拍或确认{TAG_NAMES[k]}镜头，建议稳定竖拍5—8秒' for k in missing_roles]
+    if 'product' in missing_roles and any('product' in s['tags'] for s in eligible):
+        missing.append('请单独确认商品镜头与事实卡中的商品一致；修改商品名称后需要重新确认。')
     return {'schema_version':'1.0','goal':goal,'method':method,'synthetic':p.get('synthetic') is True,
             'segments':segments,'missing':missing,'renderable':bool(segments) and not missing,
             'limitations':['质量分来自抽帧检测，不能证明语义正确。','人工确认仅表示本次输入状态，不能自动证明商户陈述真实。'],
@@ -133,6 +145,8 @@ def validate_plan(project, plan):
         used.add(s['id']); role=seg.get('role'); roles.add(role)
         if role not in GOALS[p['goal']]['roles'] or role not in s['tags']:
             raise PlanError('镜头标签无法支持本段表达。')
+        if role=='product' and not product_matches(s,list(facts.values())):
+            raise PlanError('请确认画面中的商品与当前事实卡一致。')
         for k in ('start','end'):
             if not isinstance(seg.get(k),(int,float)) or not math.isfinite(seg[k]):
                 raise PlanError('剪辑时间不是有限数值。')

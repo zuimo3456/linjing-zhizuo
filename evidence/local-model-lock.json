@@ -1,0 +1,18 @@
+{
+  "repository": "Xenova/chinese-clip-vit-base-patch16",
+  "revision": "f26904860903e70e050b8f48255e5f48401816e9",
+  "base_model": "OFA-Sys/chinese-clip-vit-base-patch16",
+  "base_revision": "36e679e65c2a2fead755ae21162091293ad37834",
+  "files": {
+    "config.json": "19447ad8c20d274f0644a6663af56286be98bd2d0e5f9472fcb318e04fcd6961",
+    "preprocessor_config.json": "61a78fdd2c7ac17b54b6190c0f4cb23423192c535003d52528d01e318a47608b",
+    "tokenizer.json": "7dfbf1966ebf99d471c3796e9b457329d2b2182b817e144f1e904b957745c839",
+    "tokenizer_config.json": "38fbc894183595cc1168e36150251b2fb658197b3a49f6908cce88ae22acd52a",
+    "vocab.txt": "45bbac6b341c319adc98a532532882e91a9cefc0329aa57bac9ae761c27b291c",
+    "README.md": "273183f3846fe3441aa7903b2479f0f07fea81272d24d03bed7f1f5c973b4f64",
+    "onnx/model_quantized.onnx": "a2c2849329eafb24100acec5a9421a39f8cb445296444c5c98855b69e5e7a751"
+  },
+  "remote_code": false,
+  "runtime": "ONNX Runtime CPU, quantized int8; no cloud inference",
+  "license_note": "Original Chinese-CLIP repository MIT (MIT-LICENSE.txt); converted model card declares base model but no separate license. Review weight redistribution terms before distribution."
+}
