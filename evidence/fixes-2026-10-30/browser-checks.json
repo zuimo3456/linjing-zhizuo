@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-30",
+  "scope": "Actual browser checks with synthetic fixtures; not merchant acceptance",
+  "D03": {
+    "ai_shop_edit_enabled": false,
+    "ai_product_edit_enabled": false,
+    "ai_project_import_enabled": false,
+    "after_ai_unlocked": true,
+    "shop_retained": "街角咖啡"
+  },
+  "D04": {
+    "render_product_edit_enabled": false,
+    "render_goal_edit_enabled": false,
+    "post_render_product_change": "柠檬茶",
+    "old_result_hidden_after_change": true,
+    "render_disabled_after_change": true
+  },
+  "legacy_import": {
+    "source_rebound_project_imported": true,
+    "confirmed_shots_after_import": 0,
+    "render_enabled": false
+  },
+  "remove_shot": {
+    "before": 4,
+    "after": 3,
+    "source_file_deleted": false
+  },
+  "server_confirmation_ui": {
+    "all_four_purposes_confirmed": true,
+    "product_binding_uncheck_recheck_after_number_fix": true,
+    "plan_ready": true
+  },
+  "reorder": {
+    "preflight_passed": true,
+    "first_up_disabled": true,
+    "last_down_disabled": true,
+    "reordered_video": "/media/dce967b0f69845a8b35cc4470a68829b/result.mp4"
+  },
+  "final_video": "/media/67f05e45c6714089bc600779b2c1bf7b/result.mp4",
+  "playback": {
+    "readyState": 4,
+    "first_currentTime": 0,
+    "final_currentTime": 12.229417,
+    "duration": 12.229417,
+    "ended": true
+  },
+  "timings": {
+    "product": [
+      0,
+      2.958
+    ],
+    "process": [
+      2.958,
+      8.958
+    ],
+    "interior": [
+      8.958,
+      12.206
+    ]
+  },
+  "saved_new_project": true,
+  "previous_saved_project_backup": "data/backups/saved-project-before-fixes-20261030.json",
+  "screenshot": "evidence/fixes-2026-10-30/ui-final-preview.png",
+  "human_audio_quality": "pending",
+  "real_merchants": 0
+}

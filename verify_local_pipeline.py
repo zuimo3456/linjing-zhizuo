@@ -3,7 +3,8 @@ import json,shutil,tempfile,uuid
 from pathlib import Path
 from datetime import datetime,timezone
 from demo import create_demo
-from planner import make_plan,validate_plan
+from planner import validate_plan
+from pipeline import build_plan as make_plan
 from local_vision import analyze_project
 from audio import synthesize
 from media import render,DATA,ROOT,probe
@@ -17,6 +18,7 @@ def main():
     truth={s['id']:s for s in project['shots']}
     for shot in analyzed['shots']:
         shot.update(tags=truth[shot['id']]['tags'],confirmed=True,label_source='synthetic_ground_truth_after_model')
+        shot['attestation']=truth[shot['id']]['attestation']
         shot['product_binding']=truth[shot['id']].get('product_binding')
     outputs={}
     for goal in ('visit','attract'):

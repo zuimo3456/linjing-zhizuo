@@ -1,19 +1,30 @@
 import copy,math,sys,unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from planner import make_plan,validate_plan,PlanError
+from planner import make_plan as _make_plan,validate_plan,PlanError,caption_for,GOALS,CTA
 from vision_adapter import parse_labels
 
 def sample():
-    return {'goal':'visit','synthetic':True,'name':'test','facts':[
+    p={'goal':'visit','synthetic':True,'name':'test','facts':[
         {'id':'f1','kind':'shop','value':'测试店','confirmed':True,'source':'模拟'},
         {'id':'f2','kind':'product','value':'测试商品','confirmed':True,'source':'模拟'},
         {'id':'f3','kind':'address','value':'测试地址','confirmed':True,'source':'模拟'},
         {'id':'f4','kind':'offer','value':'第二杯半价，限同款','confirmed':True,'source':'模拟'},
-        {'id':'f5','kind':'validity','value':'2026年10月23日至30日','confirmed':True,'source':'模拟'}],
-        'shots':[{'id':f's{i}','media_id':'a'*32,'start':0.,'end':6.,'quality':.8,'tags':[tag],'confirmed':True,
+        {'id':'f5','kind':'validity','value':'2099年10月23日至30日','confirmed':True,'source':'模拟'}],
+        'shots':[{'id':f's{i}','media_id':'a'*32,'source_sha256':'b'*64,'start':0.,'end':6.,'quality':.8,'tags':[tag],'confirmed':True,
                   'product_binding':{'fact_id':'f2','value':'测试商品','confirmed':True}}
                  for i,tag in enumerate(['interior','product','storefront','process'])]}
+    from evidence_store import identity
+    for shot in p['shots']:shot['product_binding']['evidence_id']=identity(shot)
+    return p
+
+def make_plan(project,method='evidence'):
+    # These structural tests use explicitly simulated 1s narration. Actual TTS is separately integrated.
+    lengths={}
+    for role in GOALS[project['goal']]['roles']:
+        text=caption_for(role,project['facts'],project['goal'])[0]
+        lengths[text]=1.;lengths[text+CTA[project['goal']]]=1.
+    return _make_plan(project,method,lengths)
 
 class Constraints(unittest.TestCase):
     def setUp(self): self.p=sample();self.plan=make_plan(self.p)

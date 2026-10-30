@@ -17,21 +17,22 @@ class PlanError(ValueError):
     pass
 
 def clean_project(project):
+    if not isinstance(project,dict):raise PlanError('项目格式无效，请导入正确的项目文件。')
     p = deepcopy(project)
     if p.get('goal') not in GOALS:
         raise PlanError('请选择有效营销目标。')
     facts = p.get('facts', [])
     shots = p.get('shots', [])
-    if not isinstance(facts, list) or not isinstance(shots, list) or len(facts)>30 or len(shots)>100:
+    if not isinstance(facts, list) or not isinstance(shots, list) or len(facts)>30 or len(shots)>1000:
         raise PlanError('事实或镜头数量超出限制。')
     ids = set()
     for f in facts:
-        if f.get('id') in ids or not isinstance(f.get('id'), str):
+        if not isinstance(f,dict) or not isinstance(f.get('id'),str) or not f['id'] or f['id'] in ids:
             raise PlanError('事实编号缺失或重复。')
         ids.add(f['id'])
         if f.get('kind') not in FACT_NAMES or not isinstance(f.get('value'),str) or len(f['value'])>100:
             raise PlanError('事实字段无效或超过100字。')
-        if f.get('confirmed') is True and not str(f.get('source','')).strip():
+        if f.get('confirmed') is True and (not isinstance(f.get('source'),str) or not f['source'].strip()):
             raise PlanError('确认事实时请填写来源。')
     confirmed = [f for f in facts if f.get('confirmed') is True and f['value'].strip()]
     for kind in FACT_NAMES:
@@ -39,7 +40,7 @@ def clean_project(project):
             raise PlanError(f'{FACT_NAMES[kind]}存在多条已确认记录，请先消除冲突。')
     ids=set()
     for s in shots:
-        if s.get('id') in ids or not isinstance(s.get('id'), str):
+        if not isinstance(s,dict) or not isinstance(s.get('id'),str) or not s['id'] or s['id'] in ids:
             raise PlanError('镜头编号缺失或重复。')
         ids.add(s['id'])
         for key in ('start','end','quality'):
@@ -73,36 +74,54 @@ def caption_for(role, facts, goal):
     return text,refs
 
 def product_matches(shot,facts):
+    from evidence_store import identity
     product=next((f for f in facts if f['kind']=='product' and f.get('confirmed') is True),None)
     binding=shot.get('product_binding')
     return bool(product and isinstance(binding,dict) and binding.get('confirmed') is True
-                and binding.get('fact_id')==product['id'] and binding.get('value')==product['value'])
+                and binding.get('fact_id')==product['id'] and binding.get('value')==product['value']
+                and binding.get('evidence_id')==identity(shot))
 
-def make_plan(project, method='evidence'):
+def make_plan(project, method='evidence', speech_lengths=None):
     p=clean_project(project)
     if method not in ('evidence','chronological'):
         raise PlanError('未知编排方法。')
     goal=p['goal']; spec=GOALS[goal]
     facts=[f for f in p['facts'] if f.get('confirmed') is True and f['value'].strip()]
     missing_facts=[k for k in spec['required_facts'] if not any(f['kind']==k for f in facts)]
-    eligible=[s for s in p['shots'] if s.get('confirmed') is True and s['quality']>=0.25 and s['end']-s['start']>=1]
+    date_problem=None
+    if goal=='promo' and not missing_facts:
+        from validity import period_problem
+        date_problem=period_problem(next(f['value'] for f in facts if f['kind']=='validity'))
+    eligible=[s for s in p['shots'] if s.get('confirmed') is True and not s.get('quality_issues') and not s.get('unavailable') and s['quality']>=0.25 and s['end']-s['start']>=1]
     # Maximum-coverage weighted assignment, O(shots * roles * 2^roles).
     # A versatile shot must not greedily consume the only evidence for a later role.
-    roles=spec['roles']; states={0:(0.0,{})}
-    for shot in eligible:
-        updated=dict(states)
-        for mask,(score,assignment) in states.items():
-            for index,role in enumerate(roles):
-                bit=1<<index
-                if mask&bit or role not in shot['tags']:continue
-                if role=='product' and not product_matches(shot,facts):continue
-                newmask=mask|bit
-                value=score+shot['quality']+min(shot['end']-shot['start'],8)*0.01
-                if newmask not in updated or value>updated[newmask][0]:
-                    updated[newmask]=(value,{**assignment,role:shot})
-        states=updated
-    bestmask=max(states,key=lambda mask:(mask.bit_count(),states[mask][0]))
-    assignment=states[bestmask][1]
+    roles=spec['roles'];timing_verified=speech_lengths is not None
+    def fits(s,role,last=False):
+        if role not in s['tags'] or (role=='product' and not product_matches(s,facts)):return False
+        text=caption_for(role,facts,goal)[0]+(CTA[goal] if last else '')
+        return not timing_verified or speech_lengths.get(text,float('inf'))/1.18+.08<=min(s['end']-s['start'],8)+.00001
+    def solve(candidates,anchor=None):
+        initial={} if anchor is None else {anchor[0]:anchor[1]}
+        mask=sum(1<<roles.index(r) for r in initial)
+        states={mask:(sum(s['quality']+min(s['end']-s['start'],8)*.01 for s in initial.values()),initial)}
+        for shot in candidates:
+            updated=dict(states)
+            for used,(score,assigned) in states.items():
+                for index,role in enumerate(roles):
+                    bit=1<<index
+                    if used&bit or not fits(shot,role,method=='evidence' and role==roles[-1]):continue
+                    newmask=used|bit;value=score+shot['quality']+min(shot['end']-shot['start'],8)*.01
+                    if newmask not in updated or value>updated[newmask][0]:updated[newmask]=(value,{**assigned,role:shot})
+            states=updated
+        best=max(states,key=lambda m:(m.bit_count(),states[m][0]))
+        return best,states[best]
+    if method=='chronological':
+        options=[]
+        for pos,shot in enumerate(eligible):
+            for role in roles:
+                if fits(shot,role,True):options.append(solve(eligible[:pos],(role,shot)))
+        bestmask,(score,assignment)=max(options,key=lambda x:(x[0].bit_count(),x[1][0])) if options else (0,(0,{}))
+    else:bestmask,(score,assignment)=solve(eligible)
     selected=[(role,assignment[role]) for role in roles if role in assignment]
     missing_roles=[role for role in roles if role not in assignment]
     if method=='chronological':
@@ -112,19 +131,34 @@ def make_plan(project, method='evidence'):
     segments=[]
     for role,s in selected:
         text,refs=caption_for(role,facts,goal)
-        segments.append({'shot_id':s['id'],'role':role,'start':s['start'],'end':min(s['end'],s['start']+7.5),'text':text,'fact_ids':refs,
+        segments.append({'shot_id':s['id'],'role':role,'start':s['start'],'end':min(s['end'],s['start']+8),'text':text,'fact_ids':refs,
                          'reason':f'{TAG_NAMES[role]}覆盖目标结构；标签已人工确认；质量分 {s["quality"]:.2f}。'})
     if segments:
         # CTA uses the last evidence frame, with no extra business assertions.
         last=segments[-1]
         last['text']+=CTA[goal]
-    missing=[f'请确认{FACT_NAMES[k]}' for k in missing_facts]+[f'请补拍或确认{TAG_NAMES[k]}镜头，建议稳定竖拍5—8秒' for k in missing_roles]
-    if 'product' in missing_roles and any('product' in s['tags'] for s in eligible):
+    missing=[f'请确认{FACT_NAMES[k]}' for k in missing_facts]
+    for role in missing_roles:
+        support=[s for s in eligible if role in s['tags'] and (role!='product' or product_matches(s,facts))]
+        text=caption_for(role,facts,goal)[0]+(CTA[goal] if method=='evidence' and role==roles[-1] else '')
+        spoken=speech_lengths.get(text) if timing_verified else None
+        if support and spoken is not None and all(min(s['end']-s['start'],8)<spoken/1.18+.08 for s in support):
+            longest=max(min(s['end']-s['start'],8) for s in support)
+            missing.append(f'{TAG_NAMES[role]}旁白约{spoken:.1f}秒，至少需要{spoken/1.18+.08:.1f}秒画面；当前最长可用{longest:.1f}秒。请更换素材或调整非必要文案。')
+        else:missing.append(f'请补拍或确认{TAG_NAMES[role]}镜头，建议稳定竖拍5—8秒')
+    if 'product' in missing_roles and any('product' in s['tags'] for s in eligible) and not any(product_matches(s,facts) for s in eligible if 'product' in s['tags']):
         missing.append('请单独确认商品镜头与事实卡中的商品一致；修改商品名称后需要重新确认。')
-    return {'schema_version':'1.0','goal':goal,'method':method,'synthetic':p.get('synthetic') is True,
-            'segments':segments,'missing':missing,'renderable':bool(segments) and not missing,
+    if missing_roles and timing_verified:
+        missing.append('候选镜头还需能放下对应旁白；请换足够长的镜头或调整非必要文案，保留完整活动条件。')
+    if date_problem:missing.append(date_problem)
+    if not timing_verified:missing.append('请先完成实际配音时长预检。')
+    for seg in segments:
+        seg['speech_seconds']=speech_lengths.get(seg['text']) if timing_verified else None
+        seg['minimum_seconds']=round(seg['speech_seconds']/1.18+.08,3) if seg['speech_seconds'] is not None else None
+    return {'schema_version':'2.0','goal':goal,'method':method,'synthetic':p.get('synthetic') is True,
+            'segments':segments,'missing':missing,'renderable':bool(segments) and not missing,'timing_verified':timing_verified,'warnings':p.get('warnings',[]),
             'limitations':['质量分来自抽帧检测，不能证明语义正确。','人工确认仅表示本次输入状态，不能自动证明商户陈述真实。'],
-            'assignment':{'algorithm':'maximum_coverage_weighted_matching','score':round(states[bestmask][0],4),'quality_weight':1,'duration_weight':0.01},
+            'assignment':{'algorithm':'speech_feasible_maximum_coverage','score':round(score,4),'quality_weight':1,'duration_weight':0.01},
             'coverage':{'roles':len(spec['roles'])-len(missing_roles),'required_roles':len(spec['roles']),
                         'facts':len(spec['required_facts'])-len(missing_facts),'required_facts':len(spec['required_facts'])}}
 
@@ -132,6 +166,12 @@ def validate_plan(project, plan):
     p=clean_project(project)
     if plan.get('goal')!=p['goal'] or plan.get('synthetic')!=(p.get('synthetic') is True):
         raise PlanError('目标或模拟样本标记与项目不一致。')
+    if plan.get('timing_verified') is not True:raise PlanError('请先完成配音时长预检，再生成视频。')
+    if p['goal']=='promo':
+        from validity import period_problem
+        validity=next((f['value'] for f in p['facts'] if f['kind']=='validity' and f.get('confirmed') is True),'')
+        problem=period_problem(validity)
+        if problem:raise PlanError(problem)
     shots={s['id']:s for s in p['shots']}
     facts={f['id']:f for f in p['facts'] if f.get('confirmed') is True}
     segments=plan.get('segments',[])
@@ -140,7 +180,7 @@ def validate_plan(project, plan):
     used=set(); roles=set()
     for i,seg in enumerate(segments):
         s=shots.get(seg.get('shot_id'))
-        if not s or s.get('confirmed') is not True or s['quality']<0.25 or s['id'] in used:
+        if not s or s.get('confirmed') is not True or s.get('quality_issues') or s.get('unavailable') or s['quality']<0.25 or s['id'] in used:
             raise PlanError('镜头不存在、未确认、质量过低或被重复使用。')
         used.add(s['id']); role=seg.get('role'); roles.add(role)
         if role not in GOALS[p['goal']]['roles'] or role not in s['tags']:

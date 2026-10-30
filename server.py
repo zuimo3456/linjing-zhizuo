@@ -34,7 +34,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(status);self.send_header('Content-Type','application/json; charset=utf-8');self.send_header('Content-Length',str(len(data)));self.end_headers();self.wfile.write(data)
     def body(self):
         n=int(self.headers.get('Content-Length','0'))
-        if not 0<n<=1024*1024: raise ValueError('JSON请求大小无效。')
+        if not 0<n<=4*1024*1024: raise ValueError('项目数据超过限制，请分开处理素材。')
         return json.loads(self.rfile.read(n))
     def same_origin(self):
         origin=self.headers.get('Origin')
@@ -46,13 +46,14 @@ class Handler(BaseHTTPRequestHandler):
             if path=='/api/health':
                 from local_vision import status as local_status
                 return self.reply({'ok':bool(FFMPEG and FFPROBE),'ffmpeg':bool(FFMPEG),'ffprobe':bool(FFPROBE),
-                                   'version':'local-ai-prototype-2','vision_configured':False,'local_vision':local_status(),'tts':'offline_windows'})
+                                   'version':'local-ai-prototype-3','vision_configured':False,'local_vision':local_status(),'tts':'offline_windows'})
             if path.startswith('/api/jobs/'):
                 with jobs_lock: item=jobs.get(path.rsplit('/',1)[-1])
                 return self.reply(item or {'error':'任务不存在'},200 if item else 404)
             if path=='/api/saved':
                 saved=DATA/'saved-project.json'
-                return self.reply(json.loads(saved.read_text(encoding='utf8')) if saved.exists() else None)
+                from evidence_store import reconcile
+                return self.reply(reconcile(json.loads(saved.read_text(encoding='utf8'))) if saved.exists() else None)
             if path=='/api/benchmark':
                 p=ROOT/'evidence/constraint-results.json'
                 return self.reply(json.loads(p.read_text(encoding='utf8')) if p.exists() else {'status':'not_run'})
@@ -117,29 +118,36 @@ class Handler(BaseHTTPRequestHandler):
                 from demo import create_demo
                 return self.reply(job(lambda jid,progress:create_demo(progress)),202)
             obj=self.body()
+            if path=='/api/reconcile':
+                from evidence_store import reconcile
+                return self.reply(reconcile(obj['project']))
+            if path=='/api/confirm-shot':
+                from evidence_store import confirm
+                return self.reply({'shot':confirm(obj['project'],obj['shot_id'],obj['mode'],obj['checked'] is True)})
             if path=='/api/local-analyze':
                 from local_vision import analyze_project
-                from planner import clean_project
-                project=clean_project(obj['project'])
+                from evidence_store import reconcile
+                project=reconcile(obj['project'])
                 return self.reply(job(lambda jid,progress:analyze_project(project,progress)),202)
-            if path=='/api/plan': return self.reply(make_plan(obj['project'],obj.get('method','evidence')))
+            if path=='/api/plan':
+                from pipeline import build_plan
+                return self.reply(build_plan(obj['project'],obj.get('method','evidence')))
             if path=='/api/labels':
                 from vision_adapter import parse_labels
                 return self.reply({'labels':parse_labels(obj['candidates'],{s['id'] for s in obj['project']['shots']})})
-            if path=='/api/validate': validate_plan(obj['project'],obj['plan']);return self.reply({'valid':True})
+            if path=='/api/validate':
+                from pipeline import preflight
+                _,plan=preflight(obj['project'],obj['plan']);return self.reply({'valid':True,'plan':plan})
             if path=='/api/render':
-                project=obj['project'];plan=obj['plan'];validate_plan(project,plan)
-                # Verify source identity and duration using server-owned analysis.
-                from media import probe
-                for s in project['shots']:
-                    mid=s.get('media_id','')
-                    if not re.fullmatch('[a-f0-9]{32}',mid):raise ValueError('素材编号无效。')
-                    src=DATA/mid/'source.mp4'
-                    if not src.is_file() or s['end']>probe(src)['duration']+.05:raise ValueError('镜头越过原始文件范围。')
-                return self.reply(job(lambda jid,progress:render(project,plan,jid,progress)),202)
+                from pipeline import preflight
+                project,plan=preflight(obj['project'],obj['plan'])
+                def render_checked(jid,progress):
+                    current,checked=preflight(project,plan)
+                    return render(current,checked,jid,progress)
+                return self.reply(job(render_checked),202)
             if path=='/api/save':
-                from planner import clean_project
-                p=clean_project(obj['project']);(DATA/'saved-project.json').write_text(json.dumps(p,ensure_ascii=False,indent=2),encoding='utf8')
+                from evidence_store import reconcile
+                p=reconcile(obj['project']);(DATA/'saved-project.json').write_text(json.dumps(p,ensure_ascii=False,indent=2),encoding='utf8')
                 return self.reply({'saved':True})
             if path=='/api/context':
                 from vision_adapter import context_pack

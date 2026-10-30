@@ -1,8 +1,8 @@
 """Critical failures: wrong products, contradictory frames, bad output, timing."""
 import copy,math,tempfile,unittest
 from pathlib import Path
-from planner import make_plan,validate_plan,PlanError
-from test_invariants import sample
+from planner import validate_plan,PlanError
+from test_invariants import sample,make_plan
 from local_vision import decide,frame_paths
 from audio import phrases
 from media import write_ass

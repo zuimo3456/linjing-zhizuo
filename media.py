@@ -10,9 +10,12 @@ FFMPEG=shutil.which('ffmpeg')
 FFPROBE=shutil.which('ffprobe')
 
 def run(args, timeout=180):
-    p=subprocess.run([str(x) for x in args],capture_output=True,text=True,encoding='utf8',errors='replace',timeout=timeout)
+    try:p=subprocess.run([str(x) for x in args],capture_output=True,text=True,encoding='utf8',errors='replace',timeout=timeout)
+    except subprocess.TimeoutExpired:raise ValueError('视频处理超时，请缩短素材或重新导出后再试。') from None
     if p.returncode:
-        raise RuntimeError(p.stderr[-1600:] or '媒体工具执行失败。')
+        log=DATA/'diagnostics';log.mkdir(exist_ok=True,parents=True);code=uuid.uuid4().hex[:12]
+        (log/(code+'.txt')).write_text(p.stderr,encoding='utf8')
+        raise ValueError(f'视频无法读取或处理，可能已损坏或格式不兼容。请重新导出为MP4再试。错误编号：{code}')
     return p.stdout
 
 def probe(path):
@@ -31,38 +34,51 @@ def analyze(path, media_id, name):
     # ASCII-safe temporary proxy, including when the user folder is Chinese.
     with tempfile.TemporaryDirectory(prefix='linjing-') as tmp:
         proxy=Path(tmp)/'proxy.mp4'
-        run([FFMPEG,'-y','-v','error','-i',path,'-vf','scale=-2:360,fps=6','-an','-c:v','libx264','-preset','ultrafast',proxy])
-        scenes=detect(str(proxy),ContentDetector(threshold=25,min_scene_len=6),show_progress=False)
+        run([FFMPEG,'-y','-v','error','-i',path,'-vf','scale=-2:360,fps=12','-an','-c:v','libx264','-preset','ultrafast',proxy])
+        scenes=detect(str(proxy),ContentDetector(threshold=25,min_scene_len=1),show_progress=False)
         ranges=[(a.get_seconds(),min(b.get_seconds(),meta['duration'])) for a,b in scenes]
         if not ranges: ranges=[(0,meta['duration'])]
         # Long static shots are broken into reviewable intervals, not semantic cuts.
         chunks=[]
         for a,b in ranges:
             while b-a>8: chunks.append((a,a+8)); a+=8
-            if b-a>=1: chunks.append((a,b))
+            if b>a: chunks.append((a,b))
         cap=cv2.VideoCapture(str(proxy)); shots=[]
-        for i,(a,b) in enumerate(chunks[:24]):
-            sampled=[];qualities=[];lights=[];sharps=[]
-            for j,fraction in enumerate((.2,.5,.8)):
-                at=a+(b-a)*fraction
+        for i,(a,b) in enumerate(chunks):
+            sampled=[];qualities=[];lights=[];sharps=[];issues=[]
+            if b-a<1:issues.append('镜头短于1秒，请与原素材核对或重新拍摄')
+            times=sorted(set(round(t,4) for t in (a+min(.025,(b-a)*.05),a+(b-a)*.2,a+(b-a)*.5,a+(b-a)*.8,b-min(.06,(b-a)*.05))))
+            for j,at in enumerate(times):
                 cap.set(cv2.CAP_PROP_POS_MSEC,at*1000); ok,frame=cap.read()
                 if not ok:continue
                 gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
                 sharp=float(cv2.Laplacian(gray,cv2.CV_64F).var());light=float(gray.mean())
                 qualities.append(min(1,sharp/180)*.6+max(0,1-abs(light-128)/128)*.4)
+                if float(gray.std())<3:issues.append('画面接近纯色，没有可辨认的内容')
+                elif sharp<5:issues.append('画面严重模糊，细节不足')
+                if light<12 or light>245:issues.append('画面过暗或过曝')
                 lights.append(light);sharps.append(sharp)
-                thumb=folder/(f'thumb-{i}.jpg' if j==1 else f'frame-{i}-{j}.jpg')
+                thumb=folder/(f'thumb-{i}.jpg' if j==2 else f'frame-{i}-{j}.jpg')
                 ok,encoded=cv2.imencode('.jpg',frame)
                 if ok:encoded.tofile(str(thumb));sampled.append({'time':round(at,3),'url':f'/media/{media_id}/{thumb.name}'})
             if not sampled:continue
+            if len(sampled)<len(times):issues.append('抽帧不完整，请重新上传检查')
             quality=round(min(qualities)*.4+sum(qualities)/len(qualities)*.6,3)
+            if issues:quality=min(quality,.1)
             thumb_url=next((x['url'] for x in sampled if '/thumb-' in x['url']),sampled[0]['url'])
             shots.append({'id':f'{media_id}-{i}','media_id':media_id,'start':round(a,3),'end':round(b,3),
                           'tags':['other'],'confirmed':False,'quality':quality,'brightness':round(sum(lights)/len(lights),2),
                           'sharpness':round(sum(sharps)/len(sharps),2),'label_source':'unlabeled','name':name,
-                          'thumb':thumb_url,'frames':sampled,'analysis_version':2})
+                          'thumb':thumb_url,'frames':sampled,'analysis_version':4,'quality_issues':list(dict.fromkeys(issues))})
         cap.release()
-    return {'id':media_id,'name':name,'meta':meta,'shots':shots,'synthetic':False}
+    from evidence_store import file_hash
+    sha=file_hash(path);stat=Path(path).stat()
+    for shot in shots:shot['source_sha256']=sha
+    return {'id':media_id,'name':name,'meta':meta,'shots':shots,'synthetic':False,'analysis_version':4,
+            'source_sha256':sha,'source_bytes':stat.st_size,'source_mtime_ns':stat.st_mtime_ns,
+            'coverage':{'total_seconds':meta['duration'],'analyzed_end':max((s['end'] for s in shots),default=0),
+                        'short_or_unusable_intervals':[[s['start'],s['end']] for s in shots if s['quality_issues']],
+                        'truncated':False,'sampling':'boundary_and_20_50_80_percent; not_full_semantic_coverage'}}
 
 def ass_time(t):
     cent=round(t*100); s,c=divmod(cent,100); m,s=divmod(s,60); h,m=divmod(m,60)
@@ -91,7 +107,7 @@ def render(project,plan,job_id,progress):
             from audio import synthesize
             length=seg['end']-seg['start']
             wav,spoken,cues,speed=synthesize(seg['text'],tmp,f'seg-{i}',length)
-            duration=min(length,max(2.5,spoken+.08))
+            duration=length if seg['role']=='process' else min(length,max(2.5,spoken+.08))
             ass=tmp/f'caption-{i}.ass';write_ass(ass,seg['text'],duration,project.get('synthetic') is True,cues)
             ass_filter=str(ass).replace('\\','/').replace(':',r'\:')
             source=DATA/shots[seg['shot_id']]['media_id']/'source.mp4'

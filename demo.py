@@ -10,9 +10,10 @@ def create_demo(progress=lambda _:None):
         p=json.loads(cache.read_text(encoding='utf8'))
         updated=[]
         for shot in p['shots']:
-            if shot.get('analysis_version')!=2:
+            if shot.get('analysis_version')!=4:
                 progress('升级模拟案例的多时刻抽帧')
                 fresh=analyze(DATA/shot['media_id']/'source.mp4',shot['media_id'],shot['name'])
+                (DATA/shot['media_id']/'asset.json').write_text(json.dumps(fresh,ensure_ascii=False,indent=2),encoding='utf8')
                 for item in fresh['shots']:
                     item.update(tags=shot['tags'],confirmed=True,label_source='synthetic_ground_truth',quality=max(.6,item['quality']))
                     updated.append(item)
@@ -75,7 +76,13 @@ def create_demo(progress=lambda _:None):
     return p
 
 def bind_demo_product(project):
+    from evidence_store import attest
+    from validity import current_date
+    from datetime import timedelta
+    today=current_date();end=today+timedelta(days=7)
+    next(x for x in project['facts'] if x['kind']=='validity')['value']=f'{today.year}年{today.month}月{today.day}日至{end.year}年{end.month}月{end.day}日'
     f=next(f for f in project['facts'] if f['kind']=='product')
     for shot in project['shots']:
+        shot['attestation']=attest(shot)
         if 'product' in shot['tags']:
-            shot['product_binding']={'fact_id':f['id'],'value':f['value'],'confirmed':True,'source':'synthetic_ground_truth'}
+            shot['product_binding']=attest(shot,f)

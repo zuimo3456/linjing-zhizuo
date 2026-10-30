@@ -45,7 +45,7 @@ def decide(rows,quality):
             'description':('候选用途，需查看视频确认。' if accepted else '暂不判定用途：'+'；'.join(reasons)+'。'),
             'relative_scores':{keys[int(i)]:round(float(mean[i]),4) for i in order},
             'margin':round(margin,4),'frame_votes':dict(Counter(winners)),
-            'threshold_note':'三帧一致、logit差值≥1.5的启发式门槛；尚未用真实店铺数据校准。'}
+            'threshold_note':'全部采样帧一致（至少3张）、logit差值≥1.5的启发式门槛；尚未用真实店铺数据校准。'}
 
 class Engine:
     def __init__(self):
@@ -94,7 +94,7 @@ def frame_paths(shot):
         path=ROOT/'data'/mid/name
         if not path.is_file():raise ValueError('抽帧文件缺失，请重新上传素材。')
         paths.append(path);evidence.append({'time':frame['time'],'url':f'/media/{mid}/{name}'})
-    return paths[:3],evidence[:3]
+    return paths,evidence
 
 def analyze_project(project,progress=lambda _:None):
     from planner import clean_project
@@ -106,16 +106,20 @@ def analyze_project(project,progress=lambda _:None):
     for i,shot in enumerate(p['shots']):
         progress(f'本地分析镜头 {i+1}/{len(p["shots"])}，检查多时刻画面')
         paths,frames=frame_paths(shot)
-        candidate=decide(_engine.score(paths),shot['quality'])
+        rows=[]
+        for start in range(0,len(paths),3):rows.extend(_engine.score(paths[start:start+3]))
+        candidate=decide(rows,shot['quality'])
+        if shot.get('quality_issues'):
+            candidate.update(tags=['other'],abstained=True,review_reasons=shot['quality_issues'],description='素材不能直接使用：'+'；'.join(shot['quality_issues']))
         # Preserve human attestations while exposing model disagreement for review.
         shot['local_candidate']={**candidate,'frames':frames}
         if not shot.get('confirmed'):
             shot.update(candidate,label_source='local_model_candidate')
         shot['product_binding']=None
-        shot['confirmed']=False
+        shot['confirmed']=False;shot['attestation']=None
     lock=json.loads((ROOT/'evidence/local-model-lock.json').read_text(encoding='utf8'))
     p['vision_analysis']={'engine':lock['repository'],'revision':lock['revision'],'weights_sha256':lock['files']['onnx/model_quantized.onnx'],
                           'runtime':'onnxruntime CPU','elapsed_seconds':round(time.perf_counter()-begun,3),'remote_requests':0,
-                          'shots':len(p['shots']),'prompts':PROMPTS,'thresholds':{'min_frames':3,'margin':1.5,'agreement':'all'},
+                          'shots':len(p['shots']),'prompts':PROMPTS,'thresholds':{'min_frames':3,'margin':1.5,'agreement':'all','sampling':'includes_boundaries; not_full_semantic_coverage'},
                           'scope':'用途候选；不识别价格、地址、优惠或确切商品，不自动确认事实。'}
     return p

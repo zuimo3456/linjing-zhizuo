@@ -1,5 +1,5 @@
 """Offline, phrase-timed narration with bounded speed and no long held frames."""
-import json,re,shutil,subprocess
+import json,re,shutil,subprocess,hashlib,tempfile,threading
 from pathlib import Path
 
 FFMPEG=shutil.which('ffmpeg');FFPROBE=shutil.which('ffprobe')
@@ -25,7 +25,7 @@ def phrases(text,max_chars=26):
     if not result:raise ValueError('旁白不能为空。')
     return result
 
-def synthesize(text,work,prefix,available):
+def _synthesize_uncached(text,work,prefix,available):
     cues=[];parts=[];cursor=0
     chunks=phrases(text)
     for i,phrase in enumerate(chunks):
@@ -54,3 +54,30 @@ def synthesize(text,work,prefix,available):
         cue['start']=round(min(measured,cue['start']/speed),4)
         cue['end']=round(min(measured,cue['end']/speed),4)
     return final,measured,cues,speed
+
+_voice_lock=threading.RLock()
+
+def prepare_voice(text):
+    """Measure the real speech once; reuse the same audio for planning/rendering."""
+    key=hashlib.sha256(('huihui-phrase-v2\0'+text).encode('utf8')).hexdigest()
+    folder=ROOT/'data/voice-cache';folder.mkdir(parents=True,exist_ok=True)
+    wav=folder/(key+'.wav');meta=folder/(key+'.json')
+    with _voice_lock:
+        if not (wav.is_file() and meta.is_file()):
+            with tempfile.TemporaryDirectory(prefix='linjing-preflight-') as tmp:
+                natural,length,cues,_=_synthesize_uncached(text,Path(tmp),'natural',10000)
+                shutil.copyfile(natural,wav)
+                meta.write_text(json.dumps({'duration':length,'cues':cues,'text':text},ensure_ascii=False),encoding='utf8')
+        info=json.loads(meta.read_text(encoding='utf8'))
+    return wav,info['duration'],info['cues']
+
+def synthesize(text,work,prefix,available):
+    natural,length,cues=prepare_voice(text)
+    speed=round(max(1,length/max(.1,available-.08)),5)
+    if speed>1.18:
+        raise ValueError(f'本段旁白约需{length:.1f}秒，镜头仅{available:.1f}秒。请补充足够长的素材或调整文案；系统不使用长停帧凑时长。')
+    final=work/f'{prefix}-voice.wav'
+    run([FFMPEG,'-y','-v','error','-i',natural,'-af',f'atempo={speed}','-ar','48000','-ac','1',final])
+    measured=duration(final)
+    adjusted=[{**c,'start':round(min(measured,c['start']/speed),4),'end':round(min(measured,c['end']/speed),4)} for c in cues]
+    return final,measured,adjusted,speed
