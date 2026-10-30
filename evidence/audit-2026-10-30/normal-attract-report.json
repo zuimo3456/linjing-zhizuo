@@ -1,0 +1,140 @@
+{
+  "job_id": "d02089c68e5f48439d97b4aec08fdd45",
+  "created_at_utc": "2026-10-30T09:49:28.114102+00:00",
+  "synthetic": true,
+  "status": "technical_export_only",
+  "metadata": {
+    "duration": 8.7585,
+    "width": 720,
+    "height": 1280,
+    "audio": true
+  },
+  "elapsed_seconds": 4.712,
+  "api_calls": 0,
+  "api_direct_cost_cny": 0,
+  "total_cost_cny": null,
+  "cost_note": "本次本地运行没有付费API调用；电力、设备与人工成本未计量。",
+  "tts": "Windows Microsoft Huihui Desktop offline",
+  "timings": [
+    {
+      "index": 0,
+      "start": 0,
+      "end": 2.967,
+      "text": "街角咖啡，带你看看手冲咖啡。",
+      "alignment": "measured_phrase_audio",
+      "held_frame_seconds": 0,
+      "voice_speed": 1,
+      "captions": [
+        {
+          "start": 0.0,
+          "end": 2.8872,
+          "text": "街角咖啡，带你看看手冲咖啡。"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "start": 2.967,
+      "end": 5.467,
+      "text": "这是制作过程。",
+      "alignment": "measured_phrase_audio",
+      "held_frame_seconds": 0,
+      "voice_speed": 1,
+      "captions": [
+        {
+          "start": 0.0,
+          "end": 1.1955,
+          "text": "这是制作过程。"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "start": 5.467,
+      "end": 8.717,
+      "text": "这是店内环境。感兴趣可以先收藏。",
+      "alignment": "measured_phrase_audio",
+      "held_frame_seconds": 0,
+      "voice_speed": 1,
+      "captions": [
+        {
+          "start": 0.0,
+          "end": 1.2042,
+          "text": "这是店内环境。"
+        },
+        {
+          "start": 1.3442,
+          "end": 3.1702,
+          "text": "感兴趣可以先收藏。"
+        }
+      ]
+    }
+  ],
+  "plan": {
+    "schema_version": "1.0",
+    "goal": "attract",
+    "method": "evidence",
+    "synthetic": true,
+    "segments": [
+      {
+        "shot_id": "785397e553ac40f787aee5beaf8ddd40-0",
+        "role": "product",
+        "start": 0,
+        "end": 6.0,
+        "text": "街角咖啡，带你看看手冲咖啡。",
+        "fact_ids": [
+          "shop",
+          "product"
+        ],
+        "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。"
+      },
+      {
+        "shot_id": "0d370453b76e4c6fbb87dcd0e890f366-0",
+        "role": "process",
+        "start": 0,
+        "end": 6.0,
+        "text": "这是制作过程。",
+        "fact_ids": [],
+        "reason": "制作过程覆盖目标结构；标签已人工确认；质量分 0.75。"
+      },
+      {
+        "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+        "role": "interior",
+        "start": 0,
+        "end": 6.0,
+        "text": "这是店内环境。感兴趣可以先收藏。",
+        "fact_ids": [],
+        "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。"
+      }
+    ],
+    "missing": [],
+    "renderable": true,
+    "limitations": [
+      "质量分来自抽帧检测，不能证明语义正确。",
+      "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+    ],
+    "assignment": {
+      "algorithm": "maximum_coverage_weighted_matching",
+      "score": 2.524,
+      "quality_weight": 1,
+      "duration_weight": 0.01
+    },
+    "coverage": {
+      "roles": 3,
+      "required_roles": 3,
+      "facts": 2,
+      "required_facts": 2
+    }
+  },
+  "acceptance": {
+    "playback": "pending_browser_check",
+    "human_audio_visual_quality": "pending",
+    "merchant_willingness": "not_measured"
+  },
+  "analysis": null,
+  "limitations": [
+    "画外音路径，不包含原声保留。",
+    "短句字幕按实际语音段测时，不是逐字对齐。",
+    "语义仍需确认；本地图文相似度不是商业事实验证。"
+  ]
+}

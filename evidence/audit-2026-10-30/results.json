@@ -1,0 +1,1307 @@
+{
+  "date": "2026-10-30",
+  "scope": "Constructed and CC0 technical cases only. Not merchant accuracy evaluation.",
+  "cases": [
+    {
+      "id": "C01",
+      "title": "正常到店完整渲染",
+      "seconds": 4.924,
+      "result": {
+        "status": "exported",
+        "video": "/media/f7c7dea987dd4a37a74e0280477dd0f6/result.mp4",
+        "metadata": {
+          "duration": 9.533042,
+          "width": 720,
+          "height": 1280,
+          "audio": true
+        },
+        "elapsed": 4.585,
+        "segments": [
+          {
+            "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+            "role": "storefront",
+            "start": 0,
+            "end": 6.0,
+            "text": "门店地址：示例街道18号。",
+            "fact_ids": [
+              "address"
+            ],
+            "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。"
+          },
+          {
+            "shot_id": "785397e553ac40f787aee5beaf8ddd40-0",
+            "role": "product",
+            "start": 0,
+            "end": 6.0,
+            "text": "街角咖啡，带你看看手冲咖啡。",
+            "fact_ids": [
+              "shop",
+              "product"
+            ],
+            "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。"
+          },
+          {
+            "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+            "role": "interior",
+            "start": 0,
+            "end": 6.0,
+            "text": "这是店内环境。到店前，请确认营业情况。",
+            "fact_ids": [],
+            "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。"
+          }
+        ],
+        "timings": [
+          {
+            "index": 0,
+            "start": 0,
+            "end": 2.612,
+            "text": "门店地址：示例街道18号。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 2.532,
+                "text": "门店地址：示例街道18号。"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "start": 2.612,
+            "end": 5.579,
+            "text": "街角咖啡，带你看看手冲咖啡。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 2.8872,
+                "text": "街角咖啡，带你看看手冲咖啡。"
+              }
+            ]
+          },
+          {
+            "index": 2,
+            "start": 5.579,
+            "end": 9.512,
+            "text": "这是店内环境。到店前，请确认营业情况。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 1.2042,
+                "text": "这是店内环境。"
+              },
+              {
+                "start": 1.3442,
+                "end": 3.8527,
+                "text": "到店前，请确认营业情况。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "C02",
+      "title": "正常引流完整渲染",
+      "seconds": 5.037,
+      "result": {
+        "status": "exported",
+        "video": "/media/d02089c68e5f48439d97b4aec08fdd45/result.mp4",
+        "metadata": {
+          "duration": 8.7585,
+          "width": 720,
+          "height": 1280,
+          "audio": true
+        },
+        "elapsed": 4.712,
+        "segments": [
+          {
+            "shot_id": "785397e553ac40f787aee5beaf8ddd40-0",
+            "role": "product",
+            "start": 0,
+            "end": 6.0,
+            "text": "街角咖啡，带你看看手冲咖啡。",
+            "fact_ids": [
+              "shop",
+              "product"
+            ],
+            "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。"
+          },
+          {
+            "shot_id": "0d370453b76e4c6fbb87dcd0e890f366-0",
+            "role": "process",
+            "start": 0,
+            "end": 6.0,
+            "text": "这是制作过程。",
+            "fact_ids": [],
+            "reason": "制作过程覆盖目标结构；标签已人工确认；质量分 0.75。"
+          },
+          {
+            "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+            "role": "interior",
+            "start": 0,
+            "end": 6.0,
+            "text": "这是店内环境。感兴趣可以先收藏。",
+            "fact_ids": [],
+            "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。"
+          }
+        ],
+        "timings": [
+          {
+            "index": 0,
+            "start": 0,
+            "end": 2.967,
+            "text": "街角咖啡，带你看看手冲咖啡。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 2.8872,
+                "text": "街角咖啡，带你看看手冲咖啡。"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "start": 2.967,
+            "end": 5.467,
+            "text": "这是制作过程。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 1.1955,
+                "text": "这是制作过程。"
+              }
+            ]
+          },
+          {
+            "index": 2,
+            "start": 5.467,
+            "end": 8.717,
+            "text": "这是店内环境。感兴趣可以先收藏。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 1.2042,
+                "text": "这是店内环境。"
+              },
+              {
+                "start": 1.3442,
+                "end": 3.1702,
+                "text": "感兴趣可以先收藏。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "C03",
+      "title": "缺少已确认地址",
+      "seconds": 0.027,
+      "result": {
+        "http": 200,
+        "schema_version": "1.0",
+        "goal": "visit",
+        "method": "evidence",
+        "synthetic": true,
+        "segments": [
+          {
+            "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+            "role": "storefront",
+            "start": 0,
+            "end": 6.0,
+            "text": "出发前，请确认门店位置。",
+            "fact_ids": [],
+            "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。"
+          },
+          {
+            "shot_id": "785397e553ac40f787aee5beaf8ddd40-0",
+            "role": "product",
+            "start": 0,
+            "end": 6.0,
+            "text": "街角咖啡，带你看看手冲咖啡。",
+            "fact_ids": [
+              "shop",
+              "product"
+            ],
+            "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。"
+          },
+          {
+            "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+            "role": "interior",
+            "start": 0,
+            "end": 6.0,
+            "text": "这是店内环境。到店前，请确认营业情况。",
+            "fact_ids": [],
+            "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。"
+          }
+        ],
+        "missing": [
+          "请确认地址"
+        ],
+        "renderable": false,
+        "limitations": [
+          "质量分来自抽帧检测，不能证明语义正确。",
+          "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+        ],
+        "assignment": {
+          "algorithm": "maximum_coverage_weighted_matching",
+          "score": 2.6,
+          "quality_weight": 1,
+          "duration_weight": 0.01
+        },
+        "coverage": {
+          "roles": 3,
+          "required_roles": 3,
+          "facts": 2,
+          "required_facts": 3
+        }
+      }
+    },
+    {
+      "id": "C04",
+      "title": "同类地址互相矛盾",
+      "seconds": 0.013,
+      "result": {
+        "http": 400,
+        "error": "地址存在多条已确认记录，请先消除冲突。"
+      }
+    },
+    {
+      "id": "C05",
+      "title": "商品改名保留旧绑定",
+      "seconds": 0.014,
+      "result": {
+        "http": 200,
+        "schema_version": "1.0",
+        "goal": "visit",
+        "method": "evidence",
+        "synthetic": true,
+        "segments": [
+          {
+            "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+            "role": "storefront",
+            "start": 0,
+            "end": 6.0,
+            "text": "门店地址：示例街道18号。",
+            "fact_ids": [
+              "address"
+            ],
+            "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。"
+          },
+          {
+            "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+            "role": "interior",
+            "start": 0,
+            "end": 6.0,
+            "text": "这是店内环境。到店前，请确认营业情况。",
+            "fact_ids": [],
+            "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。"
+          }
+        ],
+        "missing": [
+          "请补拍或确认商品镜头，建议稳定竖拍5—8秒",
+          "请单独确认商品镜头与事实卡中的商品一致；修改商品名称后需要重新确认。"
+        ],
+        "renderable": false,
+        "limitations": [
+          "质量分来自抽帧检测，不能证明语义正确。",
+          "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+        ],
+        "assignment": {
+          "algorithm": "maximum_coverage_weighted_matching",
+          "score": 1.75,
+          "quality_weight": 1,
+          "duration_weight": 0.01
+        },
+        "coverage": {
+          "roles": 2,
+          "required_roles": 3,
+          "facts": 3,
+          "required_facts": 3
+        }
+      }
+    },
+    {
+      "id": "C06",
+      "title": "6秒素材完整促销文案",
+      "seconds": 3.335,
+      "result": {
+        "stage": "render",
+        "plan_renderable": true,
+        "id": "01764d286bd4442f9905597762a7c38b",
+        "status": "error",
+        "message": "本段旁白约需7.8秒，镜头仅6.0秒。请缩短事实文案或提供更长镜头；系统不使用长停帧凑时长。",
+        "created": 1793353768.495415
+      }
+    },
+    {
+      "id": "C07",
+      "title": "8秒素材完整促销文案",
+      "seconds": 6.564,
+      "result": {
+        "status": "exported",
+        "video": "/media/08511217001244d8b297f01a150257a1/result.mp4",
+        "metadata": {
+          "duration": 12.814563,
+          "width": 720,
+          "height": 1280,
+          "audio": true
+        },
+        "elapsed": 6.242,
+        "segments": [
+          {
+            "shot_id": "f627049ebd0146e78ab669715dccaa07-0",
+            "role": "product",
+            "start": 0,
+            "end": 7.5,
+            "text": "街角咖啡。手冲咖啡。第二杯半价，限同款商品。2026年10月23日至10月30日。",
+            "fact_ids": [
+              "shop",
+              "product",
+              "offer",
+              "validity"
+            ],
+            "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。"
+          },
+          {
+            "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+            "role": "storefront",
+            "start": 0,
+            "end": 6.0,
+            "text": "门店地址：示例街道18号。参与前，请核对活动条件。",
+            "fact_ids": [
+              "address"
+            ],
+            "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。"
+          }
+        ],
+        "timings": [
+          {
+            "index": 0,
+            "start": 0,
+            "end": 7.498,
+            "text": "街角咖啡。手冲咖啡。第二杯半价，限同款商品。2026年10月23日至10月30日。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1.05244,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 0.8336,
+                "text": "街角咖啡。"
+              },
+              {
+                "start": 0.9666,
+                "end": 1.8587,
+                "text": "手冲咖啡。"
+              },
+              {
+                "start": 1.9918,
+                "end": 4.3105,
+                "text": "第二杯半价，限同款商品。"
+              },
+              {
+                "start": 4.4435,
+                "end": 7.418,
+                "text": "2026年10月23日至10月30日。"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "start": 7.498,
+            "end": 12.793,
+            "text": "门店地址：示例街道18号。参与前，请核对活动条件。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 2.5346,
+                "text": "门店地址：示例街道18号。"
+              },
+              {
+                "start": 2.6746,
+                "end": 5.2152,
+                "text": "参与前，请核对活动条件。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "C08",
+      "title": "已过期优惠仍确认",
+      "seconds": 6.894,
+      "result": {
+        "status": "exported",
+        "video": "/media/1e2e1b8bc3a840afa8a879dd0d918bb5/result.mp4",
+        "metadata": {
+          "duration": 11.730563,
+          "width": 720,
+          "height": 1280,
+          "audio": true
+        },
+        "elapsed": 6.551,
+        "segments": [
+          {
+            "shot_id": "f627049ebd0146e78ab669715dccaa07-0",
+            "role": "product",
+            "start": 0,
+            "end": 7.5,
+            "text": "街角咖啡。手冲咖啡。第二杯半价，限同款。2020年1月1日至2日。",
+            "fact_ids": [
+              "shop",
+              "product",
+              "offer",
+              "validity"
+            ],
+            "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。"
+          },
+          {
+            "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+            "role": "storefront",
+            "start": 0,
+            "end": 6.0,
+            "text": "门店地址：示例街道18号。参与前，请核对活动条件。",
+            "fact_ids": [
+              "address"
+            ],
+            "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。"
+          }
+        ],
+        "timings": [
+          {
+            "index": 0,
+            "start": 0,
+            "end": 6.414,
+            "text": "街角咖啡。手冲咖啡。第二杯半价，限同款。2020年1月1日至2日。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 0.8773,
+                "text": "街角咖啡。"
+              },
+              {
+                "start": 1.0173,
+                "end": 1.9562,
+                "text": "手冲咖啡。"
+              },
+              {
+                "start": 2.0962,
+                "end": 4.0693,
+                "text": "第二杯半价，限同款。"
+              },
+              {
+                "start": 4.2093,
+                "end": 6.3338,
+                "text": "2020年1月1日至2日。"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "start": 6.414,
+            "end": 11.709,
+            "text": "门店地址：示例街道18号。参与前，请核对活动条件。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 2.5346,
+                "text": "门店地址：示例街道18号。"
+              },
+              {
+                "start": 2.6746,
+                "end": 5.2152,
+                "text": "参与前，请核对活动条件。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "C09",
+      "title": "有效期结束早于开始",
+      "seconds": 0.027,
+      "result": {
+        "http": 200,
+        "schema_version": "1.0",
+        "goal": "promo",
+        "method": "evidence",
+        "synthetic": true,
+        "segments": [
+          {
+            "shot_id": "f627049ebd0146e78ab669715dccaa07-0",
+            "role": "product",
+            "start": 0,
+            "end": 7.5,
+            "text": "街角咖啡。手冲咖啡。第二杯半价，限同款商品。2027年5月10日至2027年5月1日。",
+            "fact_ids": [
+              "shop",
+              "product",
+              "offer",
+              "validity"
+            ],
+            "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。"
+          },
+          {
+            "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+            "role": "storefront",
+            "start": 0,
+            "end": 6.0,
+            "text": "门店地址：示例街道18号。参与前，请核对活动条件。",
+            "fact_ids": [
+              "address"
+            ],
+            "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。"
+          }
+        ],
+        "missing": [],
+        "renderable": true,
+        "limitations": [
+          "质量分来自抽帧检测，不能证明语义正确。",
+          "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+        ],
+        "assignment": {
+          "algorithm": "maximum_coverage_weighted_matching",
+          "score": 1.756,
+          "quality_weight": 1,
+          "duration_weight": 0.01
+        },
+        "coverage": {
+          "roles": 2,
+          "required_roles": 2,
+          "facts": 5,
+          "required_facts": 5
+        }
+      }
+    },
+    {
+      "id": "C10",
+      "title": "短高清镜头与足够长稍低分镜头共存",
+      "seconds": 2.454,
+      "result": {
+        "stage": "render",
+        "plan_renderable": true,
+        "id": "c45451312e1046178b37736b4d6f66c1",
+        "status": "error",
+        "message": "本段旁白约需2.9秒，镜头仅1.0秒。请缩短事实文案或提供更长镜头；系统不使用长停帧凑时长。",
+        "created": 1793353788.3206277
+      }
+    },
+    {
+      "id": "C11",
+      "title": "只有较长候选时能够生成",
+      "seconds": 5.375,
+      "result": {
+        "status": "exported",
+        "video": "/media/b45e808f78464277aa7a8588abc565c9/result.mp4",
+        "metadata": {
+          "duration": 9.533042,
+          "width": 720,
+          "height": 1280,
+          "audio": true
+        },
+        "elapsed": 4.989,
+        "segments": [
+          {
+            "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+            "role": "storefront",
+            "start": 0,
+            "end": 6.0,
+            "text": "门店地址：示例街道18号。",
+            "fact_ids": [
+              "address"
+            ],
+            "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。"
+          },
+          {
+            "shot_id": "f627049ebd0146e78ab669715dccaa07-0",
+            "role": "product",
+            "start": 0,
+            "end": 7.5,
+            "text": "街角咖啡，带你看看手冲咖啡。",
+            "fact_ids": [
+              "shop",
+              "product"
+            ],
+            "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。"
+          },
+          {
+            "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+            "role": "interior",
+            "start": 0,
+            "end": 6.0,
+            "text": "这是店内环境。到店前，请确认营业情况。",
+            "fact_ids": [],
+            "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。"
+          }
+        ],
+        "timings": [
+          {
+            "index": 0,
+            "start": 0,
+            "end": 2.612,
+            "text": "门店地址：示例街道18号。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 2.532,
+                "text": "门店地址：示例街道18号。"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "start": 2.612,
+            "end": 5.579,
+            "text": "街角咖啡，带你看看手冲咖啡。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 2.8872,
+                "text": "街角咖啡，带你看看手冲咖啡。"
+              }
+            ]
+          },
+          {
+            "index": 2,
+            "start": 5.579,
+            "end": 9.512,
+            "text": "这是店内环境。到店前，请确认营业情况。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 1.2042,
+                "text": "这是店内环境。"
+              },
+              {
+                "start": 1.3442,
+                "end": 3.8527,
+                "text": "到店前，请确认营业情况。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "C12",
+      "title": "同一项目包含两种商品事实",
+      "seconds": 0.003,
+      "result": {
+        "http": 400,
+        "error": "商品存在多条已确认记录，请先消除冲突。"
+      }
+    },
+    {
+      "id": "C13",
+      "title": "未选用的失效素材影响生成",
+      "seconds": 0.238,
+      "result": {
+        "stage": "render",
+        "plan_renderable": true,
+        "http": 400,
+        "response": {
+          "error": "镜头越过原始文件范围。"
+        }
+      }
+    },
+    {
+      "id": "C14",
+      "title": "损坏文件上传",
+      "seconds": 1.202,
+      "result": {
+        "id": "5773509e279846a8a09b3a4cd89e13cd",
+        "status": "error",
+        "message": "[mov,mp4,m4a,3gp,3g2,mj2 @ 000001682ab17cc0] moov atom not found\nD:\\zuimo\\Desktop\\大创\\邻镜智作-重构版\\data\\beffcf16dcfd48179135af9ff42941d9\\source.mp4: Invalid data found when processing input\n",
+        "created": 1793353796.1349156
+      }
+    },
+    {
+      "id": "C15",
+      "title": "纯灰画面质量检测与人工确认",
+      "seconds": 5.354,
+      "result": {
+        "quality": 0.4,
+        "render": {
+          "status": "exported",
+          "video": "/media/6232dd883bc742b193e2944532058a57/result.mp4",
+          "metadata": {
+            "duration": 9.533042,
+            "width": 720,
+            "height": 1280,
+            "audio": true
+          },
+          "elapsed": 4.971,
+          "segments": [
+            {
+              "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+              "role": "storefront",
+              "start": 0,
+              "end": 6.0,
+              "text": "门店地址：示例街道18号。",
+              "fact_ids": [
+                "address"
+              ],
+              "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。"
+            },
+            {
+              "shot_id": "036f5ca696c44132bc6677ae1a97a72e-0",
+              "role": "product",
+              "start": 0,
+              "end": 7.5,
+              "text": "街角咖啡，带你看看手冲咖啡。",
+              "fact_ids": [
+                "shop",
+                "product"
+              ],
+              "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.40。"
+            },
+            {
+              "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+              "role": "interior",
+              "start": 0,
+              "end": 6.0,
+              "text": "这是店内环境。到店前，请确认营业情况。",
+              "fact_ids": [],
+              "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。"
+            }
+          ],
+          "timings": [
+            {
+              "index": 0,
+              "start": 0,
+              "end": 2.612,
+              "text": "门店地址：示例街道18号。",
+              "alignment": "measured_phrase_audio",
+              "held_frame_seconds": 0,
+              "voice_speed": 1,
+              "captions": [
+                {
+                  "start": 0.0,
+                  "end": 2.532,
+                  "text": "门店地址：示例街道18号。"
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "start": 2.612,
+              "end": 5.579,
+              "text": "街角咖啡，带你看看手冲咖啡。",
+              "alignment": "measured_phrase_audio",
+              "held_frame_seconds": 0,
+              "voice_speed": 1,
+              "captions": [
+                {
+                  "start": 0.0,
+                  "end": 2.8872,
+                  "text": "街角咖啡，带你看看手冲咖啡。"
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "start": 5.579,
+              "end": 9.512,
+              "text": "这是店内环境。到店前，请确认营业情况。",
+              "alignment": "measured_phrase_audio",
+              "held_frame_seconds": 0,
+              "voice_speed": 1,
+              "captions": [
+                {
+                  "start": 0.0,
+                  "end": 1.2042,
+                  "text": "这是店内环境。"
+                },
+                {
+                  "start": 1.3442,
+                  "end": 3.8527,
+                  "text": "到店前，请确认营业情况。"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "C16",
+      "title": "商品确认后导入替换素材编号",
+      "seconds": 5.948,
+      "result": {
+        "status": "exported",
+        "video": "/media/98f219c272a24cfa823d5330e9af0ffe/result.mp4",
+        "metadata": {
+          "duration": 9.533042,
+          "width": 720,
+          "height": 1280,
+          "audio": true
+        },
+        "elapsed": 5.468,
+        "segments": [
+          {
+            "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+            "role": "storefront",
+            "start": 0,
+            "end": 6.0,
+            "text": "门店地址：示例街道18号。",
+            "fact_ids": [
+              "address"
+            ],
+            "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。"
+          },
+          {
+            "shot_id": "785397e553ac40f787aee5beaf8ddd40-0",
+            "role": "product",
+            "start": 0,
+            "end": 6.0,
+            "text": "街角咖啡，带你看看手冲咖啡。",
+            "fact_ids": [
+              "shop",
+              "product"
+            ],
+            "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。"
+          },
+          {
+            "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+            "role": "interior",
+            "start": 0,
+            "end": 6.0,
+            "text": "这是店内环境。到店前，请确认营业情况。",
+            "fact_ids": [],
+            "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。"
+          }
+        ],
+        "timings": [
+          {
+            "index": 0,
+            "start": 0,
+            "end": 2.612,
+            "text": "门店地址：示例街道18号。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 2.532,
+                "text": "门店地址：示例街道18号。"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "start": 2.612,
+            "end": 5.579,
+            "text": "街角咖啡，带你看看手冲咖啡。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 2.8872,
+                "text": "街角咖啡，带你看看手冲咖啡。"
+              }
+            ]
+          },
+          {
+            "index": 2,
+            "start": 5.579,
+            "end": 9.512,
+            "text": "这是店内环境。到店前，请确认营业情况。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 1.2042,
+                "text": "这是店内环境。"
+              },
+              {
+                "start": 1.3442,
+                "end": 3.8527,
+                "text": "到店前，请确认营业情况。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "C17",
+      "title": "横拍商品进入竖屏成片",
+      "seconds": 5.496,
+      "result": {
+        "status": "exported",
+        "video": "/media/186b8c57b54f4ee1b26ed30c08b39dd5/result.mp4",
+        "metadata": {
+          "duration": 9.533042,
+          "width": 720,
+          "height": 1280,
+          "audio": true
+        },
+        "elapsed": 5.069,
+        "segments": [
+          {
+            "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+            "role": "storefront",
+            "start": 0,
+            "end": 6.0,
+            "text": "门店地址：示例街道18号。",
+            "fact_ids": [
+              "address"
+            ],
+            "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。"
+          },
+          {
+            "shot_id": "9ae4117d1a5c4e7bbdbf2f7174d184f8-0",
+            "role": "product",
+            "start": 0,
+            "end": 7.5,
+            "text": "街角咖啡，带你看看手冲咖啡。",
+            "fact_ids": [
+              "shop",
+              "product"
+            ],
+            "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.92。"
+          },
+          {
+            "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+            "role": "interior",
+            "start": 0,
+            "end": 6.0,
+            "text": "这是店内环境。到店前，请确认营业情况。",
+            "fact_ids": [],
+            "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。"
+          }
+        ],
+        "timings": [
+          {
+            "index": 0,
+            "start": 0,
+            "end": 2.612,
+            "text": "门店地址：示例街道18号。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 2.532,
+                "text": "门店地址：示例街道18号。"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "start": 2.612,
+            "end": 5.579,
+            "text": "街角咖啡，带你看看手冲咖啡。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 2.8872,
+                "text": "街角咖啡，带你看看手冲咖啡。"
+              }
+            ]
+          },
+          {
+            "index": 2,
+            "start": 5.579,
+            "end": 9.512,
+            "text": "这是店内环境。到店前，请确认营业情况。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 1.2042,
+                "text": "这是店内环境。"
+              },
+              {
+                "start": 1.3442,
+                "end": 3.8527,
+                "text": "到店前，请确认营业情况。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "C18",
+      "title": "咖啡静帧实际模型候选",
+      "seconds": 0.572,
+      "result": {
+        "tags": [
+          "product"
+        ],
+        "suggested_tag": "product",
+        "confirmed": false,
+        "needs_review": true,
+        "abstained": false,
+        "review_reasons": [],
+        "description": "候选用途，需查看视频确认。",
+        "relative_scores": {
+          "product": 39.1877,
+          "interior": 36.9806,
+          "process": 34.3039,
+          "other": 32.9301,
+          "storefront": 32.6722,
+          "person": 31.8469
+        },
+        "margin": 2.2071,
+        "frame_votes": {
+          "product": 3
+        },
+        "threshold_note": "三帧一致、logit差值≥1.5的启发式门槛；尚未用真实店铺数据校准。"
+      }
+    },
+    {
+      "id": "C19",
+      "title": "猫静帧实际模型候选",
+      "seconds": 0.616,
+      "result": {
+        "tags": [
+          "other"
+        ],
+        "suggested_tag": "person",
+        "confirmed": false,
+        "needs_review": true,
+        "abstained": true,
+        "review_reasons": [
+          "候选用途区分不明显",
+          "未识别到稳定的门店用途"
+        ],
+        "description": "暂不判定用途：候选用途区分不明显；未识别到稳定的门店用途。",
+        "relative_scores": {
+          "person": 37.5946,
+          "other": 37.4239,
+          "product": 36.5803,
+          "process": 33.2228,
+          "interior": 31.341,
+          "storefront": 28.3677
+        },
+        "margin": 0.1707,
+        "frame_votes": {
+          "person": 3
+        },
+        "threshold_note": "三帧一致、logit差值≥1.5的启发式门槛；尚未用真实店铺数据校准。"
+      }
+    },
+    {
+      "id": "C20",
+      "title": "纯灰画面实际模型候选",
+      "seconds": 0.585,
+      "result": {
+        "tags": [
+          "other"
+        ],
+        "suggested_tag": "other",
+        "confirmed": false,
+        "needs_review": true,
+        "abstained": true,
+        "review_reasons": [
+          "候选用途区分不明显",
+          "未识别到稳定的门店用途"
+        ],
+        "description": "暂不判定用途：候选用途区分不明显；未识别到稳定的门店用途。",
+        "relative_scores": {
+          "other": 36.1964,
+          "process": 35.1259,
+          "product": 34.8802,
+          "interior": 34.3485,
+          "person": 34.2957,
+          "storefront": 32.8524
+        },
+        "margin": 1.0705,
+        "frame_votes": {
+          "other": 3
+        },
+        "threshold_note": "三帧一致、logit差值≥1.5的启发式门槛；尚未用真实店铺数据校准。"
+      }
+    },
+    {
+      "id": "C21",
+      "title": "45秒30段快切素材覆盖",
+      "seconds": 0.0,
+      "result": {
+        "duration": 45.0,
+        "shots": 24,
+        "covered_end": 36.0,
+        "uncovered_tail_seconds": 9.0,
+        "warnings": null,
+        "media_id": "22adeedf317f429c8288e710f4c63b67"
+      }
+    },
+    {
+      "id": "C22",
+      "title": "短时异物是否被三帧捕获",
+      "seconds": 1.26,
+      "result": {
+        "media_id": "a2ad127613374c34a57ad012c8d31ed0",
+        "known_cat_interval": [
+          2.5,
+          2.7
+        ],
+        "shots": [
+          {
+            "start": 0.0,
+            "end": 2.5,
+            "frames": [
+              {
+                "time": 0.5,
+                "url": "/media/a2ad127613374c34a57ad012c8d31ed0/frame-0-0.jpg"
+              },
+              {
+                "time": 1.25,
+                "url": "/media/a2ad127613374c34a57ad012c8d31ed0/thumb-0.jpg"
+              },
+              {
+                "time": 2.0,
+                "url": "/media/a2ad127613374c34a57ad012c8d31ed0/frame-0-2.jpg"
+              }
+            ],
+            "candidate": {
+              "tags": [
+                "product"
+              ],
+              "suggested_tag": "product",
+              "confirmed": false,
+              "needs_review": true,
+              "abstained": false,
+              "review_reasons": [],
+              "description": "候选用途，需查看视频确认。",
+              "relative_scores": {
+                "product": 40.0389,
+                "interior": 37.5329,
+                "process": 34.9888,
+                "other": 33.4484,
+                "storefront": 32.9569,
+                "person": 32.707
+              },
+              "margin": 2.506,
+              "frame_votes": {
+                "product": 3
+              },
+              "threshold_note": "三帧一致、logit差值≥1.5的启发式门槛；尚未用真实店铺数据校准。"
+            }
+          },
+          {
+            "start": 2.5,
+            "end": 8.0,
+            "frames": [
+              {
+                "time": 3.6,
+                "url": "/media/a2ad127613374c34a57ad012c8d31ed0/frame-1-0.jpg"
+              },
+              {
+                "time": 5.25,
+                "url": "/media/a2ad127613374c34a57ad012c8d31ed0/thumb-1.jpg"
+              },
+              {
+                "time": 6.9,
+                "url": "/media/a2ad127613374c34a57ad012c8d31ed0/frame-1-2.jpg"
+              }
+            ],
+            "candidate": {
+              "tags": [
+                "product"
+              ],
+              "suggested_tag": "product",
+              "confirmed": false,
+              "needs_review": true,
+              "abstained": false,
+              "review_reasons": [],
+              "description": "候选用途，需查看视频确认。",
+              "relative_scores": {
+                "product": 39.7041,
+                "interior": 37.388,
+                "process": 34.7974,
+                "other": 33.3569,
+                "storefront": 33.042,
+                "person": 32.3177
+              },
+              "margin": 2.3162,
+              "frame_votes": {
+                "product": 3
+              },
+              "threshold_note": "三帧一致、logit差值≥1.5的启发式门槛；尚未用真实店铺数据校准。"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "C23",
+      "title": "分析等待期间编辑店名",
+      "method": "actual_browser_UI",
+      "result": {
+        "typed_value": "分析过程中修改的店名",
+        "observed_after_completion": "街角咖啡",
+        "edited_fact_confirmed_before_completion": false,
+        "observed_old_fact_confirmed_after_completion": true,
+        "status": "edit_lost_and_old_attestation_restored",
+        "saved_project_written": false
+      }
+    },
+    {
+      "id": "C24",
+      "title": "生成等待期间修改商品",
+      "method": "actual_browser_UI",
+      "result": {
+        "current_product_after_edit": "柠檬茶",
+        "current_product_confirmed": false,
+        "result_visible_after_completion": true,
+        "result_copy": "街角咖啡，带你看看手冲咖啡。",
+        "result_video": "/media/4087e2d47e8441bcb25a1872d359aa51/result.mp4",
+        "stale_result_warning": false,
+        "screenshot": "ui-stale-result.png",
+        "saved_project_written": false
+      }
+    }
+  ]
+}

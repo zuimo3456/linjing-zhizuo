@@ -1,0 +1,142 @@
+{
+  "job_id": "f7c7dea987dd4a37a74e0280477dd0f6",
+  "created_at_utc": "2026-10-30T09:49:23.083359+00:00",
+  "synthetic": true,
+  "status": "technical_export_only",
+  "metadata": {
+    "duration": 9.533042,
+    "width": 720,
+    "height": 1280,
+    "audio": true
+  },
+  "elapsed_seconds": 4.585,
+  "api_calls": 0,
+  "api_direct_cost_cny": 0,
+  "total_cost_cny": null,
+  "cost_note": "本次本地运行没有付费API调用；电力、设备与人工成本未计量。",
+  "tts": "Windows Microsoft Huihui Desktop offline",
+  "timings": [
+    {
+      "index": 0,
+      "start": 0,
+      "end": 2.612,
+      "text": "门店地址：示例街道18号。",
+      "alignment": "measured_phrase_audio",
+      "held_frame_seconds": 0,
+      "voice_speed": 1,
+      "captions": [
+        {
+          "start": 0.0,
+          "end": 2.532,
+          "text": "门店地址：示例街道18号。"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "start": 2.612,
+      "end": 5.579,
+      "text": "街角咖啡，带你看看手冲咖啡。",
+      "alignment": "measured_phrase_audio",
+      "held_frame_seconds": 0,
+      "voice_speed": 1,
+      "captions": [
+        {
+          "start": 0.0,
+          "end": 2.8872,
+          "text": "街角咖啡，带你看看手冲咖啡。"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "start": 5.579,
+      "end": 9.512,
+      "text": "这是店内环境。到店前，请确认营业情况。",
+      "alignment": "measured_phrase_audio",
+      "held_frame_seconds": 0,
+      "voice_speed": 1,
+      "captions": [
+        {
+          "start": 0.0,
+          "end": 1.2042,
+          "text": "这是店内环境。"
+        },
+        {
+          "start": 1.3442,
+          "end": 3.8527,
+          "text": "到店前，请确认营业情况。"
+        }
+      ]
+    }
+  ],
+  "plan": {
+    "schema_version": "1.0",
+    "goal": "visit",
+    "method": "evidence",
+    "synthetic": true,
+    "segments": [
+      {
+        "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+        "role": "storefront",
+        "start": 0,
+        "end": 6.0,
+        "text": "门店地址：示例街道18号。",
+        "fact_ids": [
+          "address"
+        ],
+        "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。"
+      },
+      {
+        "shot_id": "785397e553ac40f787aee5beaf8ddd40-0",
+        "role": "product",
+        "start": 0,
+        "end": 6.0,
+        "text": "街角咖啡，带你看看手冲咖啡。",
+        "fact_ids": [
+          "shop",
+          "product"
+        ],
+        "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。"
+      },
+      {
+        "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+        "role": "interior",
+        "start": 0,
+        "end": 6.0,
+        "text": "这是店内环境。到店前，请确认营业情况。",
+        "fact_ids": [],
+        "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。"
+      }
+    ],
+    "missing": [],
+    "renderable": true,
+    "limitations": [
+      "质量分来自抽帧检测，不能证明语义正确。",
+      "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+    ],
+    "assignment": {
+      "algorithm": "maximum_coverage_weighted_matching",
+      "score": 2.6,
+      "quality_weight": 1,
+      "duration_weight": 0.01
+    },
+    "coverage": {
+      "roles": 3,
+      "required_roles": 3,
+      "facts": 3,
+      "required_facts": 3
+    }
+  },
+  "acceptance": {
+    "playback": "pending_browser_check",
+    "human_audio_visual_quality": "pending",
+    "merchant_willingness": "not_measured"
+  },
+  "analysis": null,
+  "limitations": [
+    "画外音路径，不包含原声保留。",
+    "短句字幕按实际语音段测时，不是逐字对齐。",
+    "语义仍需确认；本地图文相似度不是商业事实验证。"
+  ]
+}
