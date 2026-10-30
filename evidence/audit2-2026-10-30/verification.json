@@ -1,0 +1,245 @@
+{
+  "functional_commit": "51db091",
+  "audit_base_commit": "a4250e2",
+  "regression": {
+    "command": "python -X utf8 -m unittest discover -s tests",
+    "passed": 61,
+    "failed": 0
+  },
+  "source_integrity": {
+    "total": 49,
+    "unchanged": 49,
+    "checks": [
+      {
+        "path": "邻镜智作.docx",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作_团队重启与研究路线_2026-09-23.md",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作项目前期调研任务书.docx",
+        "unchanged": true
+      },
+      {
+        "path": "Logo候选\\邻镜智作-logo-方案1-镜头店铺.png",
+        "unchanged": true
+      },
+      {
+        "path": "Logo候选\\邻镜智作-logo-方案2-邻里定位.png",
+        "unchanged": true
+      },
+      {
+        "path": "Logo候选\\邻镜智作-logo-方案3-镜像播放.png",
+        "unchanged": true
+      },
+      {
+        "path": "Logo候选\\邻镜智作-logo-方案4-灵感胶片.png",
+        "unchanged": true
+      },
+      {
+        "path": "立项申报\\立项申报流程及常见问题说明.docx",
+        "unchanged": true
+      },
+      {
+        "path": "立项申报\\立项申请书(创新训练类)--邻镜智作.docx",
+        "unchanged": true
+      },
+      {
+        "path": "立项申报\\立项申请指南.docx",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\.gitignore",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\d8b197c63f0c4b7f9da7ace89893ba52-Scenes.csv",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\index.html",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\README.md",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\requirements.txt",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\server.py",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\THIRD_PARTY.md",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\video_analysis.py",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\aligned-frame-14.png",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\aligned-frame-8.png",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\analysis-proxy.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\asr-source.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\browser-e2e-frame-14.png",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\browser-e2e-frame-2.png",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\browser-e2e-frame-8.png",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\speech-16k-mono.pcm",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\voice-check.mp3",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\voice-check.srt",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\voiceover-frame-2.png",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\voiceover-frame-7.png",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\assets\\haarcascade_frontalface_default.xml",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\assets\\THIRD_PARTY.md",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\docs\\acceptance.md",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\docs\\sample-card-template.md",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\docs\\team-plan.md",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-02c64a8f75404611a3554d3cd4606578.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-12b9361aab69415d9ecbf291c4234ad3.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-2e2a654fe8b244d89fdbb9862703887b.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-431d97ec6daa4ff280d7aa01f685e41d.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-73491a1b70694fa794eb69b9e5394b5f.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-747e839257494fcbb5706cb357771f67.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-7fbd09e0dc7547729ac8674ea9ca169d.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-ea5f51c150d74b9da6d13f7293a4ae35.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\uploads\\03477dcd15d5484288d9c78cc866cc49.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\uploads\\6945cec10eba45eebe5920d57c87d7ff.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\uploads\\b0150efcebce42c7a5e3f04125ac5bc3.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\uploads\\b92c067236cb4f29a0b2191bb9ea7c6a.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\uploads\\d8b197c63f0c4b7f9da7ace89893ba52.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\uploads\\e57772fe35a84aba9a4ea9d75c0efd93.mp4",
+        "unchanged": true
+      }
+    ]
+  },
+  "fixtures": [
+    {
+      "name": "AUDIT2_anamorphic.mp4",
+      "bytes": 185911,
+      "sha256": "59d98577b7795ac8e730b701f2f747c474d16b52d2d4c60218df8dc87ca6a556"
+    },
+    {
+      "name": "AUDIT2_autofocus.mp4",
+      "bytes": 228021,
+      "sha256": "bcb5d6b776cd34492446f6200e52a9c8459f5fd472cb3555044a87897227d512"
+    },
+    {
+      "name": "AUDIT2_fade.mp4",
+      "bytes": 427099,
+      "sha256": "e2bd18f99f09606a593972f98f97e92aaa2abd1f8568b4f4efad61cb38c17921"
+    },
+    {
+      "name": "AUDIT2_plain.mp4",
+      "bytes": 185911,
+      "sha256": "f87038b5eb1b3bed0b8d53c689481a64bbc01247362435e161db5627ad940fb3"
+    },
+    {
+      "name": "AUDIT2_process64.mp4",
+      "bytes": 961084,
+      "sha256": "397eaa95ae4e21ac092b5ec76a7337e0252fd63665b97360a65998d03ab94dee"
+    },
+    {
+      "name": "AUDIT2_ProRes.mov",
+      "bytes": 1102198,
+      "sha256": "6a1b21b63a57af3999a93eea4cba9c90ebb3b86d0bdfae70c2d8dd45cf8ced7c"
+    }
+  ],
+  "primary_saved_project": "No /api/save request to the main server during this audit. Concurrency checks used a copied app on an ephemeral localhost port.",
+  "scope": "12 exploratory cases; 8 reproduced issues; 4 positive or non-reproducing checks. Browser evidence supplements B03, not another independent case. Technical fixtures only."
+}

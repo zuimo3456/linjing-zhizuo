@@ -1,0 +1,6 @@
+Browser tab: 5, Title: "邻镜智作 · 证据驱动的短视频编排", URL: "http://127.0.0.1:4180/".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 244-245
+~					242 container 无法播放媒体。
++						252 container 正在缓冲
+The focused UI element is 0 AXWebArea 邻镜智作 · 证据驱动的短视频编排, URL: 127.0.0.1:4180/

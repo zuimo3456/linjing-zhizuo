@@ -1,0 +1,45 @@
+{
+  "B03": {
+    "source_ax": "无法播放媒体；视频进度条禁用",
+    "workbench_videos": [
+      {
+        "duration": null,
+        "error": null,
+        "readyState": 0,
+        "src": "http://127.0.0.1:4180/media/07b40ea6445c45f69fca432ede5cdb32/source.mp4#t=0,6"
+      },
+      {
+        "duration": null,
+        "error": null,
+        "readyState": 0,
+        "src": "http://127.0.0.1:4180/media/ca53435da8024ba0aa5453fdc40a6a09/source.mp4#t=0,6"
+      },
+      {
+        "duration": null,
+        "error": null,
+        "readyState": 0,
+        "src": "http://127.0.0.1:4180/media/0d370453b76e4c6fbb87dcd0e890f366/source.mp4#t=0,6"
+      },
+      {
+        "duration": null,
+        "error": null,
+        "readyState": 0,
+        "src": "http://127.0.0.1:4180/media/714cf1b92dda4c7599c25f2fc2137b2c/source.mp4#t=0,6"
+      },
+      {
+        "duration": null,
+        "error": null,
+        "readyState": 0,
+        "src": ""
+      }
+    ],
+    "workbench_ax": "Browser tab: 5, Title: \"邻镜智作 · 证据驱动的短视频编排\", URL: \"http://127.0.0.1:4180/\".\nThe following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.\nRemoved element IDs: 243\nThe focused UI element is 225 button (expanded) 查看本段视频与抽帧, Secondary Actions: Collapse",
+    "rendered_control": {
+      "readyState": 4,
+      "duration": 9.515604,
+      "currentTime": 9.515604,
+      "paused": true
+    }
+  },
+  "automation_note": "Hidden input chooser timed out; visible import label succeeded. No primary save was called."
+}

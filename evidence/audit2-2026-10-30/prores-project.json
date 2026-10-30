@@ -1,0 +1,259 @@
+{
+  "name": "AUDIT2 ProRes预览（模拟素材）",
+  "goal": "visit",
+  "synthetic": true,
+  "facts": [
+    {
+      "id": "shop",
+      "kind": "shop",
+      "value": "街角咖啡",
+      "confirmed": true,
+      "source": "程序构造的模拟事实，不对应真实商户"
+    },
+    {
+      "id": "product",
+      "kind": "product",
+      "value": "手冲咖啡",
+      "confirmed": true,
+      "source": "程序构造的模拟事实，不对应真实商户"
+    },
+    {
+      "id": "address",
+      "kind": "address",
+      "value": "示例街道18号",
+      "confirmed": true,
+      "source": "程序构造的模拟事实，不对应真实商户"
+    },
+    {
+      "id": "offer",
+      "kind": "offer",
+      "value": "第二杯半价，限同款商品",
+      "confirmed": true,
+      "source": "程序构造的模拟事实，不对应真实商户"
+    },
+    {
+      "id": "validity",
+      "kind": "validity",
+      "value": "2026年10月30日至2026年11月6日",
+      "confirmed": true,
+      "source": "程序构造的模拟事实，不对应真实商户"
+    }
+  ],
+  "shots": [
+    {
+      "id": "07b40ea6445c45f69fca432ede5cdb32-0",
+      "media_id": "07b40ea6445c45f69fca432ede5cdb32",
+      "start": 0,
+      "end": 6.0,
+      "tags": [
+        "interior"
+      ],
+      "confirmed": true,
+      "quality": 0.804,
+      "brightness": 190.58,
+      "sharpness": 1314.71,
+      "label_source": "synthetic_ground_truth",
+      "name": "模拟镜头 1 · 慢一点，也很好",
+      "thumb": "/media/07b40ea6445c45f69fca432ede5cdb32/thumb-0.jpg",
+      "frames": [
+        {
+          "time": 0.025,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-0.jpg"
+        },
+        {
+          "time": 1.2,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-1.jpg"
+        },
+        {
+          "time": 3.0,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/thumb-0.jpg"
+        },
+        {
+          "time": 4.8,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-3.jpg"
+        },
+        {
+          "time": 5.94,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-4.jpg"
+        }
+      ],
+      "analysis_version": 4,
+      "quality_issues": [],
+      "source_sha256": "8e2c74e25c0b4bf16b51d19c3934dd823943409287d4e1cced894b41c4845e8e",
+      "attestation": {
+        "version": 2,
+        "evidence_id": "07cc78130facc4f41b4218bacfd4d2ede70884b809018ad574f83d2a8adfc7c6",
+        "tags": [
+          "interior"
+        ],
+        "signature": "5be4eb76eefeba26fbaa664e2c23f630c978927ca70fc9b808ea4783736f26fe",
+        "confirmed": true
+      }
+    },
+    {
+      "id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+      "media_id": "ca53435da8024ba0aa5453fdc40a6a09",
+      "start": 0,
+      "end": 6.0,
+      "tags": [
+        "storefront"
+      ],
+      "confirmed": true,
+      "quality": 0.826,
+      "brightness": 183.68,
+      "sharpness": 1306.52,
+      "label_source": "synthetic_ground_truth",
+      "name": "模拟镜头 3 · 街角咖啡",
+      "thumb": "/media/ca53435da8024ba0aa5453fdc40a6a09/thumb-0.jpg",
+      "frames": [
+        {
+          "time": 0.025,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-0.jpg"
+        },
+        {
+          "time": 1.2,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-1.jpg"
+        },
+        {
+          "time": 3.0,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/thumb-0.jpg"
+        },
+        {
+          "time": 4.8,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-3.jpg"
+        },
+        {
+          "time": 5.94,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-4.jpg"
+        }
+      ],
+      "analysis_version": 4,
+      "quality_issues": [],
+      "source_sha256": "d8181b364ed5ea63ad0ec24f649c81b745b2e3e1029a951295e4cc6ac008036a",
+      "attestation": {
+        "version": 2,
+        "evidence_id": "a966cd7ca8f493ea84cacc3e2697c3f3b708be32509b3e316b8d7c9d8bfbaf46",
+        "tags": [
+          "storefront"
+        ],
+        "signature": "e16db39461ac3707b18d7c868c1184ea7500f4c872ea6085c5921d2f5050f1db",
+        "confirmed": true
+      }
+    },
+    {
+      "id": "0d370453b76e4c6fbb87dcd0e890f366-0",
+      "media_id": "0d370453b76e4c6fbb87dcd0e890f366",
+      "start": 0,
+      "end": 6.0,
+      "tags": [
+        "process"
+      ],
+      "confirmed": true,
+      "quality": 0.75,
+      "brightness": 207.94,
+      "sharpness": 767.44,
+      "label_source": "synthetic_ground_truth",
+      "name": "模拟镜头 4 · 认真做一杯",
+      "thumb": "/media/0d370453b76e4c6fbb87dcd0e890f366/thumb-0.jpg",
+      "frames": [
+        {
+          "time": 0.025,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-0.jpg"
+        },
+        {
+          "time": 1.2,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-1.jpg"
+        },
+        {
+          "time": 3.0,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/thumb-0.jpg"
+        },
+        {
+          "time": 4.8,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-3.jpg"
+        },
+        {
+          "time": 5.94,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-4.jpg"
+        }
+      ],
+      "analysis_version": 4,
+      "quality_issues": [],
+      "source_sha256": "dc5dc5f0fc0a1391f0c0579765d73742ed899d7dbcf82827d37d8ea63e8ae4ea",
+      "attestation": {
+        "version": 2,
+        "evidence_id": "8b4761cded4fd606f7def78f3af233a09a2028f5dc391ac5a5581b1cfa6cd99c",
+        "tags": [
+          "process"
+        ],
+        "signature": "c515133225e3d688af83ad51b836ccdfd445e86e3067a95999d89c298fbf2a7e",
+        "confirmed": true
+      }
+    },
+    {
+      "id": "714cf1b92dda4c7599c25f2fc2137b2c-0",
+      "media_id": "714cf1b92dda4c7599c25f2fc2137b2c",
+      "start": 0,
+      "end": 6.0,
+      "tags": [
+        "product"
+      ],
+      "confirmed": true,
+      "quality": 0.79,
+      "brightness": 195.27,
+      "sharpness": 641.22,
+      "label_source": "unlabeled",
+      "name": "AUDIT2_ProRes.mov",
+      "thumb": "/media/714cf1b92dda4c7599c25f2fc2137b2c/thumb-0.jpg",
+      "frames": [
+        {
+          "time": 0.025,
+          "url": "/media/714cf1b92dda4c7599c25f2fc2137b2c/frame-0-0.jpg"
+        },
+        {
+          "time": 1.2,
+          "url": "/media/714cf1b92dda4c7599c25f2fc2137b2c/frame-0-1.jpg"
+        },
+        {
+          "time": 3.0,
+          "url": "/media/714cf1b92dda4c7599c25f2fc2137b2c/thumb-0.jpg"
+        },
+        {
+          "time": 4.8,
+          "url": "/media/714cf1b92dda4c7599c25f2fc2137b2c/frame-0-3.jpg"
+        },
+        {
+          "time": 5.94,
+          "url": "/media/714cf1b92dda4c7599c25f2fc2137b2c/frame-0-4.jpg"
+        }
+      ],
+      "analysis_version": 4,
+      "quality_issues": [],
+      "source_sha256": "6a1b21b63a57af3999a93eea4cba9c90ebb3b86d0bdfae70c2d8dd45cf8ced7c",
+      "attestation": {
+        "version": 2,
+        "evidence_id": "f70630c8920abdac102b5b8e4c5ca7e5c5cc9c8be33909f247224efa97e44a23",
+        "tags": [
+          "product"
+        ],
+        "signature": "5e7920436af3d5605f2a312fda12ca91ad1d8ddac7b3c930a0191a33062ff0de",
+        "confirmed": true
+      },
+      "product_binding": {
+        "version": 2,
+        "evidence_id": "f70630c8920abdac102b5b8e4c5ca7e5c5cc9c8be33909f247224efa97e44a23",
+        "tags": [
+          "product"
+        ],
+        "product": {
+          "id": "product",
+          "value": "手冲咖啡"
+        },
+        "signature": "15f4a685c4702ede4e0348d67ae7dd0baf9d1aa3ab0e8031582255bde77dcb04",
+        "confirmed": true,
+        "fact_id": "product",
+        "value": "手冲咖啡"
+      }
+    }
+  ]
+}

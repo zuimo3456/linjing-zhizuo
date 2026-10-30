@@ -1,0 +1,25 @@
+{
+  "isolation": "unmodified root Python sources copied to data/audit2-isolated/app; ephemeral loopback port; primary saved project and model untouched",
+  "B11": {
+    "seed_http": 200,
+    "writes": 25,
+    "reads": 400,
+    "http_counts": {
+      "200": 425
+    },
+    "error_count": 0,
+    "representative_errors": [],
+    "saved_bytes": 569108
+  },
+  "B12": {
+    "health_local_vision": {
+      "ready": true,
+      "weights_present": true,
+      "dependencies_present": true,
+      "model": "Chinese-CLIP / ONNX int8",
+      "mode": "offline_candidates",
+      "score_note": "相对相似度不是正确概率，必须人工确认。"
+    },
+    "engine_load_result": "本地模型校验失败，请重新安装。"
+  }
+}
