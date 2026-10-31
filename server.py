@@ -46,7 +46,7 @@ class Handler(BaseHTTPRequestHandler):
             if path=='/api/health':
                 from local_vision import status as local_status
                 return self.reply({'ok':bool(FFMPEG and FFPROBE),'ffmpeg':bool(FFMPEG),'ffprobe':bool(FFPROBE),
-                                   'version':'local-ai-prototype-5','vision_configured':False,'local_vision':local_status(),'tts':'offline_windows'})
+                                   'version':'local-ai-prototype-6','vision_configured':False,'local_vision':local_status(),'tts':'offline_windows'})
             if path.startswith('/api/jobs/'):
                 with jobs_lock: item=jobs.get(path.rsplit('/',1)[-1])
                 return self.reply(item or {'error':'任务不存在'},200 if item else 404)

@@ -1,0 +1,222 @@
+{
+  "allFailedBefore": {
+    "fields": [
+      true,
+      "街角咖啡",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "手冲咖啡",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "示例街道18号",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "2026年10月31日至2026年11月7日",
+      "程序构造的模拟事实，不对应真实商户"
+    ],
+    "names": [
+      "模拟镜头 1 · 慢一点，也很好",
+      "模拟镜头 3 · 街角咖啡",
+      "模拟镜头 4 · 认真做一杯",
+      "eight-0.mp4",
+      "eight-1.mp4"
+    ],
+    "plan": "01 / 商品\n↑↓\n\n街角咖啡。手冲咖啡。第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享。2026年10月31日至2026年11月7日。\n\n2个片段 · 共16.0秒 · 同一段旁白连续播放一次\n\n2个已确认片段共同承载一段旁白。\n事实引用：店名、商品名称、优惠及完整使用条件、有效期\n02 / 门头 / 路线\n↑↓\n\n门店地址：示例街道18号。参与前，请核对活动条件。\n\n1个已确认片段共同承载一段旁白。\n事实引用：门店地址\n✓ 必需信息与镜头齐全，可进入人工确认和渲染。",
+    "preview": "/media/a55312f5d1e04ab39c9b997356d523ee/result.mp4",
+    "renderDisabled": false,
+    "resultHidden": false,
+    "shop": "街角咖啡",
+    "shots": "5 个镜头",
+    "synthetic": true
+  },
+  "allFailedAfter": {
+    "fields": [
+      true,
+      "街角咖啡",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "手冲咖啡",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "示例街道18号",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "2026年10月31日至2026年11月7日",
+      "程序构造的模拟事实，不对应真实商户"
+    ],
+    "names": [
+      "模拟镜头 1 · 慢一点，也很好",
+      "模拟镜头 3 · 街角咖啡",
+      "模拟镜头 4 · 认真做一杯",
+      "eight-0.mp4",
+      "eight-1.mp4"
+    ],
+    "plan": "01 / 商品\n↑↓\n\n街角咖啡。手冲咖啡。第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享。2026年10月31日至2026年11月7日。\n\n2个片段 · 共16.0秒 · 同一段旁白连续播放一次\n\n2个已确认片段共同承载一段旁白。\n事实引用：店名、商品名称、优惠及完整使用条件、有效期\n02 / 门头 / 路线\n↑↓\n\n门店地址：示例街道18号。参与前，请核对活动条件。\n\n1个已确认片段共同承载一段旁白。\n事实引用：门店地址\n✓ 必需信息与镜头齐全，可进入人工确认和渲染。",
+    "preview": "/media/a55312f5d1e04ab39c9b997356d523ee/result.mp4",
+    "renderDisabled": false,
+    "resultHidden": false,
+    "shop": "街角咖啡",
+    "shots": "5 个镜头",
+    "synthetic": true
+  },
+  "allFailedPreserved": true,
+  "editedBefore": {
+    "fields": [
+      false,
+      "待保留测试店名",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "手冲咖啡",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "示例街道18号",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "2026年10月31日至2026年11月7日",
+      "程序构造的模拟事实，不对应真实商户"
+    ],
+    "names": [
+      "模拟镜头 1 · 慢一点，也很好",
+      "模拟镜头 3 · 街角咖啡",
+      "模拟镜头 4 · 认真做一杯",
+      "eight-0.mp4",
+      "eight-1.mp4"
+    ],
+    "plan": "每段文案都会关联事实，\n每个镜头都会关联用途。",
+    "preview": null,
+    "renderDisabled": true,
+    "resultHidden": true,
+    "shop": "待保留测试店名",
+    "shots": "5 个镜头",
+    "synthetic": true
+  },
+  "editedAfter": {
+    "fields": [
+      false,
+      "待保留测试店名",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "手冲咖啡",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "示例街道18号",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享",
+      "程序构造的模拟事实，不对应真实商户",
+      true,
+      "2026年10月31日至2026年11月7日",
+      "程序构造的模拟事实，不对应真实商户"
+    ],
+    "names": [
+      "模拟镜头 1 · 慢一点，也很好",
+      "模拟镜头 3 · 街角咖啡",
+      "模拟镜头 4 · 认真做一杯",
+      "eight-0.mp4",
+      "eight-1.mp4"
+    ],
+    "plan": "每段文案都会关联事实，\n每个镜头都会关联用途。",
+    "preview": null,
+    "renderDisabled": true,
+    "resultHidden": true,
+    "shop": "待保留测试店名",
+    "shots": "5 个镜头",
+    "synthetic": true
+  },
+  "editedPreserved": true,
+  "partial": {
+    "fields": [
+      false,
+      "",
+      "",
+      false,
+      "",
+      "",
+      false,
+      "",
+      "",
+      false,
+      "",
+      "",
+      false,
+      "",
+      ""
+    ],
+    "names": [
+      "A3_01_plain.mp4",
+      "A3_03_after_corrupt.mp4"
+    ],
+    "plan": "每段文案都会关联事实，\n每个镜头都会关联用途。",
+    "preview": null,
+    "renderDisabled": true,
+    "resultHidden": true,
+    "shop": "",
+    "shots": "2 个镜头",
+    "synthetic": false
+  },
+  "partialStatus": "上传完成：成功 2，失败 1，跳过已上传 0。已开始真实项目，模拟素材未混入。失败文件：A3_02_corrupt.mp4：视频无法读取或处理，可能已损坏或格式不兼容。请重新导出为MP4再试。错误编号：8903d010e93c",
+  "retry": {
+    "fields": [
+      false,
+      "",
+      "",
+      false,
+      "",
+      "",
+      false,
+      "",
+      "",
+      false,
+      "",
+      "",
+      false,
+      "",
+      ""
+    ],
+    "names": [
+      "A3_01_plain.mp4",
+      "A3_03_after_corrupt.mp4"
+    ],
+    "plan": "每段文案都会关联事实，\n每个镜头都会关联用途。",
+    "preview": null,
+    "renderDisabled": true,
+    "resultHidden": true,
+    "shop": "",
+    "shots": "2 个镜头",
+    "synthetic": false
+  },
+  "retryStatus": "上传完成：成功 0，失败 1，跳过已上传 2。原项目与剪辑方案已保留。失败文件：A3_02_corrupt.mp4：视频无法读取或处理，可能已损坏或格式不兼容。请重新导出为MP4再试。错误编号：136d5e57eea9",
+  "retryPreserved": true,
+  "diagnostic": {
+    "renderDisabled": true,
+    "text": "01 / 环境\n↑↓\n\n这是店内环境。\n\n环境覆盖目标结构；标签已人工确认；质量分 0.80。\n事实引用：通用引导语，不增加商户事实\n02 / 门头 / 路线\n↑↓\n\n门店地址：示例街道18号。到店前，请确认营业情况。\n\n门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。\n事实引用：门店地址\n还差这些证据\n商品（包含结尾引导语）旁白约5.5秒，至少需要4.8秒画面；当前2个可组合片段合计4.0秒。请补充画面或调整非必要文案，保留完整活动条件。"
+  },
+  "playbackStart": {
+    "currentTime": 0,
+    "duration": 21.311604,
+    "ended": false,
+    "error": null,
+    "paused": false,
+    "readyState": 4,
+    "src": "/media/961cb2b97ccc4f2ba0c7ed7c43c0b08d/result.mp4"
+  },
+  "finalVideo": "/media/961cb2b97ccc4f2ba0c7ed7c43c0b08d/result.mp4",
+  "playbackEnd": {
+    "currentTime": 21.311604,
+    "duration": 21.311604,
+    "ended": true,
+    "error": null,
+    "paused": true,
+    "readyState": 4,
+    "src": "/media/961cb2b97ccc4f2ba0c7ed7c43c0b08d/result.mp4"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "schema_version": "2.0",
+  "goal": "visit",
+  "method": "chronological",
+  "synthetic": true,
+  "segments": [
+    {
+      "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+      "role": "interior",
+      "start": 0,
+      "end": 6.0,
+      "text": "这是店内环境。",
+      "fact_ids": [],
+      "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。",
+      "speech_seconds": 1.200792,
+      "minimum_seconds": 1.098
+    },
+    {
+      "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+      "role": "storefront",
+      "start": 0,
+      "end": 6.0,
+      "text": "门店地址：示例街道18号。到店前，请确认营业情况。",
+      "fact_ids": [
+        "address"
+      ],
+      "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。",
+      "speech_seconds": 5.182104,
+      "minimum_seconds": 4.472
+    }
+  ],
+  "missing": [
+    "商品（包含结尾引导语）旁白约5.5秒，至少需要4.8秒画面；当前2个可组合片段合计4.0秒。请补充画面或调整非必要文案，保留完整活动条件。"
+  ],
+  "renderable": false,
+  "timing_verified": true,
+  "warnings": [],
+  "limitations": [
+    "质量分来自抽帧检测，不能证明语义正确。",
+    "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+  ],
+  "assignment": {
+    "algorithm": "speech_feasible_maximum_coverage",
+    "score": 1.75,
+    "quality_weight": 1,
+    "duration_weight": 0.01
+  },
+  "coverage": {
+    "roles": 2,
+    "required_roles": 3,
+    "facts": 3,
+    "required_facts": 3
+  },
+  "timing_diagnostics": [
+    {
+      "role": "interior",
+      "text": "这是店内环境。",
+      "speech_seconds": 1.200792,
+      "minimum_seconds": 1.098,
+      "available_seconds": 6.0,
+      "clip_count": 1,
+      "includes_cta": false,
+      "shortfall_seconds": 0
+    },
+    {
+      "role": "storefront",
+      "text": "门店地址：示例街道18号。",
+      "speech_seconds": 2.531979,
+      "minimum_seconds": 2.226,
+      "available_seconds": 6.0,
+      "clip_count": 1,
+      "includes_cta": false,
+      "shortfall_seconds": 0
+    },
+    {
+      "role": "product",
+      "text": "街角咖啡，带你看看手冲咖啡。到店前，请确认营业情况。",
+      "speech_seconds": 5.54475,
+      "minimum_seconds": 4.779,
+      "available_seconds": 4.0,
+      "clip_count": 2,
+      "includes_cta": true,
+      "shortfall_seconds": 0.7789406779661014
+    }
+  ]
+}

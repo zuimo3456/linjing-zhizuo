@@ -1,0 +1,270 @@
+{
+  "date": "2026-10-31",
+  "scope": "Local technical regression, not merchant or human listening acceptance.",
+  "passed": 7,
+  "total": 7,
+  "cases": [
+    {
+      "id": "F02_exact_eight",
+      "passed": true,
+      "seconds": 3.064,
+      "result": {
+        "group": {
+          "shot_id": "22ca0870a17049bebda63ad3825534ca-0",
+          "start": 0,
+          "end": 8.0,
+          "role": "product",
+          "text": "街角咖啡。手冲咖啡。第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享。2026年10月31日至2026年11月7日。",
+          "fact_ids": [
+            "shop",
+            "product",
+            "offer",
+            "validity"
+          ],
+          "reason": "2个已确认片段共同承载一段旁白。",
+          "speech_seconds": 12.559563,
+          "minimum_seconds": 10.724,
+          "clips": [
+            {
+              "shot_id": "22ca0870a17049bebda63ad3825534ca-0",
+              "start": 0,
+              "end": 8.0
+            },
+            {
+              "shot_id": "57cb9a0bf3bf4538b9ce6f5b2d8e5c3b-0",
+              "start": 0,
+              "end": 8.0
+            }
+          ]
+        },
+        "video": "/media/1aa00855b1de4d23aeb110d5d1d83853/result.mp4",
+        "timings": [
+          {
+            "index": 0,
+            "start": 0,
+            "end": 16.0,
+            "text": "街角咖啡。手冲咖啡。第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享。2026年10月31日至2026年11月7日。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 0.8773,
+                "text": "街角咖啡。"
+              },
+              {
+                "start": 1.0173,
+                "end": 1.9562,
+                "text": "手冲咖啡。"
+              },
+              {
+                "start": 2.0962,
+                "end": 6.6695,
+                "text": "第二杯半价，仅限同款饮品，每人每天限购一次，"
+              },
+              {
+                "start": 6.8095,
+                "end": 8.4435,
+                "text": "不与其他优惠同享。"
+              },
+              {
+                "start": 8.5835,
+                "end": 12.5546,
+                "text": "2026年10月31日至2026年11月7日。"
+              }
+            ],
+            "visual_clips": [
+              {
+                "shot_id": "22ca0870a17049bebda63ad3825534ca-0",
+                "start": 0,
+                "end": 8.0,
+                "output_start": 0,
+                "output_end": 8.0
+              },
+              {
+                "shot_id": "57cb9a0bf3bf4538b9ce6f5b2d8e5c3b-0",
+                "start": 0,
+                "end": 8.0,
+                "output_start": 8.0,
+                "output_end": 16.0
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "start": 16.0,
+            "end": 21.29,
+            "text": "门店地址：示例街道18号。参与前，请核对活动条件。",
+            "alignment": "measured_phrase_audio",
+            "held_frame_seconds": 0,
+            "voice_speed": 1,
+            "captions": [
+              {
+                "start": 0.0,
+                "end": 2.5346,
+                "text": "门店地址：示例街道18号。"
+              },
+              {
+                "start": 2.6746,
+                "end": 5.2103,
+                "text": "参与前，请核对活动条件。"
+              }
+            ]
+          }
+        ],
+        "metadata": {
+          "duration": 21.311604,
+          "width": 720,
+          "height": 1280,
+          "audio": true,
+          "color_transfer": null,
+          "color_primaries": null,
+          "color_space": null,
+          "pixel_format": "yuv420p"
+        }
+      }
+    },
+    {
+      "id": "F02_near_eight",
+      "passed": true,
+      "seconds": 0.145,
+      "result": {
+        "near_eight_still_valid": true,
+        "estimated_seconds": 21.21
+      }
+    },
+    {
+      "id": "F03_real_deficit",
+      "passed": true,
+      "seconds": 0.04,
+      "result": {
+        "diagnostics": [
+          {
+            "role": "interior",
+            "text": "这是店内环境。",
+            "speech_seconds": 1.200792,
+            "minimum_seconds": 1.098,
+            "available_seconds": 6.0,
+            "clip_count": 1,
+            "includes_cta": false,
+            "shortfall_seconds": 0
+          },
+          {
+            "role": "storefront",
+            "text": "门店地址：示例街道18号。",
+            "speech_seconds": 2.531979,
+            "minimum_seconds": 2.226,
+            "available_seconds": 6.0,
+            "clip_count": 1,
+            "includes_cta": false,
+            "shortfall_seconds": 0
+          },
+          {
+            "role": "product",
+            "text": "街角咖啡，带你看看手冲咖啡。到店前，请确认营业情况。",
+            "speech_seconds": 5.54475,
+            "minimum_seconds": 4.779,
+            "available_seconds": 4.0,
+            "clip_count": 2,
+            "includes_cta": true,
+            "shortfall_seconds": 0.7789406779661014
+          }
+        ],
+        "missing": [
+          "商品（包含结尾引导语）旁白约5.5秒，至少需要4.8秒画面；当前2个可组合片段合计4.0秒。请补充画面或调整非必要文案，保留完整活动条件。"
+        ],
+        "still_rejects_render": 400
+      }
+    },
+    {
+      "id": "F03_enough_footage",
+      "passed": true,
+      "seconds": 4.489,
+      "result": {
+        "group": {
+          "shot_id": "8db79c638d654d109fee6847be6391b9-0",
+          "start": 0,
+          "end": 2.0,
+          "role": "product",
+          "text": "街角咖啡，带你看看手冲咖啡。到店前，请确认营业情况。",
+          "fact_ids": [
+            "shop",
+            "product"
+          ],
+          "reason": "3个已确认片段共同承载一段旁白。",
+          "speech_seconds": 5.54475,
+          "minimum_seconds": 4.779,
+          "clips": [
+            {
+              "shot_id": "8db79c638d654d109fee6847be6391b9-0",
+              "start": 0,
+              "end": 2.0
+            },
+            {
+              "shot_id": "c6376b7baa9e40a98f16a43192fdadd5-0",
+              "start": 0,
+              "end": 2.0
+            },
+            {
+              "shot_id": "1b0e3fc7376a4827bb2db003ac2db4ae-0",
+              "start": 0,
+              "end": 2.0
+            }
+          ]
+        },
+        "video": "/media/210187405de24deba34ce324bbc329b6/result.mp4",
+        "metadata": {
+          "duration": 11.147333,
+          "width": 720,
+          "height": 1280,
+          "audio": true,
+          "color_transfer": null,
+          "color_primaries": null,
+          "color_space": null,
+          "pixel_format": "yuv420p"
+        }
+      }
+    },
+    {
+      "id": "F04_unicode_layout",
+      "passed": true,
+      "seconds": 5.756,
+      "result": {
+        "raw_fact": "示例路18号  99室",
+        "copy": "门店地址：示例路18号 99室。",
+        "video": "/media/c4e5728475514ec4acbd6317c831bf05/result.mp4",
+        "metadata": {
+          "duration": 10.075604,
+          "width": 720,
+          "height": 1280,
+          "audio": true,
+          "color_transfer": null,
+          "color_primaries": null,
+          "color_space": null,
+          "pixel_format": "yuv420p"
+        },
+        "unsupported_control_http": 400
+      }
+    },
+    {
+      "id": "existing_guards",
+      "passed": true,
+      "seconds": 0.076,
+      "result": {
+        "second_product_must_still_be_confirmed": true,
+        "expired_promo_blocked": true,
+        "semantic_risk_confirmation_http": 400
+      }
+    },
+    {
+      "id": "session_regression",
+      "passed": true,
+      "seconds": 0.255,
+      "result": {
+        "group_session_restores": true,
+        "changed_fact_invalidates_plan": true
+      }
+    }
+  ]
+}

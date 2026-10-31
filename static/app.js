@@ -61,23 +61,27 @@ $('exportProjectBtn').onclick=guard(async()=>{const packed=await locked(()=>requ
 $('projectFile').onchange=guard(async e=>{const f=e.target.files[0];if(!f)return;const restored=await locked(async()=>request('/api/reconcile',{project:JSON.parse(await f.text())}));applyProject(restored);status(plan?'已导入项目并重新核验剪辑方案，顺序已恢复。':'项目已导入并核对素材；失效确认或方案请重新完成。');e.target.value='';});
 $('videoFiles').onchange=guard(async e=>{
  const files=[...e.target.files];if(!files.length)return;if(busy)throw Error('请等待当前处理完成。');
- if(project.synthetic){project=blank();invalidate();draw();}
+ // Keep the current edit and preview until the first real asset is usable.
+ const uploadProject=project.synthetic?blank():project;let switchedProject=false;
  busy=true;buttons();const results={success:[],failed:[],skipped:[]};
  try{for(const f of files){
   try{
    if(f.size>200*1024*1024)throw Error('超过200MB');
    const digest=await crypto.subtle.digest('SHA-256',await f.arrayBuffer());
    const key=f.name+':'+f.size+':'+Array.from(new Uint8Array(digest),n=>n.toString(16).padStart(2,'0')).join('');
-   if((project.upload_records||[]).some(r=>r.key===key&&project.shots.some(s=>s.media_id===r.media_id&&!s.unavailable))){results.skipped.push(f.name);continue;}
+   if((uploadProject.upload_records||[]).some(r=>r.key===key&&uploadProject.shots.some(s=>s.media_id===r.media_id&&!s.unavailable))){results.skipped.push(f.name);continue;}
    status('正在上传：'+f.name,false,true);
    const r=await fetch('/api/upload?name='+encodeURIComponent(f.name),{method:'POST',headers:{'Content-Type':'application/octet-stream'},body:f});
    const response=await r.json();if(!r.ok)throw Error(response.error||'上传未成功');
-   const asset=await watch(response.job_id);project.shots.push(...asset.shots);
-   (project.upload_records??=[]).push({key,media_id:asset.id});results.success.push(f.name);invalidate();draw();
+   const asset=await watch(response.job_id);if(!Array.isArray(asset.shots)||!asset.shots.length)throw Error('未分析到可查看的镜头，请重新导出视频后重试。');
+   uploadProject.shots.push(...asset.shots);(uploadProject.upload_records??=[]).push({key,media_id:asset.id});
+   if(project!==uploadProject){project=uploadProject;switchedProject=true;}
+   results.success.push(f.name);invalidate();draw();
   }catch(err){results.failed.push({name:f.name,reason:err.message});}
  }
  const failures=results.failed.map(x=>x.name+'：'+x.reason).join('；');
- status(`上传完成：成功 ${results.success.length}，失败 ${results.failed.length}，跳过已上传 ${results.skipped.length}。${failures?'失败文件：'+failures:'请查看素材后确认用途。'}`,Boolean(results.failed.length),true);
+ const retained=!results.success.length&&results.failed.length?'原项目与剪辑方案已保留。':'';
+ status(`上传完成：成功 ${results.success.length}，失败 ${results.failed.length}，跳过已上传 ${results.skipped.length}。${retained}${switchedProject?'已开始真实项目，模拟素材未混入。':''}${failures?'失败文件：'+failures:'请查看素材后确认用途。'}`,Boolean(results.failed.length),true);
  }finally{busy=false;buttons();e.target.value='';}
 });
 $('contextBtn').onclick=guard(async()=>{if(!project.shots.length)throw Error('请先添加素材。');const res=await request('/api/context',{project});const a=document.createElement('a');a.href=res.url;a.download='linjing-context.zip';a.click();status(`已导出 ${res.frames} 张抽帧及标注提示词。发给模型前，请确认素材可以分享。`);});

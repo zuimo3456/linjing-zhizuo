@@ -1,0 +1,184 @@
+{
+  "video": "/media/1aa00855b1de4d23aeb110d5d1d83853/result.mp4",
+  "cover": "/media/1aa00855b1de4d23aeb110d5d1d83853/cover.jpg",
+  "report": "/media/1aa00855b1de4d23aeb110d5d1d83853/report.json",
+  "bundle": "/media/1aa00855b1de4d23aeb110d5d1d83853/evidence.zip",
+  "metrics": {
+    "job_id": "1aa00855b1de4d23aeb110d5d1d83853",
+    "created_at_utc": "2026-10-31T14:13:32.564308+00:00",
+    "synthetic": true,
+    "status": "technical_export_only",
+    "metadata": {
+      "duration": 21.311604,
+      "width": 720,
+      "height": 1280,
+      "audio": true,
+      "color_transfer": null,
+      "color_primaries": null,
+      "color_space": null,
+      "pixel_format": "yuv420p"
+    },
+    "elapsed_seconds": 2.217,
+    "api_calls": 0,
+    "api_direct_cost_cny": 0,
+    "total_cost_cny": null,
+    "cost_note": "本次本地运行没有付费API调用；电力、设备与人工成本未计量。",
+    "tts": "Windows Microsoft Huihui Desktop offline",
+    "timings": [
+      {
+        "index": 0,
+        "start": 0,
+        "end": 16.0,
+        "text": "街角咖啡。手冲咖啡。第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享。2026年10月31日至2026年11月7日。",
+        "alignment": "measured_phrase_audio",
+        "held_frame_seconds": 0,
+        "voice_speed": 1,
+        "captions": [
+          {
+            "start": 0.0,
+            "end": 0.8773,
+            "text": "街角咖啡。"
+          },
+          {
+            "start": 1.0173,
+            "end": 1.9562,
+            "text": "手冲咖啡。"
+          },
+          {
+            "start": 2.0962,
+            "end": 6.6695,
+            "text": "第二杯半价，仅限同款饮品，每人每天限购一次，"
+          },
+          {
+            "start": 6.8095,
+            "end": 8.4435,
+            "text": "不与其他优惠同享。"
+          },
+          {
+            "start": 8.5835,
+            "end": 12.5546,
+            "text": "2026年10月31日至2026年11月7日。"
+          }
+        ],
+        "visual_clips": [
+          {
+            "shot_id": "22ca0870a17049bebda63ad3825534ca-0",
+            "start": 0,
+            "end": 8.0,
+            "output_start": 0,
+            "output_end": 8.0
+          },
+          {
+            "shot_id": "57cb9a0bf3bf4538b9ce6f5b2d8e5c3b-0",
+            "start": 0,
+            "end": 8.0,
+            "output_start": 8.0,
+            "output_end": 16.0
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "start": 16.0,
+        "end": 21.29,
+        "text": "门店地址：示例街道18号。参与前，请核对活动条件。",
+        "alignment": "measured_phrase_audio",
+        "held_frame_seconds": 0,
+        "voice_speed": 1,
+        "captions": [
+          {
+            "start": 0.0,
+            "end": 2.5346,
+            "text": "门店地址：示例街道18号。"
+          },
+          {
+            "start": 2.6746,
+            "end": 5.2103,
+            "text": "参与前，请核对活动条件。"
+          }
+        ]
+      }
+    ],
+    "plan": {
+      "schema_version": "2.0",
+      "goal": "promo",
+      "method": "evidence",
+      "synthetic": true,
+      "segments": [
+        {
+          "shot_id": "22ca0870a17049bebda63ad3825534ca-0",
+          "start": 0,
+          "end": 8.0,
+          "role": "product",
+          "text": "街角咖啡。手冲咖啡。第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享。2026年10月31日至2026年11月7日。",
+          "fact_ids": [
+            "shop",
+            "product",
+            "offer",
+            "validity"
+          ],
+          "reason": "2个已确认片段共同承载一段旁白。",
+          "speech_seconds": 12.559563,
+          "minimum_seconds": 10.724,
+          "clips": [
+            {
+              "shot_id": "22ca0870a17049bebda63ad3825534ca-0",
+              "start": 0,
+              "end": 8.0
+            },
+            {
+              "shot_id": "57cb9a0bf3bf4538b9ce6f5b2d8e5c3b-0",
+              "start": 0,
+              "end": 8.0
+            }
+          ]
+        },
+        {
+          "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+          "start": 0,
+          "end": 6.0,
+          "role": "storefront",
+          "text": "门店地址：示例街道18号。参与前，请核对活动条件。",
+          "fact_ids": [
+            "address"
+          ],
+          "reason": "1个已确认片段共同承载一段旁白。",
+          "speech_seconds": 5.215229,
+          "minimum_seconds": 4.5
+        }
+      ],
+      "missing": [],
+      "renderable": true,
+      "timing_verified": true,
+      "warnings": [],
+      "limitations": [
+        "质量分来自抽帧检测，不能证明语义正确。",
+        "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+      ],
+      "assignment": {
+        "algorithm": "bounded_grouped_fallback",
+        "score": 1.586,
+        "max_clips_per_role": 4,
+        "max_total_clips": 10
+      },
+      "coverage": {
+        "roles": 2,
+        "required_roles": 2,
+        "facts": 5,
+        "required_facts": 5
+      },
+      "estimated_seconds": 21.29
+    },
+    "acceptance": {
+      "playback": "pending_browser_check",
+      "human_audio_visual_quality": "pending",
+      "merchant_willingness": "not_measured"
+    },
+    "analysis": null,
+    "limitations": [
+      "画外音路径，不包含原声保留。",
+      "短句字幕按实际语音段测时，不是逐字对齐。",
+      "语义仍需确认；本地图文相似度不是商业事实验证。"
+    ]
+  }
+}
