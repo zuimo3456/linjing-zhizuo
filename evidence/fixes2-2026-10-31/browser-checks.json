@@ -1,0 +1,36 @@
+{
+  "B03": {
+    "currentTime": 6,
+    "duration": 6,
+    "ended": true,
+    "paused": true,
+    "readyState": 4,
+    "src": "http://127.0.0.1:4180/media/ea79823ae0e14b7393626cb231c94b75/review.mp4#t=0,6"
+  },
+  "B02": {
+    "status": "本地分析：成功 4，失败 1，跳过 0。所有标签待确认；请逐段查看视频，失败素材可重新上传或移除。",
+    "analysisButtonEnabled": true,
+    "renderEnabled": false
+  },
+  "B04": {
+    "badIntervalVisible": true,
+    "recoveredIntervalVisible": true,
+    "plan": "01 / 门头 / 路线↑↓门店地址：示例街道18号。门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。事实引用：门店地址02 / 商品↑↓街角咖啡，带你看看手冲咖啡。商品覆盖目标结构；标签已人工确认；质量分 0.51。事实引用：店名、商品名称03 / 环境↑↓这是店内环境。到店前，请确认营业情况。环境覆盖目标结构；标签已人工确认；质量分 0.80。事实引用：通用引导语，不增加商户事实✓ 必需信息与镜头齐全，可进入人工确认和渲染。"
+  },
+  "finalPlaybackStart": {
+    "currentTime": 0.060751,
+    "duration": 9.515604,
+    "ended": false,
+    "paused": false,
+    "readyState": 4,
+    "src": "http://127.0.0.1:4180/media/a5048e4039064f6b9f337b3d2f8e809c/result.mp4"
+  },
+  "finalPlaybackEnd": {
+    "currentTime": 9.515604,
+    "duration": 9.515604,
+    "ended": true,
+    "paused": true,
+    "readyState": 4,
+    "src": "http://127.0.0.1:4180/media/a5048e4039064f6b9f337b3d2f8e809c/result.mp4"
+  }
+}

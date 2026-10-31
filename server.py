@@ -46,7 +46,7 @@ class Handler(BaseHTTPRequestHandler):
             if path=='/api/health':
                 from local_vision import status as local_status
                 return self.reply({'ok':bool(FFMPEG and FFPROBE),'ffmpeg':bool(FFMPEG),'ffprobe':bool(FFPROBE),
-                                   'version':'local-ai-prototype-3','vision_configured':False,'local_vision':local_status(),'tts':'offline_windows'})
+                                   'version':'local-ai-prototype-4','vision_configured':False,'local_vision':local_status(),'tts':'offline_windows'})
             if path.startswith('/api/jobs/'):
                 with jobs_lock: item=jobs.get(path.rsplit('/',1)[-1])
                 return self.reply(item or {'error':'任务不存在'},200 if item else 404)
@@ -62,7 +62,7 @@ class Handler(BaseHTTPRequestHandler):
             if path.startswith('/media/'):
                 parts=path.split('/')[2:]
                 if len(parts)!=2 or not re.fullmatch('[a-f0-9]{32}',parts[0]): return self.reply({'error':'无效素材路径'},404)
-                if not (re.fullmatch(r'(thumb-\d+|frame-\d+-\d+)\.jpg',parts[1]) or parts[1] in ('source.mp4','result.mp4','cover.jpg','report.json','project.json','evidence.zip','context.zip')):
+                if not (re.fullmatch(r'(thumb-\d+|frame-\d+-\d+)\.jpg',parts[1]) or parts[1] in ('source.mp4','review.mp4','result.mp4','cover.jpg','report.json','project.json','evidence.zip','context.zip')):
                     return self.reply({'error':'文件不可访问'},404)
                 return self.file(DATA/parts[0]/parts[1])
             return self.reply({'error':'页面不存在'},404)

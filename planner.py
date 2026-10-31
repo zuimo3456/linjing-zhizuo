@@ -164,6 +164,7 @@ def make_plan(project, method='evidence', speech_lengths=None):
 
 def validate_plan(project, plan):
     p=clean_project(project)
+    if not isinstance(plan,dict):raise PlanError('剪辑方案格式无效，请重新生成方案。')
     if plan.get('goal')!=p['goal'] or plan.get('synthetic')!=(p.get('synthetic') is True):
         raise PlanError('目标或模拟样本标记与项目不一致。')
     if plan.get('timing_verified') is not True:raise PlanError('请先完成配音时长预检，再生成视频。')
@@ -179,6 +180,8 @@ def validate_plan(project, plan):
         raise PlanError('剪辑方案必须包含1—10个镜头。')
     used=set(); roles=set()
     for i,seg in enumerate(segments):
+        if not isinstance(seg,dict) or not isinstance(seg.get('shot_id'),str) or not isinstance(seg.get('role'),str):
+            raise PlanError(f'第{i+1}段方案格式无效，请重新生成方案。')
         s=shots.get(seg.get('shot_id'))
         if not s or s.get('confirmed') is not True or s.get('quality_issues') or s.get('unavailable') or s['quality']<0.25 or s['id'] in used:
             raise PlanError('镜头不存在、未确认、质量过低或被重复使用。')
@@ -188,7 +191,7 @@ def validate_plan(project, plan):
         if role=='product' and not product_matches(s,list(facts.values())):
             raise PlanError('请确认画面中的商品与当前事实卡一致。')
         for k in ('start','end'):
-            if not isinstance(seg.get(k),(int,float)) or not math.isfinite(seg[k]):
+            if not isinstance(seg.get(k),(int,float)) or isinstance(seg[k],bool) or not math.isfinite(seg[k]):
                 raise PlanError('剪辑时间不是有限数值。')
         if seg['start']<s['start'] or seg['end']>s['end']+0.001 or not 1<=seg['end']-seg['start']<=8:
             raise PlanError('剪辑片段超出素材范围或不在1—8秒内。')

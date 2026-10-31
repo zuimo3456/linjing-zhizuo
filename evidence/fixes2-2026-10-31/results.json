@@ -1,0 +1,218 @@
+{
+  "date": "2026-10-31",
+  "scope": "Actual local API/model/media checks with technical fixtures; browser and human acceptance separate",
+  "passed": 10,
+  "total": 10,
+  "cases": [
+    {
+      "id": "B03",
+      "passed": true,
+      "elapsed_seconds": 3.723,
+      "result": {
+        "media_id": "ea79823ae0e14b7393626cb231c94b75",
+        "review_url": "/media/ea79823ae0e14b7393626cb231c94b75/review.mp4",
+        "mapping": {
+          "source_start": 0,
+          "proxy_start": 0,
+          "time_scale": 1
+        },
+        "codec": {
+          "codec_name": "h264",
+          "sample_aspect_ratio": "1:1"
+        },
+        "video": "/media/4355f96e70af411bb29c81e73e729599/result.mp4",
+        "metadata": {
+          "duration": 9.515604,
+          "width": 720,
+          "height": 1280,
+          "audio": true
+        }
+      }
+    },
+    {
+      "id": "B04",
+      "passed": true,
+      "elapsed_seconds": 3.832,
+      "result": {
+        "intervals": [
+          {
+            "start": 0,
+            "end": 0.167,
+            "quality": 0.048,
+            "issues": [
+              "镜头短于1秒，请与原素材核对或重新拍摄",
+              "画面接近纯色，没有可辨认的内容",
+              "画面过暗或过曝"
+            ]
+          },
+          {
+            "start": 0.167,
+            "end": 8.0,
+            "quality": 0.513,
+            "issues": []
+          }
+        ],
+        "bad_confirmation_http": 400,
+        "selected_range": [
+          0.167,
+          8.0
+        ],
+        "video": "/media/cbafd747d17b49acb34449ff98f25feb/result.mp4"
+      }
+    },
+    {
+      "id": "B07",
+      "passed": true,
+      "elapsed_seconds": 3.352,
+      "result": {
+        "content_rectangle_xywh_area": [
+          0,
+          520,
+          720,
+          240,
+          161795
+        ],
+        "display_ratio": 3.0,
+        "expected_ratio": 3,
+        "video": "/media/8a7b581b60704d7db1a380381f08f149/result.mp4"
+      }
+    },
+    {
+      "id": "B10",
+      "passed": true,
+      "elapsed_seconds": 0.081,
+      "result": [
+        {
+          "http": 400,
+          "error": "剪辑方案格式无效，请重新生成方案。"
+        },
+        {
+          "http": 400,
+          "error": "剪辑方案格式无效，请重新生成方案。"
+        },
+        {
+          "http": 400,
+          "error": "剪辑方案必须包含1—10个镜头。"
+        },
+        {
+          "http": 400,
+          "error": "第1段方案格式无效，请重新生成方案。"
+        },
+        {
+          "http": 400,
+          "error": "第1段方案格式无效，请重新生成方案。"
+        },
+        {
+          "http": 400,
+          "error": "第1段方案格式无效，请重新生成方案。"
+        }
+      ]
+    },
+    {
+      "id": "B12",
+      "passed": true,
+      "elapsed_seconds": 1.563,
+      "result": {
+        "corrupt_isolated_model": {
+          "ready": false,
+          "weights_present": true,
+          "dependencies_present": true,
+          "integrity_verified": false,
+          "state": "invalid",
+          "reason": "本地模型文件或校验记录损坏，请运行 setup-local-ai.ps1 重新安装。",
+          "model": "Chinese-CLIP / ONNX int8",
+          "mode": "offline_candidates",
+          "score_note": "相对相似度不是正确概率，必须人工确认。"
+        },
+        "healthy_primary": {
+          "ready": true,
+          "weights_present": true,
+          "dependencies_present": true,
+          "integrity_verified": true,
+          "state": "loaded",
+          "reason": null,
+          "model": "Chinese-CLIP / ONNX int8",
+          "mode": "offline_candidates",
+          "score_note": "相对相似度不是正确概率，必须人工确认。"
+        },
+        "primary_model_untouched": true
+      }
+    },
+    {
+      "id": "controls",
+      "passed": true,
+      "elapsed_seconds": 2.685,
+      "result": {
+        "normal_and_autofocus": {
+          "AUDIT2_plain.mp4": [
+            0.92
+          ],
+          "AUDIT2_autofocus.mp4": [
+            0.618
+          ]
+        },
+        "grey_rejected": true
+      }
+    },
+    {
+      "id": "B09",
+      "passed": true,
+      "elapsed_seconds": 2.463,
+      "result": {
+        "confirmed_name": "手冲{A1}咖啡",
+        "plan_copy": "街角咖啡，带你看看手冲{A1}咖啡。",
+        "video": "/media/3ec06a0ef3b245a0bc922beee215d9d5/result.mp4",
+        "frame": "literal-name-output.jpg"
+      }
+    },
+    {
+      "id": "B08",
+      "passed": true,
+      "elapsed_seconds": 8.823,
+      "result": {
+        "segments": 10,
+        "validate_http": 400,
+        "render_http": 400,
+        "error": "预计成片共70.21秒，超过45秒上限，请减少片段或缩短画面区间；旁白不是唯一影响时长的因素。",
+        "no_job_accepted": true,
+        "near_limit_positive": {
+          "estimated_seconds": 44.5,
+          "actual_seconds": 44.524417,
+          "video": "/media/1ae60afc27024ccda8edc3ddf9ce825a/result.mp4"
+        },
+        "above_limit_http": 400
+      }
+    },
+    {
+      "id": "B02",
+      "passed": true,
+      "elapsed_seconds": 3.167,
+      "result": {
+        "summary": {
+          "succeeded": 4,
+          "failed": 1,
+          "skipped": 0
+        },
+        "failures": [
+          {
+            "shot_id": "lost-unused",
+            "status": "failed",
+            "reason": "原视频文件缺失，请重新上传这段素材，或移除未使用的镜头。"
+          }
+        ],
+        "returned_shots": 5
+      }
+    },
+    {
+      "id": "migration",
+      "passed": true,
+      "elapsed_seconds": 0.044,
+      "result": {
+        "facts_preserved": true,
+        "confirmations_revoked": true,
+        "review_urls_present": true,
+        "shots": 4
+      }
+    }
+  ]
+}

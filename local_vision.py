@@ -1,7 +1,7 @@
 """Offline Chinese-CLIP candidates. Similarity is NOT calibrated confidence."""
 from collections import Counter
 from copy import deepcopy
-import importlib.util,json,re,time
+import importlib.util,json,re,time,threading
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parent
@@ -15,11 +15,43 @@ PROMPTS={
  'other':['一张电脑或手机屏幕截图','一张自然风景或动物的照片','一张模糊黑暗看不清的照片'],
 }
 _engine=None
+_engine_fingerprint=None
+_engine_lock=threading.RLock()
+_integrity_cache={}
+_load_failure=None
+
+def installation():
+    """Cache hashes by file metadata, never confuse file presence with integrity."""
+    from setup_onnx_model import WEIGHT_SHA,WEIGHTS,REPO,REVISION,digest
+    lock_path=ROOT/'evidence/local-model-lock.json'
+    try:
+        lock=json.loads(lock_path.read_text(encoding='utf8'))
+        if lock.get('repository')!=REPO or lock.get('revision')!=REVISION:raise ValueError('本地模型版本记录无效，请重新安装。')
+        expected={name:lock.get('files',{}).get(name) for name in (WEIGHTS,'tokenizer.json','preprocessor_config.json')}
+        if expected[WEIGHTS]!=WEIGHT_SHA or any(not isinstance(v,str) or not re.fullmatch('[0-9a-f]{64}',v) for v in expected.values()):
+            raise ValueError('本地模型校验记录不完整，请重新安装。')
+        fingerprint=[str(MODEL.resolve()),lock_path.stat().st_mtime_ns]
+        for name,want in expected.items():
+            path=MODEL/name;stat=path.stat();key=(str(path.resolve()),stat.st_size,stat.st_mtime_ns,want)
+            with _engine_lock:
+                if key not in _integrity_cache:
+                    _integrity_cache.clear() if len(_integrity_cache)>30 else None
+                    _integrity_cache[key]=digest(path)==want
+                matches=_integrity_cache[key]
+            if not matches:raise ValueError('本地模型文件校验失败，请重新安装。')
+            fingerprint.append(key)
+        return tuple(fingerprint),None
+    except FileNotFoundError:return None,'本地模型文件缺失，请运行 setup-local-ai.ps1 安装。'
+    except (OSError,ValueError,TypeError,AttributeError):return None,'本地模型文件或校验记录损坏，请运行 setup-local-ai.ps1 重新安装。'
 
 def status():
-    ready=(MODEL/'onnx/model_quantized.onnx').is_file() and (ROOT/'evidence/local-model-lock.json').is_file()
     deps=all(importlib.util.find_spec(n) is not None for n in ('onnxruntime','tokenizers'))
-    return {'ready':ready and deps,'weights_present':ready,'dependencies_present':deps,
+    fingerprint,problem=installation()
+    if not deps:problem='本地模型依赖缺失，请运行 setup-local-ai.ps1 安装；也可以先手工标注。'
+    if _load_failure and _load_failure[0]==fingerprint:problem=_load_failure[1]
+    state='invalid' if problem else ('loaded' if _engine is not None and _engine_fingerprint==fingerprint else 'verified')
+    return {'ready':problem is None,'weights_present':(MODEL/'onnx/model_quantized.onnx').is_file(),'dependencies_present':deps,
+            'integrity_verified':fingerprint is not None,'state':state,'reason':problem,
             'model':'Chinese-CLIP / ONNX int8','mode':'offline_candidates','score_note':'相对相似度不是正确概率，必须人工确认。'}
 
 def decide(rows,quality):
@@ -51,9 +83,8 @@ class Engine:
     def __init__(self):
         import onnxruntime as ort
         from tokenizers import Tokenizer
-        if not status()['ready']:raise ValueError('本地模型尚未就绪，请先运行setup-local-ai.ps1。')
-        from setup_onnx_model import digest,WEIGHT_SHA
-        if digest(MODEL/'onnx/model_quantized.onnx')!=WEIGHT_SHA:raise ValueError('本地模型校验失败，请重新安装。')
+        check=status()
+        if not check['ready']:raise ValueError(check['reason'])
         options=ort.SessionOptions();options.intra_op_num_threads=4;options.inter_op_num_threads=1
         self.session=ort.InferenceSession(str(MODEL/'onnx/model_quantized.onnx'),sess_options=options,providers=['CPUExecutionProvider'])
         self.tokenizer=Tokenizer.from_file(str(MODEL/'tokenizer.json'))
@@ -98,28 +129,51 @@ def frame_paths(shot):
 
 def analyze_project(project,progress=lambda _:None):
     from planner import clean_project
-    global _engine
+    global _engine,_load_failure,_engine_fingerprint
     p=clean_project(project);begun=time.perf_counter()
     if not p['shots']:raise ValueError('请先上传素材。')
     progress('载入本地图文模型，素材不会上传到云端')
-    if _engine is None:_engine=Engine()
+    eligible=any(not s.get('unavailable') and not s.get('quality_issues') for s in p['shots'])
+    if eligible:
+        fingerprint,problem=installation()
+        if problem:raise ValueError(problem)
+        with _engine_lock:
+            if _engine is None or _engine_fingerprint!=fingerprint:
+                try:_engine=Engine();_engine_fingerprint=fingerprint;_load_failure=None
+                except Exception:
+                    _load_failure=(fingerprint,'本地模型无法加载，请重新安装；当前仍可手工标注。')
+                    raise ValueError(_load_failure[1]) from None
+    counts={'succeeded':0,'failed':0,'skipped':0};failures=[]
     for i,shot in enumerate(p['shots']):
         progress(f'本地分析镜头 {i+1}/{len(p["shots"])}，检查多时刻画面')
-        paths,frames=frame_paths(shot)
-        rows=[]
-        for start in range(0,len(paths),3):rows.extend(_engine.score(paths[start:start+3]))
-        candidate=decide(rows,shot['quality'])
-        if shot.get('quality_issues'):
-            candidate.update(tags=['other'],abstained=True,review_reasons=shot['quality_issues'],description='素材不能直接使用：'+'；'.join(shot['quality_issues']))
-        # Preserve human attestations while exposing model disagreement for review.
+        frames=[];problem=None
+        if shot.get('unavailable'):
+            problem=shot['unavailable'];outcome='failed'
+        elif shot.get('quality_issues'):
+            problem='；'.join(shot['quality_issues']);outcome='skipped'
+        else:
+            try:
+                paths,frames=frame_paths(shot);rows=[]
+                for start in range(0,len(paths),3):rows.extend(_engine.score(paths[start:start+3]))
+                candidate=decide(rows,shot['quality']);outcome='succeeded'
+            except Exception:
+                problem='本镜头抽帧或分析失败，请重新上传此素材；其他镜头继续分析。';outcome='failed'
+        counts[outcome]+=1
+        if problem:
+            failures.append({'shot_id':shot['id'],'status':outcome,'reason':problem})
+            candidate={'tags':['other'],'suggested_tag':'other','confirmed':False,'abstained':True,'needs_review':True,
+                       'review_reasons':[problem],'description':problem}
+        shot['analysis_outcome']=outcome
+        # Preserve human chosen tags for comparison; revoke all confirmations below.
         shot['local_candidate']={**candidate,'frames':frames}
         if not shot.get('confirmed'):
             shot.update(candidate,label_source='local_model_candidate')
         shot['product_binding']=None
         shot['confirmed']=False;shot['attestation']=None
-    lock=json.loads((ROOT/'evidence/local-model-lock.json').read_text(encoding='utf8'))
-    p['vision_analysis']={'engine':lock['repository'],'revision':lock['revision'],'weights_sha256':lock['files']['onnx/model_quantized.onnx'],
+    from setup_onnx_model import REPO,REVISION,WEIGHT_SHA
+    p['vision_analysis']={'engine':REPO,'revision':REVISION,'weights_sha256':WEIGHT_SHA,
                           'runtime':'onnxruntime CPU','elapsed_seconds':round(time.perf_counter()-begun,3),'remote_requests':0,
-                          'shots':len(p['shots']),'prompts':PROMPTS,'thresholds':{'min_frames':3,'margin':1.5,'agreement':'all','sampling':'includes_boundaries; not_full_semantic_coverage'},
+                          'shots':len(p['shots']),'summary':counts,'failures':failures,'status':'partial' if counts['failed'] or counts['skipped'] else 'complete',
+                          'prompts':PROMPTS,'thresholds':{'min_frames':3,'margin':1.5,'agreement':'all','sampling':'includes_boundaries; not_full_semantic_coverage'},
                           'scope':'用途候选；不识别价格、地址、优惠或确切商品，不自动确认事实。'}
     return p

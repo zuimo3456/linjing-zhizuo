@@ -45,6 +45,7 @@ def attest(shot,product=None):
     return out
 
 def canonical(shot,verify_hash=False):
+    from media import ANALYSIS_VERSION
     mid=shot.get('media_id','')
     if not isinstance(mid,str) or not re.fullmatch('[a-f0-9]{32}',mid):raise ValueError('素材编号无效，请重新上传。')
     folder=DATA/mid;src=folder/'source.mp4';cache=folder/'asset.json'
@@ -54,7 +55,7 @@ def canonical(shot,verify_hash=False):
     except (ValueError,OSError):raise ValueError('素材分析记录无法读取，请重新上传这段视频。') from None
     source=next((s for s in asset['shots'] if s['id']==shot['id']),None)
     if source is None:raise ValueError('镜头与原视频不对应，请重新上传并确认。')
-    if source.get('analysis_version')!=4:raise ValueError('这段素材需要更新分析，请重新上传或载入新版模拟案例。')
+    if source.get('analysis_version')!=ANALYSIS_VERSION:raise ValueError('这段素材需要更新分析，请重新上传或载入新版模拟案例。')
     if (source['start'],source['end'])!=(shot['start'],shot['end']):raise ValueError('镜头范围已经变化，请重新分析并确认。')
     expected=asset.get('source_sha256')
     if not expected:raise ValueError('素材缺少文件校验，请重新上传。')
@@ -65,20 +66,31 @@ def canonical(shot,verify_hash=False):
 
 def reconcile(project):
     from planner import clean_project
-    p=clean_project(project);warnings=[]
+    from media import ANALYSIS_VERSION
+    p=clean_project(project);warnings=[];failed_sources=set()
     for mid in dict.fromkeys(s.get('media_id','') for s in p['shots']):
         if not isinstance(mid,str) or not re.fullmatch('[a-f0-9]{32}',mid):continue
         folder=DATA/mid;cache=folder/'asset.json';src=folder/'source.mp4'
         if not (cache.is_file() and src.is_file()):continue
         try:asset=json.loads(cache.read_text(encoding='utf8'))
         except (ValueError,OSError):continue
-        needs_refresh=asset.get('analysis_version')!=4
+        needs_refresh=asset.get('analysis_version')!=ANALYSIS_VERSION or not (folder/'review.mp4').is_file()
         old_shots=[s for s in p['shots'] if s['media_id']==mid]
         if needs_refresh:
-            from media import analyze
-            asset=analyze(src,mid,asset.get('name','已保存素材'))
-            cache.write_text(json.dumps(asset,ensure_ascii=False,indent=2),encoding='utf8')
-        if needs_refresh or any(s.get('analysis_version')!=4 for s in old_shots):
+            try:
+                with _lock:
+                    from media import analyze
+                    current=json.loads(cache.read_text(encoding='utf8'))
+                    if current.get('analysis_version')==ANALYSIS_VERSION and (folder/'review.mp4').is_file():asset=current
+                    else:
+                        asset=analyze(src,mid,asset.get('name','已保存素材'))
+                        temporary=cache.with_suffix('.building.json')
+                        temporary.write_text(json.dumps(asset,ensure_ascii=False,indent=2),encoding='utf8');temporary.replace(cache)
+            except (ValueError,OSError):
+                failed_sources.add(mid)
+                for old in old_shots:old.update(confirmed=False,product_binding=None,unavailable='素材重新分析失败，请重新上传此素材；其他素材仍可使用。')
+                warnings.append('部分素材无法更新分析，请重新上传这些素材。');continue
+        if needs_refresh or any(s.get('analysis_version')!=ANALYSIS_VERSION for s in old_shots):
             previous={s['id']:s for s in old_shots};fresh=[]
             for source in asset['shots']:
                 item=deepcopy(source);old=previous.get(item['id'])
@@ -90,9 +102,10 @@ def reconcile(project):
             warnings.append('素材分析已升级并列出完整镜头，请重新查看和确认；旧确认未自动沿用。')
     product=next((f for f in p['facts'] if f['kind']=='product' and f.get('confirmed') is True),None)
     for shot in p['shots']:
+        if shot.get('media_id') in failed_sources:continue
         try:
             source,sha=canonical(shot)
-            shot.update({k:deepcopy(source[k]) for k in ('quality','quality_issues','frames','thumb','analysis_version') if k in source})
+            shot.update({k:deepcopy(source[k]) for k in ('quality','quality_issues','frames','thumb','analysis_version','review_url') if k in source})
             shot['source_sha256']=sha;shot.pop('unavailable',None)
             if shot.get('quality_issues'):
                 shot['confirmed']=False

@@ -81,3 +81,10 @@ def synthesize(text,work,prefix,available):
     measured=duration(final)
     adjusted=[{**c,'start':round(min(measured,c['start']/speed),4),'end':round(min(measured,c['end']/speed),4)} for c in cues]
     return final,measured,adjusted,speed
+
+def fitted_duration(text,available,role):
+    """Use the exact fitted audio for both preflight and rendering duration."""
+    if role=='process':return available
+    with tempfile.TemporaryDirectory(prefix='linjing-fit-') as tmp:
+        _,measured,_,_=synthesize(text,Path(tmp),'check',available)
+    return min(available,max(2.5,measured+.08))

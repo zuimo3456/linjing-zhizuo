@@ -2,7 +2,7 @@
 import json, uuid
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
-from media import DATA,FFMPEG,run,analyze
+from media import DATA,FFMPEG,run,analyze,ANALYSIS_VERSION
 
 def create_demo(progress=lambda _:None):
     cache=DATA/'demo-project.json'
@@ -10,7 +10,7 @@ def create_demo(progress=lambda _:None):
         p=json.loads(cache.read_text(encoding='utf8'))
         updated=[]
         for shot in p['shots']:
-            if shot.get('analysis_version')!=4:
+            if shot.get('analysis_version')!=ANALYSIS_VERSION:
                 progress('升级模拟案例的多时刻抽帧')
                 fresh=analyze(DATA/shot['media_id']/'source.mp4',shot['media_id'],shot['name'])
                 (DATA/shot['media_id']/'asset.json').write_text(json.dumps(fresh,ensure_ascii=False,indent=2),encoding='utf8')

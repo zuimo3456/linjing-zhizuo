@@ -2,9 +2,9 @@
 from pathlib import Path
 import copy,json,time,uuid,urllib.request,urllib.error,sys
 from demo import create_demo
-from media import DATA,ROOT,FFMPEG,run,analyze
+from media import DATA,ROOT,FFMPEG,run,analyze,ANALYSIS_VERSION
 
-OUT=ROOT/'evidence/fixes-2026-10-30';OUT.mkdir(parents=True,exist_ok=True)
+OUT=ROOT/(sys.argv[sys.argv.index('--out')+1] if '--out' in sys.argv else 'evidence/fixes-2026-10-30');OUT.mkdir(parents=True,exist_ok=True)
 ONLY=sys.argv[sys.argv.index('--only')+1] if '--only' in sys.argv else None
 records=json.loads((OUT/'results.json').read_text(encoding='utf8'))['cases'] if ONLY and (OUT/'results.json').exists() else []
 def save():
@@ -38,7 +38,7 @@ def render(p,pl):
     return done['result']
 def refreshed(mid):
     folder=DATA/mid;cache=folder/'asset.json';old=json.loads(cache.read_text(encoding='utf8'))
-    if old.get('analysis_version')==4:return old
+    if old.get('analysis_version')==ANALYSIS_VERSION:return old
     result=analyze(folder/'source.mp4',mid,old['name']);cache.write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf8');return result
 def fixture(name,args):
     for meta in DATA.glob('*/asset.json'):

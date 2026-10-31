@@ -8,6 +8,41 @@ ROOT=Path(__file__).resolve().parent
 DATA=ROOT/'data'
 FFMPEG=shutil.which('ffmpeg')
 FFPROBE=shutil.which('ffprobe')
+ANALYSIS_VERSION=5
+
+def square_pixel_scale(width,height):
+    # reset_sar includes the input display aspect ratio in proportional scaling.
+    return f'scale={width}:{height}:force_original_aspect_ratio=decrease:force_divisible_by=2:reset_sar=1'
+
+def frame_quality(frame):
+    import cv2
+    gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+    sharp=float(cv2.Laplacian(gray,cv2.CV_64F).var());light=float(gray.mean())
+    quality=min(1,sharp/180)*.6+max(0,1-abs(light-128)/128)*.4
+    issues=[]
+    if float(gray.std())<3:issues.append('画面接近纯色，没有可辨认的内容')
+    elif sharp<5:issues.append('画面严重模糊，细节不足')
+    if light<12 or light>245:issues.append('画面过暗或过曝')
+    return quality,light,sharp,issues
+
+def quality_ranges(cap,a,b):
+    """Keep bad intervals visible, but recover >=1s continuous usable intervals."""
+    import cv2
+    fps=12;count=max(1,int((b-a)*fps+.001));cap.set(cv2.CAP_PROP_POS_MSEC,a*1000)
+    runs=[];start=a;previous=None
+    for n in range(count):
+        ok,frame=cap.read()
+        if not ok:break
+        usable=not frame_quality(frame)[3]
+        at=min(b,a+n/fps)
+        if previous is not None and usable!=previous:
+            runs.append((start,at,previous));start=at
+        previous=usable
+    if previous is None:return [(a,b)]
+    runs.append((start,b,previous))
+    # A single all-good/all-bad interval retains the original scene boundaries.
+    if len(runs)==1:return [(a,b)]
+    return [(x,y) for x,y,_ in runs if y>x]
 
 def run(args, timeout=180):
     try:p=subprocess.run([str(x) for x in args],capture_output=True,text=True,encoding='utf8',errors='replace',timeout=timeout)
@@ -31,10 +66,18 @@ def analyze(path, media_id, name):
     meta=probe(path)
     if not 1<=meta['duration']<=180: raise ValueError('每段素材需要在1—180秒之间。')
     folder=DATA/media_id; folder.mkdir(exist_ok=True,parents=True)
+    preview=folder/'review.mp4';temporary=folder/'review-building.mp4'
+    try:
+        run([FFMPEG,'-y','-v','error','-i',path,'-map','0:v:0','-map','0:a:0?',
+             '-vf',square_pixel_scale(720,1280),'-c:v','libx264','-preset','veryfast','-crf','23','-threads','2',
+             '-pix_fmt','yuv420p','-c:a','aac','-movflags','+faststart',temporary])
+        temporary.replace(preview)
+    finally:
+        temporary.unlink(missing_ok=True)
     # ASCII-safe temporary proxy, including when the user folder is Chinese.
     with tempfile.TemporaryDirectory(prefix='linjing-') as tmp:
         proxy=Path(tmp)/'proxy.mp4'
-        run([FFMPEG,'-y','-v','error','-i',path,'-vf','scale=-2:360,fps=12','-an','-c:v','libx264','-preset','ultrafast',proxy])
+        run([FFMPEG,'-y','-v','error','-i',path,'-vf',square_pixel_scale(640,360)+',fps=12','-an','-c:v','libx264','-preset','ultrafast',proxy])
         scenes=detect(str(proxy),ContentDetector(threshold=25,min_scene_len=1),show_progress=False)
         ranges=[(a.get_seconds(),min(b.get_seconds(),meta['duration'])) for a,b in scenes]
         if not ranges: ranges=[(0,meta['duration'])]
@@ -44,6 +87,7 @@ def analyze(path, media_id, name):
             while b-a>8: chunks.append((a,a+8)); a+=8
             if b>a: chunks.append((a,b))
         cap=cv2.VideoCapture(str(proxy)); shots=[]
+        chunks=[interval for a,b in chunks for interval in quality_ranges(cap,a,b)]
         for i,(a,b) in enumerate(chunks):
             sampled=[];qualities=[];lights=[];sharps=[];issues=[]
             if b-a<1:issues.append('镜头短于1秒，请与原素材核对或重新拍摄')
@@ -51,12 +95,8 @@ def analyze(path, media_id, name):
             for j,at in enumerate(times):
                 cap.set(cv2.CAP_PROP_POS_MSEC,at*1000); ok,frame=cap.read()
                 if not ok:continue
-                gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
-                sharp=float(cv2.Laplacian(gray,cv2.CV_64F).var());light=float(gray.mean())
-                qualities.append(min(1,sharp/180)*.6+max(0,1-abs(light-128)/128)*.4)
-                if float(gray.std())<3:issues.append('画面接近纯色，没有可辨认的内容')
-                elif sharp<5:issues.append('画面严重模糊，细节不足')
-                if light<12 or light>245:issues.append('画面过暗或过曝')
+                quality,light,sharp,frame_issues=frame_quality(frame)
+                qualities.append(quality);issues.extend(frame_issues)
                 lights.append(light);sharps.append(sharp)
                 thumb=folder/(f'thumb-{i}.jpg' if j==2 else f'frame-{i}-{j}.jpg')
                 ok,encoded=cv2.imencode('.jpg',frame)
@@ -69,12 +109,14 @@ def analyze(path, media_id, name):
             shots.append({'id':f'{media_id}-{i}','media_id':media_id,'start':round(a,3),'end':round(b,3),
                           'tags':['other'],'confirmed':False,'quality':quality,'brightness':round(sum(lights)/len(lights),2),
                           'sharpness':round(sum(sharps)/len(sharps),2),'label_source':'unlabeled','name':name,
-                          'thumb':thumb_url,'frames':sampled,'analysis_version':4,'quality_issues':list(dict.fromkeys(issues))})
+                          'thumb':thumb_url,'frames':sampled,'analysis_version':ANALYSIS_VERSION,'quality_issues':list(dict.fromkeys(issues)),
+                          'review_url':f'/media/{media_id}/review.mp4'})
         cap.release()
     from evidence_store import file_hash
     sha=file_hash(path);stat=Path(path).stat()
     for shot in shots:shot['source_sha256']=sha
-    return {'id':media_id,'name':name,'meta':meta,'shots':shots,'synthetic':False,'analysis_version':4,
+    return {'id':media_id,'name':name,'meta':meta,'shots':shots,'synthetic':False,'analysis_version':ANALYSIS_VERSION,
+            'review_url':f'/media/{media_id}/review.mp4','review_mapping':{'source_start':0,'proxy_start':0,'time_scale':1},
             'source_sha256':sha,'source_bytes':stat.st_size,'source_mtime_ns':stat.st_mtime_ns,
             'coverage':{'total_seconds':meta['duration'],'analyzed_end':max((s['end'] for s in shots),default=0),
                         'short_or_unusable_intervals':[[s['start'],s['end']] for s in shots if s['quality_issues']],
@@ -85,7 +127,10 @@ def ass_time(t):
     return f'{h}:{m:02}:{s:02}.{c:02}'
 
 def write_ass(path, text, duration, synthetic, cues=None):
-    def escape(s): return s.replace('\\','\\\\').replace('{','').replace('}','').replace('\n',' ')
+    def escape(s):
+        # libass supports \{ and \}; a word joiner prevents literal \N/\h
+        # from becoming formatting while retaining the visible backslash.
+        return s.replace('\\','\\\u2060').replace('{',r'\{').replace('}',r'\}').replace('\n',' ')
     # Lines are capped at 15 Chinese characters for a 720-wide mobile frame.
     body=''
     for cue in cues or [{'start':0,'end':duration,'text':text}]:
@@ -114,7 +159,7 @@ def render(project,plan,job_id,progress):
             if not source.is_file(): raise ValueError('本地素材缺失，请重新上传。')
             dest=tmp/f'part-{i}.mp4'
             # Preserve full frame. Refuse excessive narration instead of freezing.
-            vf=f'scale=720:1280:force_original_aspect_ratio=decrease,pad=720:1280:(ow-iw)/2:(oh-ih)/2:color=0x17251e,setsar=1,fps=25,ass=filename=\'{ass_filter}\''
+            vf=square_pixel_scale(720,1280)+f',pad=720:1280:(ow-iw)/2:(oh-ih)/2:color=0x17251e,setsar=1,fps=25,ass=filename=\'{ass_filter}\''
             run([FFMPEG,'-y','-v','error','-ss',seg['start'],'-t',length,'-i',source,'-i',wav,'-vf',vf,
                  '-map','0:v:0','-map','1:a:0','-af','apad','-t',duration,'-c:v','libx264','-preset','veryfast','-crf','22',
                  '-threads','2','-c:a','aac','-ar','48000','-ac','2','-pix_fmt','yuv420p',dest])
@@ -122,7 +167,7 @@ def render(project,plan,job_id,progress):
                                                     'alignment':'measured_phrase_audio','held_frame_seconds':0,
                                                     'voice_speed':speed,'captions':cues})
             cursor+=duration
-        if cursor>45: raise ValueError('总旁白超过45秒，请缩短事实字段。')
+        if cursor>45.000001: raise ValueError('成片总时长超过45秒，请减少片段或缩短画面区间。')
         listing=tmp/'parts.txt'; listing.write_text('\n'.join(f"file '{p.as_posix()}'" for p in rendered),encoding='utf8')
         run([FFMPEG,'-y','-v','error','-f','concat','-safe','0','-i',listing,'-c','copy','-movflags','+faststart',out/'result.mp4'])
     result_meta=probe(out/'result.mp4')

@@ -22,11 +22,17 @@ def build_plan(project,method='evidence'):
 def preflight(project,plan):
     p=reconcile(project);checked=deepcopy(plan)
     validate_plan(p,checked);verify_selected(p,checked)
+    durations=[]
     for i,seg in enumerate(checked['segments']):
         natural=prepare_voice(seg['text'])[1];available=seg['end']-seg['start']
         if natural/1.18+.08>available+.000001:
             raise PlanError(f'第{i+1}段旁白约需{natural:.1f}秒，当前镜头仅{available:.1f}秒，请重新编排或更换更长的素材。')
         seg.update(speech_seconds=natural,minimum_seconds=round(natural/1.18+.08,3))
+        from audio import fitted_duration
+        durations.append(fitted_duration(seg['text'],available,seg['role']))
+    total=sum(durations)
+    if total>45.000001:
+        raise PlanError(f'预计成片共{total:.2f}秒，超过45秒上限，请减少片段或缩短画面区间；旁白不是唯一影响时长的因素。')
     checked['timing_verified']=True
-    checked.update(renderable=True,missing=[])
+    checked.update(renderable=True,missing=[],estimated_seconds=round(total,3))
     return p,checked
