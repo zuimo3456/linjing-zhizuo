@@ -1,0 +1,1557 @@
+{
+  "date": "2026-10-31",
+  "baseline": "d02f4aa",
+  "scope": "Original simulated technical fixtures, not merchant outcomes; no application edits.",
+  "cases": [
+    {
+      "id": "C01",
+      "title": "两段各8秒能否承载完整优惠条件",
+      "elapsed_seconds": 9.261,
+      "result": {
+        "plan_http": 200,
+        "plan": {
+          "schema_version": "2.0",
+          "goal": "promo",
+          "method": "evidence",
+          "synthetic": true,
+          "segments": [
+            {
+              "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+              "role": "storefront",
+              "start": 0,
+              "end": 6.0,
+              "text": "门店地址：示例街道18号。参与前，请核对活动条件。",
+              "fact_ids": [
+                "address"
+              ],
+              "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。",
+              "speech_seconds": 5.215229,
+              "minimum_seconds": 4.5
+            }
+          ],
+          "missing": [
+            "商品旁白约12.6秒，至少需要10.7秒画面；当前最长可用8.0秒。请更换素材或调整非必要文案。",
+            "候选镜头还需能放下对应旁白；请换足够长的镜头或调整非必要文案，保留完整活动条件。"
+          ],
+          "renderable": false,
+          "timing_verified": true,
+          "warnings": [],
+          "limitations": [
+            "质量分来自抽帧检测，不能证明语义正确。",
+            "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+          ],
+          "assignment": {
+            "algorithm": "speech_feasible_maximum_coverage",
+            "score": 0.886,
+            "quality_weight": 1,
+            "duration_weight": 0.01
+          },
+          "coverage": {
+            "roles": 1,
+            "required_roles": 2,
+            "facts": 5,
+            "required_facts": 5
+          }
+        }
+      }
+    },
+    {
+      "id": "C02",
+      "title": "两段各7.96秒对照与实际成片",
+      "elapsed_seconds": 4.666,
+      "result": {
+        "plan_http": 200,
+        "plan": {
+          "schema_version": "2.0",
+          "goal": "promo",
+          "method": "evidence",
+          "synthetic": true,
+          "segments": [
+            {
+              "shot_id": "c45c9de9d0be4c07b5c8ec13ef6c6b49-0",
+              "start": 0,
+              "end": 7.96,
+              "role": "product",
+              "text": "街角咖啡。手冲咖啡。第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享。2026年10月31日至2026年11月7日。",
+              "fact_ids": [
+                "shop",
+                "product",
+                "offer",
+                "validity"
+              ],
+              "reason": "2个已确认片段共同承载一段旁白。",
+              "speech_seconds": 12.559563,
+              "minimum_seconds": 10.724,
+              "clips": [
+                {
+                  "shot_id": "c45c9de9d0be4c07b5c8ec13ef6c6b49-0",
+                  "start": 0,
+                  "end": 7.96
+                },
+                {
+                  "shot_id": "552db5842c864ce2ab04ce6195b82042-0",
+                  "start": 0,
+                  "end": 7.96
+                }
+              ]
+            },
+            {
+              "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+              "start": 0,
+              "end": 6.0,
+              "role": "storefront",
+              "text": "门店地址：示例街道18号。参与前，请核对活动条件。",
+              "fact_ids": [
+                "address"
+              ],
+              "reason": "1个已确认片段共同承载一段旁白。",
+              "speech_seconds": 5.215229,
+              "minimum_seconds": 4.5
+            }
+          ],
+          "missing": [],
+          "renderable": true,
+          "timing_verified": true,
+          "warnings": [],
+          "limitations": [
+            "质量分来自抽帧检测，不能证明语义正确。",
+            "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+          ],
+          "assignment": {
+            "algorithm": "bounded_grouped_fallback",
+            "score": 1.586,
+            "max_clips_per_role": 4,
+            "max_total_clips": 10
+          },
+          "coverage": {
+            "roles": 2,
+            "required_roles": 2,
+            "facts": 5,
+            "required_facts": 5
+          }
+        },
+        "render": {
+          "id": "bcbf878ad8674affa072cd19e8ba0b0e",
+          "status": "done",
+          "message": "处理完成",
+          "created": 1793453975.1249971,
+          "result": {
+            "video": "/media/bcbf878ad8674affa072cd19e8ba0b0e/result.mp4",
+            "cover": "/media/bcbf878ad8674affa072cd19e8ba0b0e/cover.jpg",
+            "report": "/media/bcbf878ad8674affa072cd19e8ba0b0e/report.json",
+            "bundle": "/media/bcbf878ad8674affa072cd19e8ba0b0e/evidence.zip",
+            "metrics": {
+              "job_id": "bcbf878ad8674affa072cd19e8ba0b0e",
+              "created_at_utc": "2026-10-31T13:39:37.409451+00:00",
+              "synthetic": true,
+              "status": "technical_export_only",
+              "metadata": {
+                "duration": 21.231604,
+                "width": 720,
+                "height": 1280,
+                "audio": true,
+                "color_transfer": null,
+                "color_primaries": null,
+                "color_space": null,
+                "pixel_format": "yuv420p"
+              },
+              "elapsed_seconds": 2.169,
+              "api_calls": 0,
+              "api_direct_cost_cny": 0,
+              "total_cost_cny": null,
+              "cost_note": "本次本地运行没有付费API调用；电力、设备与人工成本未计量。",
+              "tts": "Windows Microsoft Huihui Desktop offline",
+              "timings": [
+                {
+                  "index": 0,
+                  "start": 0,
+                  "end": 15.92,
+                  "text": "街角咖啡。手冲咖啡。第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享。2026年10月31日至2026年11月7日。",
+                  "alignment": "measured_phrase_audio",
+                  "held_frame_seconds": 0,
+                  "voice_speed": 1,
+                  "captions": [
+                    {
+                      "start": 0.0,
+                      "end": 0.8773,
+                      "text": "街角咖啡。"
+                    },
+                    {
+                      "start": 1.0173,
+                      "end": 1.9562,
+                      "text": "手冲咖啡。"
+                    },
+                    {
+                      "start": 2.0962,
+                      "end": 6.6695,
+                      "text": "第二杯半价，仅限同款饮品，每人每天限购一次，"
+                    },
+                    {
+                      "start": 6.8095,
+                      "end": 8.4435,
+                      "text": "不与其他优惠同享。"
+                    },
+                    {
+                      "start": 8.5835,
+                      "end": 12.5546,
+                      "text": "2026年10月31日至2026年11月7日。"
+                    }
+                  ],
+                  "visual_clips": [
+                    {
+                      "shot_id": "c45c9de9d0be4c07b5c8ec13ef6c6b49-0",
+                      "start": 0,
+                      "end": 7.96,
+                      "output_start": 0,
+                      "output_end": 7.96
+                    },
+                    {
+                      "shot_id": "552db5842c864ce2ab04ce6195b82042-0",
+                      "start": 0,
+                      "end": 7.96,
+                      "output_start": 7.96,
+                      "output_end": 15.92
+                    }
+                  ]
+                },
+                {
+                  "index": 1,
+                  "start": 15.92,
+                  "end": 21.21,
+                  "text": "门店地址：示例街道18号。参与前，请核对活动条件。",
+                  "alignment": "measured_phrase_audio",
+                  "held_frame_seconds": 0,
+                  "voice_speed": 1,
+                  "captions": [
+                    {
+                      "start": 0.0,
+                      "end": 2.5346,
+                      "text": "门店地址：示例街道18号。"
+                    },
+                    {
+                      "start": 2.6746,
+                      "end": 5.2103,
+                      "text": "参与前，请核对活动条件。"
+                    }
+                  ]
+                }
+              ],
+              "plan": {
+                "schema_version": "2.0",
+                "goal": "promo",
+                "method": "evidence",
+                "synthetic": true,
+                "segments": [
+                  {
+                    "shot_id": "c45c9de9d0be4c07b5c8ec13ef6c6b49-0",
+                    "start": 0,
+                    "end": 7.96,
+                    "role": "product",
+                    "text": "街角咖啡。手冲咖啡。第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享。2026年10月31日至2026年11月7日。",
+                    "fact_ids": [
+                      "shop",
+                      "product",
+                      "offer",
+                      "validity"
+                    ],
+                    "reason": "2个已确认片段共同承载一段旁白。",
+                    "speech_seconds": 12.559563,
+                    "minimum_seconds": 10.724,
+                    "clips": [
+                      {
+                        "shot_id": "c45c9de9d0be4c07b5c8ec13ef6c6b49-0",
+                        "start": 0,
+                        "end": 7.96
+                      },
+                      {
+                        "shot_id": "552db5842c864ce2ab04ce6195b82042-0",
+                        "start": 0,
+                        "end": 7.96
+                      }
+                    ]
+                  },
+                  {
+                    "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+                    "start": 0,
+                    "end": 6.0,
+                    "role": "storefront",
+                    "text": "门店地址：示例街道18号。参与前，请核对活动条件。",
+                    "fact_ids": [
+                      "address"
+                    ],
+                    "reason": "1个已确认片段共同承载一段旁白。",
+                    "speech_seconds": 5.215229,
+                    "minimum_seconds": 4.5
+                  }
+                ],
+                "missing": [],
+                "renderable": true,
+                "timing_verified": true,
+                "warnings": [],
+                "limitations": [
+                  "质量分来自抽帧检测，不能证明语义正确。",
+                  "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+                ],
+                "assignment": {
+                  "algorithm": "bounded_grouped_fallback",
+                  "score": 1.586,
+                  "max_clips_per_role": 4,
+                  "max_total_clips": 10
+                },
+                "coverage": {
+                  "roles": 2,
+                  "required_roles": 2,
+                  "facts": 5,
+                  "required_facts": 5
+                },
+                "estimated_seconds": 21.21
+              },
+              "acceptance": {
+                "playback": "pending_browser_check",
+                "human_audio_visual_quality": "pending",
+                "merchant_willingness": "not_measured"
+              },
+              "analysis": null,
+              "limitations": [
+                "画外音路径，不包含原声保留。",
+                "短句字幕按实际语音段测时，不是逐字对齐。",
+                "语义仍需确认；本地图文相似度不是商业事实验证。"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "C03",
+      "title": "引流关注正常流程",
+      "elapsed_seconds": 1.818,
+      "result": {
+        "plan_http": 200,
+        "plan": {
+          "schema_version": "2.0",
+          "goal": "attract",
+          "method": "evidence",
+          "synthetic": true,
+          "segments": [
+            {
+              "shot_id": "785397e553ac40f787aee5beaf8ddd40-0",
+              "role": "product",
+              "start": 0,
+              "end": 6.0,
+              "text": "街角咖啡，带你看看手冲咖啡。",
+              "fact_ids": [
+                "shop",
+                "product"
+              ],
+              "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。",
+              "speech_seconds": 2.887188,
+              "minimum_seconds": 2.527
+            },
+            {
+              "shot_id": "0d370453b76e4c6fbb87dcd0e890f366-0",
+              "role": "process",
+              "start": 0,
+              "end": 6.0,
+              "text": "这是制作过程。",
+              "fact_ids": [],
+              "reason": "制作过程覆盖目标结构；标签已人工确认；质量分 0.75。",
+              "speech_seconds": 1.195479,
+              "minimum_seconds": 1.093
+            },
+            {
+              "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+              "role": "interior",
+              "start": 0,
+              "end": 6.0,
+              "text": "这是店内环境。感兴趣可以先收藏。",
+              "fact_ids": [],
+              "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。",
+              "speech_seconds": 3.170167,
+              "minimum_seconds": 2.767
+            }
+          ],
+          "missing": [],
+          "renderable": true,
+          "timing_verified": true,
+          "warnings": [],
+          "limitations": [
+            "质量分来自抽帧检测，不能证明语义正确。",
+            "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+          ],
+          "assignment": {
+            "algorithm": "speech_feasible_maximum_coverage",
+            "score": 2.524,
+            "quality_weight": 1,
+            "duration_weight": 0.01
+          },
+          "coverage": {
+            "roles": 3,
+            "required_roles": 3,
+            "facts": 2,
+            "required_facts": 2
+          }
+        },
+        "render": {
+          "id": "58ca5c2eca854434acc34026f53689df",
+          "status": "done",
+          "message": "处理完成",
+          "created": 1793453977.7008173,
+          "result": {
+            "video": "/media/58ca5c2eca854434acc34026f53689df/result.mp4",
+            "cover": "/media/58ca5c2eca854434acc34026f53689df/cover.jpg",
+            "report": "/media/58ca5c2eca854434acc34026f53689df/report.json",
+            "bundle": "/media/58ca5c2eca854434acc34026f53689df/evidence.zip",
+            "metrics": {
+              "job_id": "58ca5c2eca854434acc34026f53689df",
+              "created_at_utc": "2026-10-31T13:39:39.234220+00:00",
+              "synthetic": true,
+              "status": "technical_export_only",
+              "metadata": {
+                "duration": 12.229417,
+                "width": 720,
+                "height": 1280,
+                "audio": true,
+                "color_transfer": null,
+                "color_primaries": null,
+                "color_space": null,
+                "pixel_format": "yuv420p"
+              },
+              "elapsed_seconds": 1.299,
+              "api_calls": 0,
+              "api_direct_cost_cny": 0,
+              "total_cost_cny": null,
+              "cost_note": "本次本地运行没有付费API调用；电力、设备与人工成本未计量。",
+              "tts": "Windows Microsoft Huihui Desktop offline",
+              "timings": [
+                {
+                  "index": 0,
+                  "start": 0,
+                  "end": 2.958,
+                  "text": "街角咖啡，带你看看手冲咖啡。",
+                  "alignment": "measured_phrase_audio",
+                  "held_frame_seconds": 0,
+                  "voice_speed": 1,
+                  "captions": [
+                    {
+                      "start": 0.0,
+                      "end": 2.8782,
+                      "text": "街角咖啡，带你看看手冲咖啡。"
+                    }
+                  ]
+                },
+                {
+                  "index": 1,
+                  "start": 2.958,
+                  "end": 8.958,
+                  "text": "这是制作过程。",
+                  "alignment": "measured_phrase_audio",
+                  "held_frame_seconds": 0,
+                  "voice_speed": 1,
+                  "captions": [
+                    {
+                      "start": 0.0,
+                      "end": 1.1878,
+                      "text": "这是制作过程。"
+                    }
+                  ]
+                },
+                {
+                  "index": 2,
+                  "start": 8.958,
+                  "end": 12.206,
+                  "text": "这是店内环境。感兴趣可以先收藏。",
+                  "alignment": "measured_phrase_audio",
+                  "held_frame_seconds": 0,
+                  "voice_speed": 1,
+                  "captions": [
+                    {
+                      "start": 0.0,
+                      "end": 1.2042,
+                      "text": "这是店内环境。"
+                    },
+                    {
+                      "start": 1.3442,
+                      "end": 3.1681,
+                      "text": "感兴趣可以先收藏。"
+                    }
+                  ]
+                }
+              ],
+              "plan": {
+                "schema_version": "2.0",
+                "goal": "attract",
+                "method": "evidence",
+                "synthetic": true,
+                "segments": [
+                  {
+                    "shot_id": "785397e553ac40f787aee5beaf8ddd40-0",
+                    "role": "product",
+                    "start": 0,
+                    "end": 6.0,
+                    "text": "街角咖啡，带你看看手冲咖啡。",
+                    "fact_ids": [
+                      "shop",
+                      "product"
+                    ],
+                    "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。",
+                    "speech_seconds": 2.887188,
+                    "minimum_seconds": 2.527
+                  },
+                  {
+                    "shot_id": "0d370453b76e4c6fbb87dcd0e890f366-0",
+                    "role": "process",
+                    "start": 0,
+                    "end": 6.0,
+                    "text": "这是制作过程。",
+                    "fact_ids": [],
+                    "reason": "制作过程覆盖目标结构；标签已人工确认；质量分 0.75。",
+                    "speech_seconds": 1.195479,
+                    "minimum_seconds": 1.093
+                  },
+                  {
+                    "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+                    "role": "interior",
+                    "start": 0,
+                    "end": 6.0,
+                    "text": "这是店内环境。感兴趣可以先收藏。",
+                    "fact_ids": [],
+                    "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。",
+                    "speech_seconds": 3.170167,
+                    "minimum_seconds": 2.767
+                  }
+                ],
+                "missing": [],
+                "renderable": true,
+                "timing_verified": true,
+                "warnings": [],
+                "limitations": [
+                  "质量分来自抽帧检测，不能证明语义正确。",
+                  "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+                ],
+                "assignment": {
+                  "algorithm": "speech_feasible_maximum_coverage",
+                  "score": 2.524,
+                  "quality_weight": 1,
+                  "duration_weight": 0.01
+                },
+                "coverage": {
+                  "roles": 3,
+                  "required_roles": 3,
+                  "facts": 2,
+                  "required_facts": 2
+                },
+                "estimated_seconds": 12.206
+              },
+              "acceptance": {
+                "playback": "pending_browser_check",
+                "human_audio_visual_quality": "pending",
+                "merchant_willingness": "not_measured"
+              },
+              "analysis": null,
+              "limitations": [
+                "画外音路径，不包含原声保留。",
+                "短句字幕按实际语音段测时，不是逐字对齐。",
+                "语义仍需确认；本地图文相似度不是商业事实验证。"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "C04",
+      "title": "短镜头组按素材顺序编排",
+      "elapsed_seconds": 0.016,
+      "result": {
+        "http": 200,
+        "plan": {
+          "schema_version": "2.0",
+          "goal": "visit",
+          "method": "chronological",
+          "synthetic": true,
+          "segments": [
+            {
+              "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+              "role": "interior",
+              "start": 0,
+              "end": 6.0,
+              "text": "这是店内环境。",
+              "fact_ids": [],
+              "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。",
+              "speech_seconds": 1.200792,
+              "minimum_seconds": 1.098
+            },
+            {
+              "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+              "role": "storefront",
+              "start": 0,
+              "end": 6.0,
+              "text": "门店地址：示例街道18号。到店前，请确认营业情况。",
+              "fact_ids": [
+                "address"
+              ],
+              "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。",
+              "speech_seconds": 5.182104,
+              "minimum_seconds": 4.472
+            }
+          ],
+          "missing": [
+            "商品旁白约2.9秒，至少需要2.5秒画面；当前最长可用2.0秒。请更换素材或调整非必要文案。",
+            "候选镜头还需能放下对应旁白；请换足够长的镜头或调整非必要文案，保留完整活动条件。"
+          ],
+          "renderable": false,
+          "timing_verified": true,
+          "warnings": [],
+          "limitations": [
+            "质量分来自抽帧检测，不能证明语义正确。",
+            "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+          ],
+          "assignment": {
+            "algorithm": "speech_feasible_maximum_coverage",
+            "score": 1.75,
+            "quality_weight": 1,
+            "duration_weight": 0.01
+          },
+          "coverage": {
+            "roles": 2,
+            "required_roles": 3,
+            "facts": 3,
+            "required_facts": 3
+          }
+        },
+        "render": null
+      }
+    },
+    {
+      "id": "C05",
+      "title": "复制文字中的Unicode换行",
+      "elapsed_seconds": 4.059,
+      "result": {
+        "plan_http": 200,
+        "plan": {
+          "schema_version": "2.0",
+          "goal": "visit",
+          "method": "evidence",
+          "synthetic": true,
+          "segments": [
+            {
+              "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+              "role": "storefront",
+              "start": 0,
+              "end": 6.0,
+              "text": "门店地址：示例路18号 99室。",
+              "fact_ids": [
+                "address"
+              ],
+              "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。",
+              "speech_seconds": 3.088438,
+              "minimum_seconds": 2.697
+            },
+            {
+              "shot_id": "785397e553ac40f787aee5beaf8ddd40-0",
+              "role": "product",
+              "start": 0,
+              "end": 6.0,
+              "text": "街角咖啡，带你看看手冲咖啡。",
+              "fact_ids": [
+                "shop",
+                "product"
+              ],
+              "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。",
+              "speech_seconds": 2.887188,
+              "minimum_seconds": 2.527
+            },
+            {
+              "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+              "role": "interior",
+              "start": 0,
+              "end": 6.0,
+              "text": "这是店内环境。到店前，请确认营业情况。",
+              "fact_ids": [],
+              "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。",
+              "speech_seconds": 3.852708,
+              "minimum_seconds": 3.345
+            }
+          ],
+          "missing": [],
+          "renderable": true,
+          "timing_verified": true,
+          "warnings": [],
+          "limitations": [
+            "质量分来自抽帧检测，不能证明语义正确。",
+            "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+          ],
+          "assignment": {
+            "algorithm": "speech_feasible_maximum_coverage",
+            "score": 2.6,
+            "quality_weight": 1,
+            "duration_weight": 0.01
+          },
+          "coverage": {
+            "roles": 3,
+            "required_roles": 3,
+            "facts": 3,
+            "required_facts": 3
+          }
+        },
+        "render": {
+          "id": "2242ce72fb6549d1b49fa5c14937d061",
+          "status": "done",
+          "message": "处理完成",
+          "created": 1793453981.7112567,
+          "result": {
+            "video": "/media/2242ce72fb6549d1b49fa5c14937d061/result.mp4",
+            "cover": "/media/2242ce72fb6549d1b49fa5c14937d061/cover.jpg",
+            "report": "/media/2242ce72fb6549d1b49fa5c14937d061/report.json",
+            "bundle": "/media/2242ce72fb6549d1b49fa5c14937d061/evidence.zip",
+            "metrics": {
+              "job_id": "2242ce72fb6549d1b49fa5c14937d061",
+              "created_at_utc": "2026-10-31T13:39:43.312177+00:00",
+              "synthetic": true,
+              "status": "technical_export_only",
+              "metadata": {
+                "duration": 10.075604,
+                "width": 720,
+                "height": 1280,
+                "audio": true,
+                "color_transfer": null,
+                "color_primaries": null,
+                "color_space": null,
+                "pixel_format": "yuv420p"
+              },
+              "elapsed_seconds": 1.289,
+              "api_calls": 0,
+              "api_direct_cost_cny": 0,
+              "total_cost_cny": null,
+              "cost_note": "本次本地运行没有付费API调用；电力、设备与人工成本未计量。",
+              "tts": "Windows Microsoft Huihui Desktop offline",
+              "timings": [
+                {
+                  "index": 0,
+                  "start": 0,
+                  "end": 3.166,
+                  "text": "门店地址：示例路18号 99室。",
+                  "alignment": "measured_phrase_audio",
+                  "held_frame_seconds": 0,
+                  "voice_speed": 1,
+                  "captions": [
+                    {
+                      "start": 0.0,
+                      "end": 3.0859,
+                      "text": "门店地址：示例路18号 99室。"
+                    }
+                  ]
+                },
+                {
+                  "index": 1,
+                  "start": 3.166,
+                  "end": 6.124,
+                  "text": "街角咖啡，带你看看手冲咖啡。",
+                  "alignment": "measured_phrase_audio",
+                  "held_frame_seconds": 0,
+                  "voice_speed": 1,
+                  "captions": [
+                    {
+                      "start": 0.0,
+                      "end": 2.8782,
+                      "text": "街角咖啡，带你看看手冲咖啡。"
+                    }
+                  ]
+                },
+                {
+                  "index": 2,
+                  "start": 6.124,
+                  "end": 10.052,
+                  "text": "这是店内环境。到店前，请确认营业情况。",
+                  "alignment": "measured_phrase_audio",
+                  "held_frame_seconds": 0,
+                  "voice_speed": 1,
+                  "captions": [
+                    {
+                      "start": 0.0,
+                      "end": 1.2042,
+                      "text": "这是店内环境。"
+                    },
+                    {
+                      "start": 1.3442,
+                      "end": 3.8483,
+                      "text": "到店前，请确认营业情况。"
+                    }
+                  ]
+                }
+              ],
+              "plan": {
+                "schema_version": "2.0",
+                "goal": "visit",
+                "method": "evidence",
+                "synthetic": true,
+                "segments": [
+                  {
+                    "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+                    "role": "storefront",
+                    "start": 0,
+                    "end": 6.0,
+                    "text": "门店地址：示例路18号 99室。",
+                    "fact_ids": [
+                      "address"
+                    ],
+                    "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。",
+                    "speech_seconds": 3.088438,
+                    "minimum_seconds": 2.697
+                  },
+                  {
+                    "shot_id": "785397e553ac40f787aee5beaf8ddd40-0",
+                    "role": "product",
+                    "start": 0,
+                    "end": 6.0,
+                    "text": "街角咖啡，带你看看手冲咖啡。",
+                    "fact_ids": [
+                      "shop",
+                      "product"
+                    ],
+                    "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。",
+                    "speech_seconds": 2.887188,
+                    "minimum_seconds": 2.527
+                  },
+                  {
+                    "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+                    "role": "interior",
+                    "start": 0,
+                    "end": 6.0,
+                    "text": "这是店内环境。到店前，请确认营业情况。",
+                    "fact_ids": [],
+                    "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。",
+                    "speech_seconds": 3.852708,
+                    "minimum_seconds": 3.345
+                  }
+                ],
+                "missing": [],
+                "renderable": true,
+                "timing_verified": true,
+                "warnings": [],
+                "limitations": [
+                  "质量分来自抽帧检测，不能证明语义正确。",
+                  "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+                ],
+                "assignment": {
+                  "algorithm": "speech_feasible_maximum_coverage",
+                  "score": 2.6,
+                  "quality_weight": 1,
+                  "duration_weight": 0.01
+                },
+                "coverage": {
+                  "roles": 3,
+                  "required_roles": 3,
+                  "facts": 3,
+                  "required_facts": 3
+                },
+                "estimated_seconds": 10.052
+              },
+              "acceptance": {
+                "playback": "pending_browser_check",
+                "human_audio_visual_quality": "pending",
+                "merchant_willingness": "not_measured"
+              },
+              "analysis": null,
+              "limitations": [
+                "画外音路径，不包含原声保留。",
+                "短句字幕按实际语音段测时，不是逐字对齐。",
+                "语义仍需确认；本地图文相似度不是商业事实验证。"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "C06",
+      "title": "损坏或不完整的项目导入",
+      "elapsed_seconds": 0.066,
+      "result": [
+        {
+          "input": 0,
+          "http": 400,
+          "response": {
+            "error": "项目格式无效，请导入正确的项目文件。"
+          }
+        },
+        {
+          "input": 1,
+          "http": 400,
+          "response": {
+            "error": "项目格式无效，请导入正确的项目文件。"
+          }
+        },
+        {
+          "input": 2,
+          "http": 400,
+          "response": {
+            "error": "请选择有效营销目标。"
+          }
+        },
+        {
+          "input": 3,
+          "http": 400,
+          "response": {
+            "error": "镜头时间或质量分数无效。"
+          }
+        },
+        {
+          "input": 4,
+          "http": 400,
+          "response": {
+            "error": "事实编号缺失或重复。"
+          }
+        },
+        {
+          "input": 5,
+          "http": 200,
+          "response": {
+            "name": "街角咖啡 · 模拟案例",
+            "goal": "visit",
+            "synthetic": true,
+            "facts": [
+              {
+                "id": "shop",
+                "kind": "shop",
+                "value": "街角咖啡",
+                "confirmed": true,
+                "source": "程序构造的模拟事实，不对应真实商户"
+              },
+              {
+                "id": "product",
+                "kind": "product",
+                "value": "手冲咖啡",
+                "confirmed": true,
+                "source": "程序构造的模拟事实，不对应真实商户"
+              },
+              {
+                "id": "address",
+                "kind": "address",
+                "value": "示例街道18号",
+                "confirmed": true,
+                "source": "程序构造的模拟事实，不对应真实商户"
+              },
+              {
+                "id": "offer",
+                "kind": "offer",
+                "value": "第二杯半价，限同款商品",
+                "confirmed": true,
+                "source": "程序构造的模拟事实，不对应真实商户"
+              },
+              {
+                "id": "validity",
+                "kind": "validity",
+                "value": "2026年10月31日至2026年11月7日",
+                "confirmed": true,
+                "source": "程序构造的模拟事实，不对应真实商户"
+              }
+            ],
+            "shots": [
+              {
+                "id": "07b40ea6445c45f69fca432ede5cdb32-0",
+                "media_id": "07b40ea6445c45f69fca432ede5cdb32",
+                "start": 0,
+                "end": 6.0,
+                "tags": [
+                  "interior"
+                ],
+                "confirmed": true,
+                "quality": 0.804,
+                "brightness": 190.58,
+                "sharpness": 1322.46,
+                "label_source": "synthetic_ground_truth",
+                "name": "模拟镜头 1 · 慢一点，也很好",
+                "thumb": "/media/07b40ea6445c45f69fca432ede5cdb32/thumb-0.jpg",
+                "frames": [
+                  {
+                    "time": 0.025,
+                    "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-0.jpg"
+                  },
+                  {
+                    "time": 0.5,
+                    "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-1.jpg"
+                  },
+                  {
+                    "time": 1.0,
+                    "url": "/media/07b40ea6445c45f69fca432ede5cdb32/thumb-0.jpg"
+                  },
+                  {
+                    "time": 1.2,
+                    "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-3.jpg"
+                  },
+                  {
+                    "time": 1.5,
+                    "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-4.jpg"
+                  },
+                  {
+                    "time": 2.0,
+                    "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-5.jpg"
+                  },
+                  {
+                    "time": 2.5,
+                    "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-6.jpg"
+                  },
+                  {
+                    "time": 3.0,
+                    "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-7.jpg"
+                  },
+                  {
+                    "time": 3.5,
+                    "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-8.jpg"
+                  },
+                  {
+                    "time": 4.0,
+                    "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-9.jpg"
+                  },
+                  {
+                    "time": 4.5,
+                    "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-10.jpg"
+                  },
+                  {
+                    "time": 4.8,
+                    "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-11.jpg"
+                  },
+                  {
+                    "time": 5.0,
+                    "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-12.jpg"
+                  },
+                  {
+                    "time": 5.5,
+                    "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-13.jpg"
+                  },
+                  {
+                    "time": 5.94,
+                    "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-14.jpg"
+                  }
+                ],
+                "analysis_version": 6,
+                "quality_issues": [],
+                "review_url": "/media/07b40ea6445c45f69fca432ede5cdb32/review.mp4",
+                "source_sha256": "8e2c74e25c0b4bf16b51d19c3934dd823943409287d4e1cced894b41c4845e8e",
+                "attestation": {
+                  "version": 2,
+                  "evidence_id": "07cc78130facc4f41b4218bacfd4d2ede70884b809018ad574f83d2a8adfc7c6",
+                  "tags": [
+                    "interior"
+                  ],
+                  "signature": "5be4eb76eefeba26fbaa664e2c23f630c978927ca70fc9b808ea4783736f26fe",
+                  "confirmed": true
+                }
+              },
+              {
+                "id": "785397e553ac40f787aee5beaf8ddd40-0",
+                "media_id": "785397e553ac40f787aee5beaf8ddd40",
+                "start": 0,
+                "end": 6.0,
+                "tags": [
+                  "product"
+                ],
+                "confirmed": true,
+                "quality": 0.79,
+                "brightness": 195.29,
+                "sharpness": 912.53,
+                "label_source": "synthetic_ground_truth",
+                "name": "模拟镜头 2 · 一杯手冲",
+                "thumb": "/media/785397e553ac40f787aee5beaf8ddd40/thumb-0.jpg",
+                "frames": [
+                  {
+                    "time": 0.025,
+                    "url": "/media/785397e553ac40f787aee5beaf8ddd40/frame-0-0.jpg"
+                  },
+                  {
+                    "time": 0.5,
+                    "url": "/media/785397e553ac40f787aee5beaf8ddd40/frame-0-1.jpg"
+                  },
+                  {
+                    "time": 1.0,
+                    "url": "/media/785397e553ac40f787aee5beaf8ddd40/thumb-0.jpg"
+                  },
+                  {
+                    "time": 1.2,
+                    "url": "/media/785397e553ac40f787aee5beaf8ddd40/frame-0-3.jpg"
+                  },
+                  {
+                    "time": 1.5,
+                    "url": "/media/785397e553ac40f787aee5beaf8ddd40/frame-0-4.jpg"
+                  },
+                  {
+                    "time": 2.0,
+                    "url": "/media/785397e553ac40f787aee5beaf8ddd40/frame-0-5.jpg"
+                  },
+                  {
+                    "time": 2.5,
+                    "url": "/media/785397e553ac40f787aee5beaf8ddd40/frame-0-6.jpg"
+                  },
+                  {
+                    "time": 3.0,
+                    "url": "/media/785397e553ac40f787aee5beaf8ddd40/frame-0-7.jpg"
+                  },
+                  {
+                    "time": 3.5,
+                    "url": "/media/785397e553ac40f787aee5beaf8ddd40/frame-0-8.jpg"
+                  },
+                  {
+                    "time": 4.0,
+                    "url": "/media/785397e553ac40f787aee5beaf8ddd40/frame-0-9.jpg"
+                  },
+                  {
+                    "time": 4.5,
+                    "url": "/media/785397e553ac40f787aee5beaf8ddd40/frame-0-10.jpg"
+                  },
+                  {
+                    "time": 4.8,
+                    "url": "/media/785397e553ac40f787aee5beaf8ddd40/frame-0-11.jpg"
+                  },
+                  {
+                    "time": 5.0,
+                    "url": "/media/785397e553ac40f787aee5beaf8ddd40/frame-0-12.jpg"
+                  },
+                  {
+                    "time": 5.5,
+                    "url": "/media/785397e553ac40f787aee5beaf8ddd40/frame-0-13.jpg"
+                  },
+                  {
+                    "time": 5.94,
+                    "url": "/media/785397e553ac40f787aee5beaf8ddd40/frame-0-14.jpg"
+                  }
+                ],
+                "analysis_version": 6,
+                "quality_issues": [],
+                "review_url": "/media/785397e553ac40f787aee5beaf8ddd40/review.mp4",
+                "source_sha256": "6836441992a8cacd3c51bdab335b41524f8716247807724b725f864199391656",
+                "attestation": {
+                  "version": 2,
+                  "evidence_id": "c1583abd41fe03e3585d31c1ad6aa88976a202b3a4ff2b941a32299f7792da8e",
+                  "tags": [
+                    "product"
+                  ],
+                  "signature": "f203f9428e97ed86040bd5a07b988ed83c395ea10091a604c36ae8adeae5dd3e",
+                  "confirmed": true
+                },
+                "product_binding": {
+                  "version": 2,
+                  "evidence_id": "c1583abd41fe03e3585d31c1ad6aa88976a202b3a4ff2b941a32299f7792da8e",
+                  "tags": [
+                    "product"
+                  ],
+                  "product": {
+                    "id": "product",
+                    "value": "手冲咖啡"
+                  },
+                  "signature": "77a3622230ca62f1dd553a2683f566aec1fe06d720117eb07c0616f35b5509b6",
+                  "confirmed": true,
+                  "fact_id": "product",
+                  "value": "手冲咖啡"
+                }
+              },
+              {
+                "id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+                "media_id": "ca53435da8024ba0aa5453fdc40a6a09",
+                "start": 0,
+                "end": 6.0,
+                "tags": [
+                  "storefront"
+                ],
+                "confirmed": true,
+                "quality": 0.826,
+                "brightness": 183.68,
+                "sharpness": 1313.21,
+                "label_source": "synthetic_ground_truth",
+                "name": "模拟镜头 3 · 街角咖啡",
+                "thumb": "/media/ca53435da8024ba0aa5453fdc40a6a09/thumb-0.jpg",
+                "frames": [
+                  {
+                    "time": 0.025,
+                    "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-0.jpg"
+                  },
+                  {
+                    "time": 0.5,
+                    "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-1.jpg"
+                  },
+                  {
+                    "time": 1.0,
+                    "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/thumb-0.jpg"
+                  },
+                  {
+                    "time": 1.2,
+                    "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-3.jpg"
+                  },
+                  {
+                    "time": 1.5,
+                    "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-4.jpg"
+                  },
+                  {
+                    "time": 2.0,
+                    "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-5.jpg"
+                  },
+                  {
+                    "time": 2.5,
+                    "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-6.jpg"
+                  },
+                  {
+                    "time": 3.0,
+                    "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-7.jpg"
+                  },
+                  {
+                    "time": 3.5,
+                    "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-8.jpg"
+                  },
+                  {
+                    "time": 4.0,
+                    "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-9.jpg"
+                  },
+                  {
+                    "time": 4.5,
+                    "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-10.jpg"
+                  },
+                  {
+                    "time": 4.8,
+                    "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-11.jpg"
+                  },
+                  {
+                    "time": 5.0,
+                    "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-12.jpg"
+                  },
+                  {
+                    "time": 5.5,
+                    "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-13.jpg"
+                  },
+                  {
+                    "time": 5.94,
+                    "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-14.jpg"
+                  }
+                ],
+                "analysis_version": 6,
+                "quality_issues": [],
+                "review_url": "/media/ca53435da8024ba0aa5453fdc40a6a09/review.mp4",
+                "source_sha256": "d8181b364ed5ea63ad0ec24f649c81b745b2e3e1029a951295e4cc6ac008036a",
+                "attestation": {
+                  "version": 2,
+                  "evidence_id": "a966cd7ca8f493ea84cacc3e2697c3f3b708be32509b3e316b8d7c9d8bfbaf46",
+                  "tags": [
+                    "storefront"
+                  ],
+                  "signature": "e16db39461ac3707b18d7c868c1184ea7500f4c872ea6085c5921d2f5050f1db",
+                  "confirmed": true
+                }
+              },
+              {
+                "id": "0d370453b76e4c6fbb87dcd0e890f366-0",
+                "media_id": "0d370453b76e4c6fbb87dcd0e890f366",
+                "start": 0,
+                "end": 6.0,
+                "tags": [
+                  "process"
+                ],
+                "confirmed": true,
+                "quality": 0.75,
+                "brightness": 207.94,
+                "sharpness": 773.39,
+                "label_source": "synthetic_ground_truth",
+                "name": "模拟镜头 4 · 认真做一杯",
+                "thumb": "/media/0d370453b76e4c6fbb87dcd0e890f366/thumb-0.jpg",
+                "frames": [
+                  {
+                    "time": 0.025,
+                    "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-0.jpg"
+                  },
+                  {
+                    "time": 0.5,
+                    "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-1.jpg"
+                  },
+                  {
+                    "time": 1.0,
+                    "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/thumb-0.jpg"
+                  },
+                  {
+                    "time": 1.2,
+                    "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-3.jpg"
+                  },
+                  {
+                    "time": 1.5,
+                    "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-4.jpg"
+                  },
+                  {
+                    "time": 2.0,
+                    "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-5.jpg"
+                  },
+                  {
+                    "time": 2.5,
+                    "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-6.jpg"
+                  },
+                  {
+                    "time": 3.0,
+                    "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-7.jpg"
+                  },
+                  {
+                    "time": 3.5,
+                    "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-8.jpg"
+                  },
+                  {
+                    "time": 4.0,
+                    "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-9.jpg"
+                  },
+                  {
+                    "time": 4.5,
+                    "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-10.jpg"
+                  },
+                  {
+                    "time": 4.8,
+                    "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-11.jpg"
+                  },
+                  {
+                    "time": 5.0,
+                    "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-12.jpg"
+                  },
+                  {
+                    "time": 5.5,
+                    "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-13.jpg"
+                  },
+                  {
+                    "time": 5.94,
+                    "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-14.jpg"
+                  }
+                ],
+                "analysis_version": 6,
+                "quality_issues": [],
+                "review_url": "/media/0d370453b76e4c6fbb87dcd0e890f366/review.mp4",
+                "source_sha256": "dc5dc5f0fc0a1391f0c0579765d73742ed899d7dbcf82827d37d8ea63e8ae4ea",
+                "attestation": {
+                  "version": 2,
+                  "evidence_id": "8b4761cded4fd606f7def78f3af233a09a2028f5dc391ac5a5581b1cfa6cd99c",
+                  "tags": [
+                    "process"
+                  ],
+                  "signature": "c515133225e3d688af83ad51b836ccdfd445e86e3067a95999d89c298fbf2a7e",
+                  "confirmed": true
+                }
+              }
+            ],
+            "warnings": [
+              "素材与事实已恢复；原剪辑方案需重新核对：素材、事实或确认状态已经变化。"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "C07",
+      "title": "过期促销不允许生成",
+      "elapsed_seconds": 0.015,
+      "result": {
+        "http": 200,
+        "renderable": false,
+        "missing": [
+          "活动已于2026-10-02结束，请更新有效期后再生成促销视频。",
+          "请先完成实际配音时长预检。"
+        ]
+      }
+    },
+    {
+      "id": "C08",
+      "title": "已保存方案在项目变更后重新核验",
+      "elapsed_seconds": 0.559,
+      "result": [
+        {
+          "change": "unchanged",
+          "http": 200,
+          "has_saved_edit": true,
+          "warnings": []
+        },
+        {
+          "change": "goal",
+          "http": 200,
+          "has_saved_edit": false,
+          "warnings": [
+            "素材与事实已恢复；原剪辑方案需重新核对：素材、事实或确认状态已经变化。"
+          ]
+        },
+        {
+          "change": "address",
+          "http": 200,
+          "has_saved_edit": false,
+          "warnings": [
+            "素材与事实已恢复；原剪辑方案需重新核对：素材、事实或确认状态已经变化。"
+          ]
+        },
+        {
+          "change": "source",
+          "http": 200,
+          "has_saved_edit": true,
+          "warnings": []
+        },
+        {
+          "change": "confirmation",
+          "http": 200,
+          "has_saved_edit": false,
+          "warnings": [
+            "素材与事实已恢复；原剪辑方案需重新核对：素材、事实或确认状态已经变化。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C09",
+      "title": "HLG标记素材应明确拒绝",
+      "elapsed_seconds": 0.97,
+      "result": {
+        "scope": "synthetic transfer-metadata detection only, not real HDR color calibration",
+        "fixture_metadata": {
+          "duration": 6.0,
+          "width": 720,
+          "height": 1280,
+          "audio": false,
+          "color_transfer": "arib-std-b67",
+          "color_primaries": "bt2020",
+          "color_space": "bt2020nc",
+          "pixel_format": "yuv420p10le"
+        },
+        "job": {
+          "id": "f6971da68a8b4f4a9f0b871577a012d3",
+          "status": "error",
+          "message": "检测到HDR（PQ/HLG）素材。当前版本请先导出为普通SDR / BT.709视频再上传，以保证颜色可核对。原文件已保留。",
+          "created": 1793454099.8201187
+        }
+      }
+    },
+    {
+      "id": "C10",
+      "title": "素材顺序模式末段旁白缺口提示是否准确",
+      "elapsed_seconds": 0.049,
+      "result": {
+        "last_role": "product",
+        "last_copy": "街角咖啡，带你看看手冲咖啡。到店前，请确认营业情况。",
+        "actual_natural_seconds": 5.54475,
+        "actual_minimum_seconds": 4.779,
+        "total_product_seconds": 4.0,
+        "reported_missing": [
+          "商品旁白约2.9秒，至少需要2.5秒画面；当前最长可用2.0秒。请更换素材或调整非必要文案。",
+          "候选镜头还需能放下对应旁白；请换足够长的镜头或调整非必要文案，保留完整活动条件。"
+        ]
+      }
+    },
+    {
+      "id": "C11",
+      "title": "同一杯商品的曝光变化是否被误封",
+      "elapsed_seconds": 2.95,
+      "result": {
+        "status": "done",
+        "summary": {
+          "succeeded": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "shots": [
+          {
+            "frames": 19,
+            "risk": null,
+            "candidate": {
+              "tags": [
+                "product"
+              ],
+              "suggested_tag": "product",
+              "confirmed": false,
+              "needs_review": true,
+              "abstained": false,
+              "review_reasons": [],
+              "description": "候选用途，需查看视频确认。",
+              "relative_scores": {
+                "product": 39.6527,
+                "interior": 37.3503,
+                "process": 34.7243,
+                "other": 33.2215,
+                "storefront": 32.9798,
+                "person": 32.2343
+              },
+              "margin": 2.3023,
+              "frame_votes": {
+                "product": 19
+              },
+              "threshold_note": "全部采样帧一致（至少3张）、logit差值≥1.5的启发式门槛；尚未用真实店铺数据校准。",
+              "frames": [
+                {
+                  "time": 0.025,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-0.jpg"
+                },
+                {
+                  "time": 0.5,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-1.jpg"
+                },
+                {
+                  "time": 1.0,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/thumb-0.jpg"
+                },
+                {
+                  "time": 1.5,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-3.jpg"
+                },
+                {
+                  "time": 1.6,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-4.jpg"
+                },
+                {
+                  "time": 2.0,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-5.jpg"
+                },
+                {
+                  "time": 2.5,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-6.jpg"
+                },
+                {
+                  "time": 3.0,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-7.jpg"
+                },
+                {
+                  "time": 3.5,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-8.jpg"
+                },
+                {
+                  "time": 4.0,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-9.jpg"
+                },
+                {
+                  "time": 4.5,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-10.jpg"
+                },
+                {
+                  "time": 5.0,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-11.jpg"
+                },
+                {
+                  "time": 5.5,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-12.jpg"
+                },
+                {
+                  "time": 6.0,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-13.jpg"
+                },
+                {
+                  "time": 6.4,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-14.jpg"
+                },
+                {
+                  "time": 6.5,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-15.jpg"
+                },
+                {
+                  "time": 7.0,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-16.jpg"
+                },
+                {
+                  "time": 7.5,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-17.jpg"
+                },
+                {
+                  "time": 7.94,
+                  "url": "/media/e83904d64c3a4e2d833c9de1a9f48abb/frame-0-18.jpg"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

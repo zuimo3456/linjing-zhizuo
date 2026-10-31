@@ -1,0 +1,66 @@
+{
+  "schema_version": "2.0",
+  "goal": "visit",
+  "method": "evidence",
+  "synthetic": true,
+  "segments": [
+    {
+      "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+      "role": "storefront",
+      "start": 0,
+      "end": 6.0,
+      "text": "门店地址：示例路18号 99室。",
+      "fact_ids": [
+        "address"
+      ],
+      "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。",
+      "speech_seconds": 3.088438,
+      "minimum_seconds": 2.697
+    },
+    {
+      "shot_id": "785397e553ac40f787aee5beaf8ddd40-0",
+      "role": "product",
+      "start": 0,
+      "end": 6.0,
+      "text": "街角咖啡，带你看看手冲咖啡。",
+      "fact_ids": [
+        "shop",
+        "product"
+      ],
+      "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。",
+      "speech_seconds": 2.887188,
+      "minimum_seconds": 2.527
+    },
+    {
+      "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+      "role": "interior",
+      "start": 0,
+      "end": 6.0,
+      "text": "这是店内环境。到店前，请确认营业情况。",
+      "fact_ids": [],
+      "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。",
+      "speech_seconds": 3.852708,
+      "minimum_seconds": 3.345
+    }
+  ],
+  "missing": [],
+  "renderable": true,
+  "timing_verified": true,
+  "warnings": [],
+  "limitations": [
+    "质量分来自抽帧检测，不能证明语义正确。",
+    "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+  ],
+  "assignment": {
+    "algorithm": "speech_feasible_maximum_coverage",
+    "score": 2.6,
+    "quality_weight": 1,
+    "duration_weight": 0.01
+  },
+  "coverage": {
+    "roles": 3,
+    "required_roles": 3,
+    "facts": 3,
+    "required_facts": 3
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "2.0",
+  "goal": "promo",
+  "method": "evidence",
+  "synthetic": true,
+  "segments": [
+    {
+      "shot_id": "c45c9de9d0be4c07b5c8ec13ef6c6b49-0",
+      "start": 0,
+      "end": 7.96,
+      "role": "product",
+      "text": "街角咖啡。手冲咖啡。第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享。2026年10月31日至2026年11月7日。",
+      "fact_ids": [
+        "shop",
+        "product",
+        "offer",
+        "validity"
+      ],
+      "reason": "2个已确认片段共同承载一段旁白。",
+      "speech_seconds": 12.559563,
+      "minimum_seconds": 10.724,
+      "clips": [
+        {
+          "shot_id": "c45c9de9d0be4c07b5c8ec13ef6c6b49-0",
+          "start": 0,
+          "end": 7.96
+        },
+        {
+          "shot_id": "552db5842c864ce2ab04ce6195b82042-0",
+          "start": 0,
+          "end": 7.96
+        }
+      ]
+    },
+    {
+      "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+      "start": 0,
+      "end": 6.0,
+      "role": "storefront",
+      "text": "门店地址：示例街道18号。参与前，请核对活动条件。",
+      "fact_ids": [
+        "address"
+      ],
+      "reason": "1个已确认片段共同承载一段旁白。",
+      "speech_seconds": 5.215229,
+      "minimum_seconds": 4.5
+    }
+  ],
+  "missing": [],
+  "renderable": true,
+  "timing_verified": true,
+  "warnings": [],
+  "limitations": [
+    "质量分来自抽帧检测，不能证明语义正确。",
+    "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+  ],
+  "assignment": {
+    "algorithm": "bounded_grouped_fallback",
+    "score": 1.586,
+    "max_clips_per_role": 4,
+    "max_total_clips": 10
+  },
+  "coverage": {
+    "roles": 2,
+    "required_roles": 2,
+    "facts": 5,
+    "required_facts": 5
+  }
+}

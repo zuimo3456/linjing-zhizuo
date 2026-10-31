@@ -1,0 +1,64 @@
+{
+  "schema_version": "2.0",
+  "goal": "attract",
+  "method": "evidence",
+  "synthetic": true,
+  "segments": [
+    {
+      "shot_id": "785397e553ac40f787aee5beaf8ddd40-0",
+      "role": "product",
+      "start": 0,
+      "end": 6.0,
+      "text": "街角咖啡，带你看看手冲咖啡。",
+      "fact_ids": [
+        "shop",
+        "product"
+      ],
+      "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。",
+      "speech_seconds": 2.887188,
+      "minimum_seconds": 2.527
+    },
+    {
+      "shot_id": "0d370453b76e4c6fbb87dcd0e890f366-0",
+      "role": "process",
+      "start": 0,
+      "end": 6.0,
+      "text": "这是制作过程。",
+      "fact_ids": [],
+      "reason": "制作过程覆盖目标结构；标签已人工确认；质量分 0.75。",
+      "speech_seconds": 1.195479,
+      "minimum_seconds": 1.093
+    },
+    {
+      "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+      "role": "interior",
+      "start": 0,
+      "end": 6.0,
+      "text": "这是店内环境。感兴趣可以先收藏。",
+      "fact_ids": [],
+      "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。",
+      "speech_seconds": 3.170167,
+      "minimum_seconds": 2.767
+    }
+  ],
+  "missing": [],
+  "renderable": true,
+  "timing_verified": true,
+  "warnings": [],
+  "limitations": [
+    "质量分来自抽帧检测，不能证明语义正确。",
+    "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+  ],
+  "assignment": {
+    "algorithm": "speech_feasible_maximum_coverage",
+    "score": 2.524,
+    "quality_weight": 1,
+    "duration_weight": 0.01
+  },
+  "coverage": {
+    "roles": 3,
+    "required_roles": 3,
+    "facts": 2,
+    "required_facts": 2
+  }
+}
