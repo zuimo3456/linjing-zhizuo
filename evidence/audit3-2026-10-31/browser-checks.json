@@ -1,0 +1,51 @@
+{
+  "T09": {
+    "selected": [
+      "A3_01_plain.mp4",
+      "A3_02_corrupt.mp4",
+      "A3_03_after_corrupt.mp4"
+    ],
+    "status": "视频无法读取或处理，可能已损坏或格式不兼容。请重新导出为MP4再试。错误编号：fe7681ac2b16",
+    "uploaded": [
+      "A3_01_plain.mp4"
+    ],
+    "unlocked": true
+  },
+  "T08": {
+    "hdr": {
+      "currentTime": 4.577997,
+      "duration": 9.515604,
+      "paused": true,
+      "readyState": 4,
+      "src": "http://127.0.0.1:4180/media/a603cf5499364802a6f002b43180cfa6/result.mp4#t=3.6,4.4"
+    },
+    "sdr": {
+      "currentTime": 4.588172,
+      "duration": 9.515604,
+      "paused": true,
+      "readyState": 4,
+      "src": "http://127.0.0.1:4180/media/d9d27151679b43b18daa7538dee82232/result.mp4#t=3.6,4.4"
+    }
+  },
+  "T10": {
+    "before": [
+      "01 / 门头 / 路线",
+      "02 / 商品",
+      "03 / 环境"
+    ],
+    "reordered": [
+      "01 / 商品",
+      "02 / 门头 / 路线",
+      "03 / 环境"
+    ],
+    "download": "Canceled by the in-app browser; no export-file restoration claimed.",
+    "saveMessage": "项目已保存到本机，重新打开页面可恢复。",
+    "afterReloadPlan": "每段文案都会关联事实，每个镜头都会关联用途。",
+    "regenerated": [
+      "01 / 门头 / 路线",
+      "02 / 商品",
+      "03 / 环境"
+    ],
+    "savedPlanRestored": false
+  }
+}

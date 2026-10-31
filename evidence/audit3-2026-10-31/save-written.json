@@ -1,0 +1,13 @@
+{
+  "sha256": "35b498cfb1c878acbb2de9126983645140b43fe6f68b345b6ec8674d51e80491",
+  "keys": [
+    "name",
+    "goal",
+    "synthetic",
+    "facts",
+    "shots",
+    "warnings"
+  ],
+  "contains_plan": false,
+  "contains_segments": false
+}

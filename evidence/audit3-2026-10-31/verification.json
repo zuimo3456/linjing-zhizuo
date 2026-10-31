@@ -1,0 +1,285 @@
+{
+  "date": "2026-10-31",
+  "functional_commit": "a8c5fb2",
+  "regression_tests": {
+    "total": 70,
+    "passed": 70
+  },
+  "case_count": 10,
+  "new_defects": [
+    "T07",
+    "T09",
+    "T10"
+  ],
+  "known_limits_reproduced": [
+    "T02",
+    "T06",
+    "T08"
+  ],
+  "normal_controls": [
+    "T01",
+    "T03",
+    "T04",
+    "T05"
+  ],
+  "hdr_roundtrip_reference_RGB_MAE": 7.129,
+  "source_integrity": {
+    "total": 49,
+    "unchanged": 49,
+    "checks": [
+      {
+        "path": "邻镜智作.docx",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作_团队重启与研究路线_2026-09-23.md",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作项目前期调研任务书.docx",
+        "unchanged": true
+      },
+      {
+        "path": "Logo候选\\邻镜智作-logo-方案1-镜头店铺.png",
+        "unchanged": true
+      },
+      {
+        "path": "Logo候选\\邻镜智作-logo-方案2-邻里定位.png",
+        "unchanged": true
+      },
+      {
+        "path": "Logo候选\\邻镜智作-logo-方案3-镜像播放.png",
+        "unchanged": true
+      },
+      {
+        "path": "Logo候选\\邻镜智作-logo-方案4-灵感胶片.png",
+        "unchanged": true
+      },
+      {
+        "path": "立项申报\\立项申报流程及常见问题说明.docx",
+        "unchanged": true
+      },
+      {
+        "path": "立项申报\\立项申请书(创新训练类)--邻镜智作.docx",
+        "unchanged": true
+      },
+      {
+        "path": "立项申报\\立项申请指南.docx",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\.gitignore",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\d8b197c63f0c4b7f9da7ace89893ba52-Scenes.csv",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\index.html",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\README.md",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\requirements.txt",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\server.py",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\THIRD_PARTY.md",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\video_analysis.py",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\aligned-frame-14.png",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\aligned-frame-8.png",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\analysis-proxy.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\asr-source.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\browser-e2e-frame-14.png",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\browser-e2e-frame-2.png",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\browser-e2e-frame-8.png",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\speech-16k-mono.pcm",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\voice-check.mp3",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\voice-check.srt",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\voiceover-frame-2.png",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\analysis-test\\voiceover-frame-7.png",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\assets\\haarcascade_frontalface_default.xml",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\assets\\THIRD_PARTY.md",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\docs\\acceptance.md",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\docs\\sample-card-template.md",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\docs\\team-plan.md",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-02c64a8f75404611a3554d3cd4606578.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-12b9361aab69415d9ecbf291c4234ad3.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-2e2a654fe8b244d89fdbb9862703887b.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-431d97ec6daa4ff280d7aa01f685e41d.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-73491a1b70694fa794eb69b9e5394b5f.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-747e839257494fcbb5706cb357771f67.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-7fbd09e0dc7547729ac8674ea9ca169d.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\exports\\linjing-ea5f51c150d74b9da6d13f7293a4ae35.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\uploads\\03477dcd15d5484288d9c78cc866cc49.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\uploads\\6945cec10eba45eebe5920d57c87d7ff.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\uploads\\b0150efcebce42c7a5e3f04125ac5bc3.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\uploads\\b92c067236cb4f29a0b2191bb9ea7c6a.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\uploads\\d8b197c63f0c4b7f9da7ace89893ba52.mp4",
+        "unchanged": true
+      },
+      {
+        "path": "邻镜智作-mvp\\uploads\\e57772fe35a84aba9a4ea9d75c0efd93.mp4",
+        "unchanged": true
+      }
+    ]
+  },
+  "saved_project_restored_hash_and_mtime": true,
+  "primary_save_note": "Temporarily saved the synthetic order test through UI; original bytes and mtime restored after checking no independent save occurred.",
+  "application_changed": false,
+  "paid_api_calls": 0,
+  "scope": "Synthetic and CC0-derived technical examples, not real shop accuracy or user acceptance",
+  "fixtures": [
+    {
+      "name": "A3_01_plain.mp4",
+      "bytes": 185911,
+      "sha256": "f87038b5eb1b3bed0b8d53c689481a64bbc01247362435e161db5627ad940fb3"
+    },
+    {
+      "name": "A3_02_corrupt.mp4",
+      "bytes": 36,
+      "sha256": "6e757d2dfeb598d4defa0b13d2f843cbf395ad2ba942c0942bea08ffc294ecf8"
+    },
+    {
+      "name": "A3_03_after_corrupt.mp4",
+      "bytes": 185911,
+      "sha256": "f87038b5eb1b3bed0b8d53c689481a64bbc01247362435e161db5627ad940fb3"
+    },
+    {
+      "name": "A3_dissolve_cat.mp4",
+      "bytes": 657228,
+      "sha256": "3d2165524cb02a0c6e1dacd1999f5b3608f5eb73176c89ecc154e9c3f8240379"
+    },
+    {
+      "name": "A3_HDR_PQ.mp4",
+      "bytes": 21906,
+      "sha256": "790c94125ab0e9c4297dc1752714903edaddaaed17fa44c1817a684777a04fbb"
+    },
+    {
+      "name": "A3_rotate90.mp4",
+      "bytes": 185911,
+      "sha256": "19207e2c3f6ce4e64e3e253f5ac080263fcd02b904d32c0b7686eb3d8599f973"
+    },
+    {
+      "name": "A3_rotate90_matrix.mp4",
+      "bytes": 185911,
+      "sha256": "5c610f376792baa311e44b0a8ec41f5648a3d439600886a021066ac1f99d73f4"
+    },
+    {
+      "name": "A3_timestamp_offset.mp4",
+      "bytes": 185923,
+      "sha256": "b3e29e47e9f49281b7e6e0672c11824c9346305f4f9e730605f17690b3d80802"
+    },
+    {
+      "name": "A3_two_seconds.mp4",
+      "bytes": 148261,
+      "sha256": "92acbd8e0a6a8642911232840a7da7561cb729373024a84d459bc21aaeaa484f"
+    },
+    {
+      "name": "A3_vfr.mp4",
+      "bytes": 186687,
+      "sha256": "901c57e3a3d2632eddb6b92775b3effdcf2b77ed27e8fa0608e31c36f6186ce8"
+    }
+  ]
+}

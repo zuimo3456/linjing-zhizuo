@@ -1,0 +1,378 @@
+{
+  "date": "2026-10-31",
+  "scope": "Exploratory technical fixtures; no claim of real-merchant accuracy",
+  "cases": [
+    {
+      "id": "T01",
+      "title": "正常咖啡素材完整链路对照",
+      "elapsed_seconds": 3.303,
+      "result": {
+        "asset": {
+          "id": "bde1ac4bac1c441690b730332a84d0a5",
+          "meta": {
+            "duration": 8.0,
+            "width": 600,
+            "height": 400,
+            "audio": false
+          },
+          "coverage": {
+            "total_seconds": 8.0,
+            "analyzed_end": 8.0,
+            "short_or_unusable_intervals": [],
+            "truncated": false,
+            "sampling": "boundary_and_20_50_80_percent; not_full_semantic_coverage"
+          },
+          "intervals": [
+            {
+              "start": 0,
+              "end": 8.0,
+              "quality": 0.92,
+              "issues": []
+            }
+          ]
+        },
+        "plan_ready": true,
+        "video": "/media/d9d27151679b43b18daa7538dee82232/result.mp4",
+        "metadata": {
+          "duration": 9.515604,
+          "width": 720,
+          "height": 1280,
+          "audio": true
+        }
+      }
+    },
+    {
+      "id": "T03",
+      "title": "有效视频带非零起始时间戳",
+      "elapsed_seconds": 0.844,
+      "result": {
+        "source_timing": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "start_time": "5.000000",
+              "duration": "8.000000"
+            }
+          ],
+          "format": {
+            "start_time": "5.000000",
+            "duration": "8.000000"
+          }
+        },
+        "review_timing": {
+          "format": {
+            "start_time": "0.000000",
+            "duration": "8.000000"
+          }
+        },
+        "asset": {
+          "id": "c36ffd34abf646fc9ee7078def41fbb2",
+          "meta": {
+            "duration": 8.0,
+            "width": 600,
+            "height": 400,
+            "audio": false
+          },
+          "coverage": {
+            "total_seconds": 8.0,
+            "analyzed_end": 8.0,
+            "short_or_unusable_intervals": [],
+            "truncated": false,
+            "sampling": "boundary_and_20_50_80_percent; not_full_semantic_coverage"
+          },
+          "intervals": [
+            {
+              "start": 0,
+              "end": 8.0,
+              "quality": 0.92,
+              "issues": []
+            }
+          ]
+        },
+        "mapping": {
+          "source_start": 0,
+          "proxy_start": 0,
+          "time_scale": 1
+        },
+        "plan_ready": true
+      }
+    },
+    {
+      "id": "T04",
+      "title": "手机式可变帧率素材",
+      "elapsed_seconds": 2.766,
+      "result": {
+        "asset": {
+          "id": "f958d8d425824f548558612d181cbce0",
+          "meta": {
+            "duration": 5.983333,
+            "width": 600,
+            "height": 400,
+            "audio": false
+          },
+          "coverage": {
+            "total_seconds": 5.983333,
+            "analyzed_end": 5.983,
+            "short_or_unusable_intervals": [],
+            "truncated": false,
+            "sampling": "boundary_and_20_50_80_percent; not_full_semantic_coverage"
+          },
+          "intervals": [
+            {
+              "start": 0,
+              "end": 5.983,
+              "quality": 0.92,
+              "issues": []
+            }
+          ]
+        },
+        "plan_ready": true,
+        "video": "/media/17406e7b524d498caa2ffab5eaf1fea3/result.mp4",
+        "metadata": {
+          "duration": 9.515604,
+          "width": 720,
+          "height": 1280,
+          "audio": true
+        }
+      }
+    },
+    {
+      "id": "T06",
+      "title": "多段清晰短素材合计足够但单段不足",
+      "elapsed_seconds": 1.013,
+      "result": {
+        "confirmed_product_clips": 2,
+        "individual_seconds": 2,
+        "total_product_seconds": 4,
+        "plan_ready": false,
+        "missing": [
+          "商品旁白约2.9秒，至少需要2.5秒画面；当前最长可用2.0秒。请更换素材或调整非必要文案。",
+          "候选镜头还需能放下对应旁白；请换足够长的镜头或调整非必要文案，保留完整活动条件。"
+        ]
+      }
+    },
+    {
+      "id": "T07",
+      "title": "导入的商品名称含回车字符",
+      "elapsed_seconds": 4.252,
+      "result": {
+        "confirmed_value": "手冲\rA1咖啡",
+        "plan_text": "街角咖啡，带你看看手冲\rA1咖啡。",
+        "plan_ready": true,
+        "render_status": "exported",
+        "video": "/media/30066525eff64fc18b19e96af5259bfa/result.mp4"
+      }
+    },
+    {
+      "id": "T08",
+      "title": "正确转换为PQ的10bit HDR素材",
+      "elapsed_seconds": 3.308,
+      "result": {
+        "source_color": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "pix_fmt": "yuv420p10le",
+              "color_space": "bt2020nc",
+              "color_transfer": "smpte2084",
+              "color_primaries": "bt2020"
+            }
+          ]
+        },
+        "asset": {
+          "id": "b470102f52184161988e69d31f927c54",
+          "meta": {
+            "duration": 8.0,
+            "width": 600,
+            "height": 400,
+            "audio": false
+          },
+          "coverage": {
+            "total_seconds": 8.0,
+            "analyzed_end": 8.0,
+            "short_or_unusable_intervals": [],
+            "truncated": false,
+            "sampling": "boundary_and_20_50_80_percent; not_full_semantic_coverage"
+          },
+          "intervals": [
+            {
+              "start": 0,
+              "end": 8.0,
+              "quality": 0.677,
+              "issues": []
+            }
+          ]
+        },
+        "plan_ready": true,
+        "video": "/media/a603cf5499364802a6f002b43180cfa6/result.mp4"
+      }
+    },
+    {
+      "id": "T05",
+      "title": "手机90度旋转元数据",
+      "elapsed_seconds": 2.887,
+      "result": {
+        "source_display_matrix": {
+          "streams": [
+            {
+              "side_data_list": [
+                {
+                  "side_data_type": "Display Matrix",
+                  "displaymatrix": "\n00000000:            0      -65536           0\n00000001:        65536           0           0\n00000002:            0           0  1073741824\n",
+                  "rotation": 90
+                }
+              ]
+            }
+          ]
+        },
+        "asset": {
+          "id": "07bca3fe9713416d8f73c5516529149f",
+          "meta": {
+            "duration": 8.0,
+            "width": 600,
+            "height": 400,
+            "audio": false
+          },
+          "coverage": {
+            "total_seconds": 8.0,
+            "analyzed_end": 8.0,
+            "short_or_unusable_intervals": [],
+            "truncated": false,
+            "sampling": "boundary_and_20_50_80_percent; not_full_semantic_coverage"
+          },
+          "intervals": [
+            {
+              "start": 0,
+              "end": 8.0,
+              "quality": 0.92,
+              "issues": []
+            }
+          ]
+        },
+        "review": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "width": 720,
+              "height": 1080,
+              "sample_aspect_ratio": "1:1"
+            }
+          ]
+        },
+        "plan_ready": true,
+        "video": "/media/6785f5341ce343feb9033d21e4e6ff78/result.mp4"
+      }
+    },
+    {
+      "id": "T02",
+      "title": "溶解转场内混入猫画面",
+      "elapsed_seconds": 4.317,
+      "result": {
+        "asset": {
+          "id": "f535b6d75f8041ad802d9d059dcdd1d1",
+          "meta": {
+            "duration": 8.0,
+            "width": 600,
+            "height": 400,
+            "audio": false
+          },
+          "coverage": {
+            "total_seconds": 8.0,
+            "analyzed_end": 8.0,
+            "short_or_unusable_intervals": [],
+            "truncated": false,
+            "sampling": "boundary_and_20_50_80_percent; not_full_semantic_coverage"
+          },
+          "intervals": [
+            {
+              "start": 0,
+              "end": 8.0,
+              "quality": 0.92,
+              "issues": []
+            }
+          ]
+        },
+        "local_candidates": [
+          {
+            "start": 0,
+            "end": 8.0,
+            "candidate": {
+              "tags": [
+                "product"
+              ],
+              "suggested_tag": "product",
+              "confirmed": false,
+              "needs_review": true,
+              "abstained": false,
+              "review_reasons": [],
+              "description": "候选用途，需查看视频确认。",
+              "relative_scores": {
+                "product": 39.561,
+                "interior": 37.4812,
+                "process": 34.6709,
+                "other": 33.3764,
+                "storefront": 32.9777,
+                "person": 32.4146
+              },
+              "margin": 2.0797,
+              "frame_votes": {
+                "product": 5
+              },
+              "threshold_note": "全部采样帧一致（至少3张）、logit差值≥1.5的启发式门槛；尚未用真实店铺数据校准。",
+              "frames": [
+                {
+                  "time": 0.025,
+                  "url": "/media/f535b6d75f8041ad802d9d059dcdd1d1/frame-0-0.jpg"
+                },
+                {
+                  "time": 1.6,
+                  "url": "/media/f535b6d75f8041ad802d9d059dcdd1d1/frame-0-1.jpg"
+                },
+                {
+                  "time": 4.0,
+                  "url": "/media/f535b6d75f8041ad802d9d059dcdd1d1/thumb-0.jpg"
+                },
+                {
+                  "time": 6.4,
+                  "url": "/media/f535b6d75f8041ad802d9d059dcdd1d1/frame-0-3.jpg"
+                },
+                {
+                  "time": 7.94,
+                  "url": "/media/f535b6d75f8041ad802d9d059dcdd1d1/frame-0-4.jpg"
+                }
+              ]
+            },
+            "frames": [
+              {
+                "time": 0.025,
+                "url": "/media/f535b6d75f8041ad802d9d059dcdd1d1/frame-0-0.jpg"
+              },
+              {
+                "time": 1.6,
+                "url": "/media/f535b6d75f8041ad802d9d059dcdd1d1/frame-0-1.jpg"
+              },
+              {
+                "time": 4.0,
+                "url": "/media/f535b6d75f8041ad802d9d059dcdd1d1/thumb-0.jpg"
+              },
+              {
+                "time": 6.4,
+                "url": "/media/f535b6d75f8041ad802d9d059dcdd1d1/frame-0-3.jpg"
+              },
+              {
+                "time": 7.94,
+                "url": "/media/f535b6d75f8041ad802d9d059dcdd1d1/frame-0-4.jpg"
+              }
+            ]
+          }
+        ],
+        "confirmation_note": "After AI clears confirmations, explicitly reconfirmed purpose and product through API to simulate human oversight; not automatic AI confirmation",
+        "plan_ready": true,
+        "video": "/media/5971ab605fd54909a0a18abeae23a61a/result.mp4"
+      }
+    }
+  ]
+}

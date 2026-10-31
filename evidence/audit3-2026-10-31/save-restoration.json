@@ -1,0 +1,12 @@
+{
+  "restored": true,
+  "mtime_restored": true,
+  "test_saved_keys": [
+    "name",
+    "goal",
+    "synthetic",
+    "facts",
+    "shots",
+    "warnings"
+  ]
+}
