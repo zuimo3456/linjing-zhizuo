@@ -1,0 +1,57 @@
+{
+  "schema_version": "2.0",
+  "goal": "promo",
+  "method": "evidence",
+  "synthetic": true,
+  "segments": [
+    {
+      "shot_id": "22ca0870a17049bebda63ad3825534ca-0",
+      "role": "product",
+      "start": 0,
+      "end": 8.0,
+      "text": "街角咖啡。手冲咖啡。单杯‮19‬元。2026年10月31日至2026年11月7日。",
+      "fact_ids": [
+        "shop",
+        "product",
+        "offer",
+        "validity"
+      ],
+      "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.79。",
+      "speech_seconds": 7.225292,
+      "minimum_seconds": 6.203
+    },
+    {
+      "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+      "role": "storefront",
+      "start": 0,
+      "end": 6.0,
+      "text": "门店地址：示例街道18号。参与前，请核对活动条件。",
+      "fact_ids": [
+        "address"
+      ],
+      "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。",
+      "speech_seconds": 5.215229,
+      "minimum_seconds": 4.5
+    }
+  ],
+  "missing": [],
+  "renderable": true,
+  "timing_verified": true,
+  "warnings": [],
+  "limitations": [
+    "质量分来自抽帧检测，不能证明语义正确。",
+    "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+  ],
+  "assignment": {
+    "algorithm": "speech_feasible_maximum_coverage",
+    "score": 1.756,
+    "quality_weight": 1,
+    "duration_weight": 0.01
+  },
+  "coverage": {
+    "roles": 2,
+    "required_roles": 2,
+    "facts": 5,
+    "required_facts": 5
+  }
+}

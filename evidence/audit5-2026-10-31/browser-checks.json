@@ -1,0 +1,33 @@
+{
+  "direction": {
+    "codepoints": [
+      "5355",
+      "676f",
+      "202e",
+      "31",
+      "39",
+      "202c",
+      "5143"
+    ],
+    "raw": "单杯‮19‬元",
+    "planCanRender": true,
+    "observedFormPrice": "91元",
+    "observedSubtitlePrice": "19元"
+  },
+  "ordinary": "单杯19元",
+  "delayed": {
+    "confirmed": false,
+    "text": "counter-video-delay2.mp4\n0.0–8.0s · 质量 10/100\n\n抽帧不完整，请重新上传检查\n\n查看本段视频与抽帧\n门头 / 路线\n商品\n制作过程\n环境\n人物\n待判断 / 其他\n我已查看并确认标签\n画面商品确实是：手冲咖啡\n移除这个镜头",
+    "message": "这段素材不能使用：抽帧不完整，请重新上传检查"
+  },
+  "group": {
+    "names": [
+      "模拟镜头 3 · 街角咖啡",
+      "eight-0.mp4",
+      "one-second-product.mp4",
+      "eight-1.mp4"
+    ],
+    "plan": "01 / 门头 / 路线\n↑↓\n\n门店地址：示例街道18号。参与前，请核对活动条件。\n\n门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。\n事实引用：门店地址\n还差这些证据\n商品（包含结尾引导语）旁白约15.2秒，至少需要13.0秒画面；当前2个可组合片段合计9.0秒。请补充画面或调整非必要文案，保留完整活动条件。",
+    "renderDisabled": true
+  }
+}

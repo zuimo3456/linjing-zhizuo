@@ -1,0 +1,55 @@
+{
+  "schema_version": "2.0",
+  "goal": "visit",
+  "method": "evidence",
+  "synthetic": true,
+  "segments": [
+    {
+      "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+      "role": "storefront",
+      "start": 0,
+      "end": 6.0,
+      "text": "门店地址：示例街道18号。",
+      "fact_ids": [
+        "address"
+      ],
+      "reason": "门头 / 路线覆盖目标结构；标签已人工确认；质量分 0.83。",
+      "speech_seconds": 2.531979,
+      "minimum_seconds": 2.226
+    },
+    {
+      "shot_id": "07b40ea6445c45f69fca432ede5cdb32-0",
+      "role": "interior",
+      "start": 0,
+      "end": 6.0,
+      "text": "这是店内环境。到店前，请确认营业情况。",
+      "fact_ids": [],
+      "reason": "环境覆盖目标结构；标签已人工确认；质量分 0.80。",
+      "speech_seconds": 3.852708,
+      "minimum_seconds": 3.345
+    }
+  ],
+  "missing": [
+    "请补拍或确认商品镜头，建议稳定竖拍5—8秒",
+    "候选镜头还需能放下对应旁白；请换足够长的镜头或调整非必要文案，保留完整活动条件。"
+  ],
+  "renderable": false,
+  "timing_verified": true,
+  "warnings": [],
+  "limitations": [
+    "质量分来自抽帧检测，不能证明语义正确。",
+    "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+  ],
+  "assignment": {
+    "algorithm": "speech_feasible_maximum_coverage",
+    "score": 1.75,
+    "quality_weight": 1,
+    "duration_weight": 0.01
+  },
+  "coverage": {
+    "roles": 2,
+    "required_roles": 3,
+    "facts": 3,
+    "required_facts": 3
+  }
+}
