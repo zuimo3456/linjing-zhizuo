@@ -1,0 +1,327 @@
+{
+  "date": "2026-10-31",
+  "scope": "Technical fixtures, not merchant efficacy",
+  "cases": [
+    {
+      "id": "normal_valid_signed_render",
+      "passed": true,
+      "evidence": {
+        "video": "/media/bdc1908e5aed4f90b6dde886ee64ef8e/result.mp4",
+        "duration": 9.515604
+      }
+    },
+    {
+      "id": "D01_source_rebind_blocked",
+      "passed": true,
+      "evidence": {
+        "plan_ready": false,
+        "render_status": 400,
+        "message": "镜头不存在、未确认、质量过低或被重复使用。"
+      }
+    },
+    {
+      "id": "D02_expired_reverse_unknown_dates",
+      "passed": true,
+      "evidence": [
+        [
+          "活动已于2020-01-02结束，请更新有效期后再生成促销视频。",
+          "请先完成实际配音时长预检。"
+        ],
+        [
+          "活动结束日期早于开始日期，请更正有效期。",
+          "请先完成实际配音时长预检。"
+        ],
+        [
+          "有效期无法识别，请填写明确日期，例如2027年5月1日至2027年5月7日。",
+          "请先完成实际配音时长预检。"
+        ]
+      ]
+    },
+    {
+      "id": "D05_feasible_long_candidate_selected",
+      "passed": true,
+      "evidence": {
+        "short_quality": 0.79,
+        "long_quality": 0.451,
+        "selected": {
+          "shot_id": "3fb9a6dfc0444ec6beab2c352b6ebce9-0",
+          "role": "product",
+          "start": 0,
+          "end": 8.0,
+          "text": "街角咖啡，带你看看手冲咖啡。",
+          "fact_ids": [
+            "shop",
+            "product"
+          ],
+          "reason": "商品覆盖目标结构；标签已人工确认；质量分 0.45。",
+          "speech_seconds": 2.887188,
+          "minimum_seconds": 2.527
+        },
+        "video": "/media/22278b644039402db9b1ef6cd1230cb3/result.mp4"
+      }
+    },
+    {
+      "id": "D06_all_thirty_scenes_covered",
+      "passed": true,
+      "evidence": {
+        "shots": 30,
+        "coverage": {
+          "total_seconds": 45.0,
+          "analyzed_end": 45.0,
+          "short_or_unusable_intervals": [
+            [
+              0.0,
+              1.5
+            ],
+            [
+              1.5,
+              3.0
+            ],
+            [
+              3.0,
+              4.5
+            ],
+            [
+              4.5,
+              6.0
+            ],
+            [
+              6.0,
+              7.5
+            ],
+            [
+              7.5,
+              9.0
+            ],
+            [
+              9.0,
+              10.5
+            ],
+            [
+              10.5,
+              12.0
+            ],
+            [
+              12.0,
+              13.5
+            ],
+            [
+              13.5,
+              15.0
+            ],
+            [
+              15.0,
+              16.5
+            ],
+            [
+              16.5,
+              18.0
+            ],
+            [
+              18.0,
+              19.5
+            ],
+            [
+              19.5,
+              21.0
+            ],
+            [
+              21.0,
+              22.5
+            ],
+            [
+              22.5,
+              24.0
+            ],
+            [
+              24.0,
+              25.5
+            ],
+            [
+              25.5,
+              27.0
+            ],
+            [
+              27.0,
+              28.5
+            ],
+            [
+              28.5,
+              30.0
+            ],
+            [
+              30.0,
+              31.5
+            ],
+            [
+              31.5,
+              33.0
+            ],
+            [
+              33.0,
+              34.5
+            ],
+            [
+              34.5,
+              36.0
+            ],
+            [
+              36.0,
+              37.5
+            ],
+            [
+              37.5,
+              39.0
+            ],
+            [
+              39.0,
+              40.5
+            ],
+            [
+              40.5,
+              42.0
+            ],
+            [
+              42.0,
+              43.5
+            ],
+            [
+              43.5,
+              45.0
+            ]
+          ],
+          "truncated": false,
+          "sampling": "boundaries_and_max_0.5_second_gap; not_full_semantic_coverage"
+        }
+      }
+    },
+    {
+      "id": "D07_boundary_flash_not_accepted",
+      "passed": true,
+      "evidence": {
+        "intervals": [
+          [
+            0.0,
+            2.5
+          ],
+          [
+            2.5,
+            2.75
+          ],
+          [
+            2.75,
+            8.0
+          ]
+        ],
+        "suspect": [
+          {
+            "id": "a2ad127613374c34a57ad012c8d31ed0-1",
+            "issues": [
+              "镜头短于1秒，请与原素材核对或重新拍摄"
+            ],
+            "candidate": [
+              "other"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "D08_gray_source_independently_rejected",
+      "passed": true,
+      "evidence": {
+        "quality": 0.1,
+        "issues": [
+          "画面接近纯色，没有可辨认的内容"
+        ],
+        "confirmation_error": "这段素材不能使用：画面接近纯色，没有可辨认的内容"
+      }
+    },
+    {
+      "id": "D09_speech_too_long_rejected_before_render",
+      "passed": true,
+      "evidence": {
+        "ready": false,
+        "missing": [
+          "商品旁白约8.7秒，至少需要7.4秒画面；当前最长可用6.0秒。请更换素材或调整非必要文案。",
+          "候选镜头还需能放下对应旁白；请换足够长的镜头或调整非必要文案，保留完整活动条件。"
+        ]
+      }
+    },
+    {
+      "id": "D10_unused_missing_source_no_longer_blocks",
+      "passed": true,
+      "evidence": {
+        "warning": [
+          "原视频文件缺失，请重新上传这段素材，或移除未使用的镜头。"
+        ],
+        "video": "/media/772bfd48caa846748c33f1af206512a4/result.mp4"
+      }
+    },
+    {
+      "id": "D11_complete_process_interval_preserved",
+      "passed": true,
+      "evidence": {
+        "source_seconds": 6.0,
+        "render_seconds": 6.0,
+        "video": "/media/360cf654c12948f39281e23bb3d31423/result.mp4"
+      }
+    },
+    {
+      "id": "D12_friendly_corrupt_upload_message",
+      "passed": true,
+      "evidence": "视频无法读取或处理，可能已损坏或格式不兼容。请重新导出为MP4再试。错误编号：0cefea413ced"
+    },
+    {
+      "id": "empty_project_remains_actionable",
+      "passed": true,
+      "evidence": [
+        "请确认店名",
+        "请确认商品",
+        "请确认地址",
+        "请补拍或确认门头 / 路线镜头，建议稳定竖拍5—8秒",
+        "请补拍或确认商品镜头，建议稳定竖拍5—8秒",
+        "请补拍或确认环境镜头，建议稳定竖拍5—8秒",
+        "请先完成实际配音时长预检。"
+      ]
+    },
+    {
+      "id": "migration_preserves_facts_revokes_old_confirmation",
+      "passed": true,
+      "evidence": {
+        "facts_preserved": true,
+        "confirmations_revoked": true,
+        "shots": 4,
+        "warnings": [
+          "素材分析已升级并列出完整镜头，请重新查看和确认；旧确认未自动沿用。"
+        ]
+      }
+    },
+    {
+      "id": "migration_restores_legacy_tail_coverage",
+      "passed": true,
+      "evidence": {
+        "before": 24,
+        "after": 30,
+        "covered_end": 45
+      }
+    },
+    {
+      "id": "browser_number_roundtrip_keeps_confirmation",
+      "passed": true,
+      "evidence": {
+        "ready_after_browser_number_roundtrip": true
+      }
+    },
+    {
+      "id": "normal_valid_promo_with_long_source",
+      "passed": true,
+      "evidence": {
+        "validity": "2026年10月31日至2026年11月7日",
+        "video": "/media/02917bea3fd141ccb7ae8ebf82aab665/result.mp4",
+        "duration": 13.311604
+      }
+    }
+  ],
+  "audit_origin_date": "2026-10-30"
+}

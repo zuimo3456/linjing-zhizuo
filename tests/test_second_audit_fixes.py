@@ -26,7 +26,7 @@ class SecondAuditFixes(unittest.TestCase):
         from evidence_store import reconcile
         for flag in (True,'素材重新分析失败：伪造的旧标志'):
             p=sample();p['shots']=p['shots'][:1];p['shots'][0]['unavailable']=flag
-            with patch('evidence_store.canonical',return_value=({'quality':.8,'quality_issues':[]},'a'*64)):
+            with patch('evidence_store.canonical',return_value=({**p['shots'][0],'quality':.8,'quality_issues':[]},'a'*64)):
                 out=reconcile(p)
             self.assertNotIn('unavailable',out['shots'][0])
 

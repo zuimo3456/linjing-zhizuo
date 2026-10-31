@@ -46,14 +46,14 @@ class Handler(BaseHTTPRequestHandler):
             if path=='/api/health':
                 from local_vision import status as local_status
                 return self.reply({'ok':bool(FFMPEG and FFPROBE),'ffmpeg':bool(FFMPEG),'ffprobe':bool(FFPROBE),
-                                   'version':'local-ai-prototype-4','vision_configured':False,'local_vision':local_status(),'tts':'offline_windows'})
+                                   'version':'local-ai-prototype-5','vision_configured':False,'local_vision':local_status(),'tts':'offline_windows'})
             if path.startswith('/api/jobs/'):
                 with jobs_lock: item=jobs.get(path.rsplit('/',1)[-1])
                 return self.reply(item or {'error':'任务不存在'},200 if item else 404)
             if path=='/api/saved':
                 saved=DATA/'saved-project.json'
-                from evidence_store import reconcile
-                return self.reply(reconcile(json.loads(saved.read_text(encoding='utf8'))) if saved.exists() else None)
+                from session_store import restore_session
+                return self.reply(restore_session(json.loads(saved.read_text(encoding='utf8'))) if saved.exists() else None)
             if path=='/api/benchmark':
                 p=ROOT/'evidence/constraint-results.json'
                 return self.reply(json.loads(p.read_text(encoding='utf8')) if p.exists() else {'status':'not_run'})
@@ -119,8 +119,11 @@ class Handler(BaseHTTPRequestHandler):
                 return self.reply(job(lambda jid,progress:create_demo(progress)),202)
             obj=self.body()
             if path=='/api/reconcile':
-                from evidence_store import reconcile
-                return self.reply(reconcile(obj['project']))
+                from session_store import restore_session
+                return self.reply(restore_session(obj['project']))
+            if path=='/api/export-project':
+                from session_store import prepare_session
+                return self.reply(prepare_session(obj['project'],obj.get('plan'),obj.get('method','evidence')))
             if path=='/api/confirm-shot':
                 from evidence_store import confirm
                 return self.reply({'shot':confirm(obj['project'],obj['shot_id'],obj['mode'],obj['checked'] is True)})
@@ -146,9 +149,8 @@ class Handler(BaseHTTPRequestHandler):
                     return render(current,checked,jid,progress)
                 return self.reply(job(render_checked),202)
             if path=='/api/save':
-                from evidence_store import reconcile
-                p=reconcile(obj['project']);(DATA/'saved-project.json').write_text(json.dumps(p,ensure_ascii=False,indent=2),encoding='utf8')
-                return self.reply({'saved':True})
+                from session_store import save_session
+                return self.reply(save_session(obj['project'],obj.get('plan'),obj.get('method','evidence')))
             if path=='/api/context':
                 from vision_adapter import context_pack
                 return self.reply(context_pack(obj['project']))

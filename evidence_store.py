@@ -86,10 +86,11 @@ def reconcile(project):
                         asset=analyze(src,mid,asset.get('name','已保存素材'))
                         temporary=cache.with_suffix('.building.json')
                         temporary.write_text(json.dumps(asset,ensure_ascii=False,indent=2),encoding='utf8');temporary.replace(cache)
-            except (ValueError,OSError):
+            except (ValueError,OSError) as e:
                 failed_sources.add(mid)
-                for old in old_shots:old.update(confirmed=False,product_binding=None,unavailable='素材重新分析失败，请重新上传此素材；其他素材仍可使用。')
-                warnings.append('部分素材无法更新分析，请重新上传这些素材。');continue
+                issue=str(e) if isinstance(e,ValueError) and 'HDR' in str(e) else '素材重新分析失败，请重新上传此素材；其他素材仍可使用。'
+                for old in old_shots:old.update(confirmed=False,product_binding=None,unavailable=issue)
+                warnings.append('部分素材无法更新分析，请查看对应素材提示后处理。');continue
         if needs_refresh or any(s.get('analysis_version')!=ANALYSIS_VERSION for s in old_shots):
             previous={s['id']:s for s in old_shots};fresh=[]
             for source in asset['shots']:
@@ -105,6 +106,10 @@ def reconcile(project):
         if shot.get('media_id') in failed_sources:continue
         try:
             source,sha=canonical(shot)
+            from review_store import semantic_issue
+            risk=semantic_issue(source)
+            if risk:shot['semantic_issue']=risk;shot.update(confirmed=False,product_binding=None)
+            else:shot.pop('semantic_issue',None)
             shot.update({k:deepcopy(source[k]) for k in ('quality','quality_issues','frames','thumb','analysis_version','review_url') if k in source})
             shot['source_sha256']=sha;shot.pop('unavailable',None)
             if shot.get('quality_issues'):
@@ -129,6 +134,9 @@ def confirm(project,shot_id,mode,checked):
         else:shot['product_binding']=None
         return shot
     source,sha=canonical(shot,verify_hash=True)
+    from review_store import semantic_issue
+    risk=semantic_issue(source)
+    if risk:raise ValueError(risk)
     if source.get('quality_issues'):raise ValueError('这段素材不能使用：'+'；'.join(source['quality_issues']))
     shot['source_sha256']=sha
     if mode=='purpose':
@@ -142,11 +150,15 @@ def confirm(project,shot_id,mode,checked):
     return shot
 
 def verify_selected(project,plan):
+    from planner import segment_clips
     shots={s['id']:s for s in project['shots']}
     product=next((f for f in project['facts'] if f['kind']=='product' and f.get('confirmed') is True),None)
     for seg in plan['segments']:
-        s=shots[seg['shot_id']];source,sha=canonical(s,verify_hash=True)
-        if s.get('source_sha256')!=sha or not valid_attestation(s):raise ValueError('镜头确认已失效，请重新核对原视频。')
-        if source.get('quality_issues'):raise ValueError('选中的画面质量不合格，请更换素材。')
-        if seg['role']=='product' and (not product or not valid_attestation(s,product)):
-            raise ValueError('商品对应确认与原视频不一致，请重新确认。')
+        for clip in segment_clips(seg):
+            s=shots[clip['shot_id']];source,sha=canonical(s,verify_hash=True)
+            from review_store import semantic_issue
+            if semantic_issue(source):raise ValueError(semantic_issue(source))
+            if s.get('source_sha256')!=sha or not valid_attestation(s):raise ValueError('镜头确认已失效，请重新核对原视频。')
+            if source.get('quality_issues'):raise ValueError('选中的画面质量不合格，请更换素材。')
+            if seg['role']=='product' and (not product or not valid_attestation(s,product)):
+                raise ValueError('商品对应确认与原视频不一致，请重新确认。')

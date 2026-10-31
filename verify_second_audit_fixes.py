@@ -5,7 +5,7 @@ from demo import create_demo
 from media import ROOT,DATA,FFMPEG,run,ANALYSIS_VERSION
 from planner import caption_for,CTA
 
-OUT=ROOT/'evidence/fixes2-2026-10-31';OUT.mkdir(exist_ok=True)
+OUT=ROOT/(sys.argv[sys.argv.index('--out')+1] if '--out' in sys.argv else 'evidence/fixes2-2026-10-31');OUT.mkdir(parents=True,exist_ok=True)
 BASE='http://127.0.0.1:4180'
 ONLY=sys.argv[sys.argv.index('--only')+1] if '--only' in sys.argv else None
 records=json.loads((OUT/'results.json').read_text(encoding='utf8'))['cases'] if ONLY and (OUT/'results.json').exists() else []

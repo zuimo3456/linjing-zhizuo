@@ -2,13 +2,14 @@
 from __future__ import annotations
 import json, shutil, subprocess, tempfile, time, uuid
 from pathlib import Path
-from planner import validate_plan
+from planner import validate_plan,segment_clips,segment_seconds
+from text_rules import display_text
 
 ROOT=Path(__file__).resolve().parent
 DATA=ROOT/'data'
 FFMPEG=shutil.which('ffmpeg')
 FFPROBE=shutil.which('ffprobe')
-ANALYSIS_VERSION=5
+ANALYSIS_VERSION=6
 
 def square_pixel_scale(width,height):
     # reset_sar includes the input display aspect ratio in proportional scaling.
@@ -58,13 +59,17 @@ def probe(path):
     video=next((s for s in obj.get('streams',[]) if s['codec_type']=='video'),None)
     if not video: raise ValueError('文件中没有视频轨道。')
     return {'duration':float(obj['format']['duration']),'width':video['width'],'height':video['height'],
-            'audio':any(s['codec_type']=='audio' for s in obj['streams'])}
+            'audio':any(s['codec_type']=='audio' for s in obj['streams']),
+            'color_transfer':video.get('color_transfer'),'color_primaries':video.get('color_primaries'),
+            'color_space':video.get('color_space'),'pixel_format':video.get('pix_fmt')}
 
 def analyze(path, media_id, name):
     import cv2
     from scenedetect import detect, ContentDetector
     meta=probe(path)
     if not 1<=meta['duration']<=180: raise ValueError('每段素材需要在1—180秒之间。')
+    if meta.get('color_transfer') in ('smpte2084','arib-std-b67'):
+        raise ValueError('检测到HDR（PQ/HLG）素材。当前版本请先导出为普通SDR / BT.709视频再上传，以保证颜色可核对。原文件已保留。')
     folder=DATA/media_id; folder.mkdir(exist_ok=True,parents=True)
     preview=folder/'review.mp4';temporary=folder/'review-building.mp4'
     try:
@@ -91,7 +96,8 @@ def analyze(path, media_id, name):
         for i,(a,b) in enumerate(chunks):
             sampled=[];qualities=[];lights=[];sharps=[];issues=[]
             if b-a<1:issues.append('镜头短于1秒，请与原素材核对或重新拍摄')
-            times=sorted(set(round(t,4) for t in (a+min(.025,(b-a)*.05),a+(b-a)*.2,a+(b-a)*.5,a+(b-a)*.8,b-min(.06,(b-a)*.05))))
+            times=sorted(set(round(t,4) for t in [a+min(.025,(b-a)*.05),a+(b-a)*.2,a+(b-a)*.5,a+(b-a)*.8,b-min(.06,(b-a)*.05)]+
+                             [a+n*.5 for n in range(1,int((b-a)/.5)+1) if a+n*.5<b-.06]))
             for j,at in enumerate(times):
                 cap.set(cv2.CAP_PROP_POS_MSEC,at*1000); ok,frame=cap.read()
                 if not ok:continue
@@ -120,7 +126,7 @@ def analyze(path, media_id, name):
             'source_sha256':sha,'source_bytes':stat.st_size,'source_mtime_ns':stat.st_mtime_ns,
             'coverage':{'total_seconds':meta['duration'],'analyzed_end':max((s['end'] for s in shots),default=0),
                         'short_or_unusable_intervals':[[s['start'],s['end']] for s in shots if s['quality_issues']],
-                        'truncated':False,'sampling':'boundary_and_20_50_80_percent; not_full_semantic_coverage'}}
+                        'truncated':False,'sampling':'boundaries_and_max_0.5_second_gap; not_full_semantic_coverage'}}
 
 def ass_time(t):
     cent=round(t*100); s,c=divmod(cent,100); m,s=divmod(s,60); h,m=divmod(m,60)
@@ -134,7 +140,8 @@ def write_ass(path, text, duration, synthetic, cues=None):
     # Lines are capped at 15 Chinese characters for a 720-wide mobile frame.
     body=''
     for cue in cues or [{'start':0,'end':duration,'text':text}]:
-        lines=[escape(cue['text'][i:i+14]) for i in range(0,len(cue['text']),14)]
+        literal=display_text(cue['text'])
+        lines=[escape(literal[i:i+14]) for i in range(0,len(literal),14)]
         if len(lines)>2:raise ValueError('单条字幕超过两行，请缩短文案。')
         body+=f'Dialogue: 0,{ass_time(cue["start"])},{ass_time(cue["end"])},Main,,0,0,0,,'+r'\N'.join(lines)+'\n'
     if synthetic:
@@ -150,22 +157,38 @@ def render(project,plan,job_id,progress):
         for i,seg in enumerate(segments):
             progress(f'合成第 {i+1}/{len(segments)} 段旁白与画面')
             from audio import synthesize
-            length=seg['end']-seg['start']
+            clips=segment_clips(seg);length=segment_seconds(seg)
             wav,spoken,cues,speed=synthesize(seg['text'],tmp,f'seg-{i}',length)
-            duration=length if seg['role']=='process' else min(length,max(2.5,spoken+.08))
+            duration=length if seg['role']=='process' or seg.get('clips') else min(length,max(2.5,spoken+.08))
             ass=tmp/f'caption-{i}.ass';write_ass(ass,seg['text'],duration,project.get('synthetic') is True,cues)
             ass_filter=str(ass).replace('\\','/').replace(':',r'\:')
-            source=DATA/shots[seg['shot_id']]['media_id']/'source.mp4'
+            source=DATA/shots[seg['shot_id']]['media_id']/'source.mp4';source_start=seg['start']
+            if seg.get('clips'):
+                visuals=[]
+                for ci,clip in enumerate(clips):
+                    original=DATA/shots[clip['shot_id']]['media_id']/'source.mp4';visual=tmp/f'visual-{i}-{ci}.mp4'
+                    filt=square_pixel_scale(720,1280)+',pad=720:1280:(ow-iw)/2:(oh-ih)/2:color=0x17251e,setsar=1,fps=25'
+                    run([FFMPEG,'-y','-v','error','-ss',clip['start'],'-t',clip['end']-clip['start'],'-i',original,
+                         '-an','-vf',filt,'-c:v','libx264','-preset','veryfast','-crf','22','-threads','2','-pix_fmt','yuv420p',visual])
+                    visuals.append(visual)
+                listing=tmp/f'visual-{i}.txt';listing.write_text('\n'.join(f"file '{v.as_posix()}'" for v in visuals),encoding='utf8')
+                source=tmp/f'group-{i}.mp4';source_start=0
+                run([FFMPEG,'-y','-v','error','-f','concat','-safe','0','-i',listing,'-c','copy',source])
             if not source.is_file(): raise ValueError('本地素材缺失，请重新上传。')
             dest=tmp/f'part-{i}.mp4'
             # Preserve full frame. Refuse excessive narration instead of freezing.
             vf=square_pixel_scale(720,1280)+f',pad=720:1280:(ow-iw)/2:(oh-ih)/2:color=0x17251e,setsar=1,fps=25,ass=filename=\'{ass_filter}\''
-            run([FFMPEG,'-y','-v','error','-ss',seg['start'],'-t',length,'-i',source,'-i',wav,'-vf',vf,
+            run([FFMPEG,'-y','-v','error','-ss',source_start,'-t',length,'-i',source,'-i',wav,'-vf',vf,
                  '-map','0:v:0','-map','1:a:0','-af','apad','-t',duration,'-c:v','libx264','-preset','veryfast','-crf','22',
                  '-threads','2','-c:a','aac','-ar','48000','-ac','2','-pix_fmt','yuv420p',dest])
             rendered.append(dest); timings.append({'index':i,'start':round(cursor,3),'end':round(cursor+duration,3),'text':seg['text'],
                                                     'alignment':'measured_phrase_audio','held_frame_seconds':0,
                                                     'voice_speed':speed,'captions':cues})
+            if seg.get('clips'):
+                offset=cursor;mapping=[]
+                for clip in clips:
+                    stop=offset+clip['end']-clip['start'];mapping.append({**clip,'output_start':round(offset,3),'output_end':round(stop,3)});offset=stop
+                timings[-1]['visual_clips']=mapping
             cursor+=duration
         if cursor>45.000001: raise ValueError('成片总时长超过45秒，请减少片段或缩短画面区间。')
         listing=tmp/'parts.txt'; listing.write_text('\n'.join(f"file '{p.as_posix()}'" for p in rendered),encoding='utf8')

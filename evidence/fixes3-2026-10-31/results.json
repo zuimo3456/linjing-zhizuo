@@ -1,0 +1,280 @@
+{
+  "date": "2026-10-31",
+  "scope": "Actual local API/model/video checks, not merchant accuracy. HDR is explicitly rejected, not tone-mapped.",
+  "passed": 6,
+  "total": 6,
+  "cases": [
+    {
+      "id": "T07_text",
+      "passed": true,
+      "elapsed_seconds": 4.248,
+      "result": {
+        "copy": "街角咖啡，带你看看手冲 A1咖啡。",
+        "video": "/media/aae9e3472bde49a6ae2eddcb3f1b5b74/result.mp4",
+        "raw_fact_preserved": "手冲\rA1咖啡"
+      }
+    },
+    {
+      "id": "T10_session",
+      "passed": true,
+      "elapsed_seconds": 1.071,
+      "result": {
+        "order": [
+          "product",
+          "storefront",
+          "interior"
+        ],
+        "roundtrip_preserved": true,
+        "changed_product_invalidates_plan": true,
+        "warnings": [
+          "商品对应确认已失效，请查看画面后重新确认。",
+          "素材与事实已恢复；原剪辑方案需重新核对：素材、事实或确认状态已经变化。"
+        ]
+      }
+    },
+    {
+      "id": "T02_semantic",
+      "passed": true,
+      "elapsed_seconds": 9.603,
+      "result": {
+        "risk": "约2.50秒出现明显内容切换，模型同时给出无关/人物风险。请使用不含混入内容的区间或重新上传；当前区间不能直接确认。",
+        "frames": 19,
+        "sample_times": [
+          0.025,
+          0.5,
+          1.0,
+          1.5,
+          1.6,
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          5.5,
+          6.0,
+          6.4,
+          6.5,
+          7.0,
+          7.5,
+          7.94
+        ],
+        "candidate": {
+          "tags": [
+            "other"
+          ],
+          "suggested_tag": "product",
+          "confirmed": false,
+          "needs_review": true,
+          "abstained": true,
+          "review_reasons": [
+            "约2.50秒出现明显内容切换，模型同时给出无关/人物风险。请使用不含混入内容的区间或重新上传；当前区间不能直接确认。"
+          ],
+          "description": "约2.50秒出现明显内容切换，模型同时给出无关/人物风险。请使用不含混入内容的区间或重新上传；当前区间不能直接确认。",
+          "relative_scores": {
+            "product": 39.4906,
+            "interior": 37.113,
+            "process": 34.5619,
+            "other": 33.4374,
+            "storefront": 32.7876,
+            "person": 32.5616
+          },
+          "margin": 2.3777,
+          "frame_votes": {
+            "product": 18,
+            "person": 1
+          },
+          "threshold_note": "全部采样帧一致（至少3张）、logit差值≥1.5的启发式门槛；尚未用真实店铺数据校准。",
+          "semantic_issue": "约2.50秒出现明显内容切换，模型同时给出无关/人物风险。请使用不含混入内容的区间或重新上传；当前区间不能直接确认。",
+          "frames": [
+            {
+              "time": 0.025,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-0.jpg"
+            },
+            {
+              "time": 0.5,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-1.jpg"
+            },
+            {
+              "time": 1.0,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/thumb-0.jpg"
+            },
+            {
+              "time": 1.5,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-3.jpg"
+            },
+            {
+              "time": 1.6,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-4.jpg"
+            },
+            {
+              "time": 2.0,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-5.jpg"
+            },
+            {
+              "time": 2.5,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-6.jpg"
+            },
+            {
+              "time": 3.0,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-7.jpg"
+            },
+            {
+              "time": 3.5,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-8.jpg"
+            },
+            {
+              "time": 4.0,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-9.jpg"
+            },
+            {
+              "time": 4.5,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-10.jpg"
+            },
+            {
+              "time": 5.0,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-11.jpg"
+            },
+            {
+              "time": 5.5,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-12.jpg"
+            },
+            {
+              "time": 6.0,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-13.jpg"
+            },
+            {
+              "time": 6.4,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-14.jpg"
+            },
+            {
+              "time": 6.5,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-15.jpg"
+            },
+            {
+              "time": 7.0,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-16.jpg"
+            },
+            {
+              "time": 7.5,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-17.jpg"
+            },
+            {
+              "time": 7.94,
+              "url": "/media/dc596e0be1de420ca71994c1fe1de2b8/frame-0-18.jpg"
+            }
+          ]
+        },
+        "confirmation_http": 400,
+        "stale_render_http": 400,
+        "clean_alternative_video": "/media/81340f7c281d469598eb2551efdd9bc5/result.mp4"
+      }
+    },
+    {
+      "id": "T06_short_group",
+      "passed": true,
+      "elapsed_seconds": 4.07,
+      "result": {
+        "group": {
+          "shot_id": "8db79c638d654d109fee6847be6391b9-0",
+          "start": 0,
+          "end": 2.0,
+          "role": "product",
+          "text": "街角咖啡，带你看看手冲咖啡。",
+          "fact_ids": [
+            "shop",
+            "product"
+          ],
+          "reason": "2个已确认片段共同承载一段旁白。",
+          "speech_seconds": 2.887188,
+          "minimum_seconds": 2.527,
+          "clips": [
+            {
+              "shot_id": "8db79c638d654d109fee6847be6391b9-0",
+              "start": 0,
+              "end": 2.0
+            },
+            {
+              "shot_id": "c6376b7baa9e40a98f16a43192fdadd5-0",
+              "start": 0,
+              "end": 2.0
+            }
+          ]
+        },
+        "timing": {
+          "index": 1,
+          "start": 2.606,
+          "end": 6.606,
+          "text": "街角咖啡，带你看看手冲咖啡。",
+          "alignment": "measured_phrase_audio",
+          "held_frame_seconds": 0,
+          "voice_speed": 1,
+          "captions": [
+            {
+              "start": 0.0,
+              "end": 2.8782,
+              "text": "街角咖啡，带你看看手冲咖啡。"
+            }
+          ],
+          "visual_clips": [
+            {
+              "shot_id": "8db79c638d654d109fee6847be6391b9-0",
+              "start": 0,
+              "end": 2.0,
+              "output_start": 2.606,
+              "output_end": 4.606
+            },
+            {
+              "shot_id": "c6376b7baa9e40a98f16a43192fdadd5-0",
+              "start": 0,
+              "end": 2.0,
+              "output_start": 4.606,
+              "output_end": 6.606
+            }
+          ]
+        },
+        "video": "/media/f6b5e44b9c8c4029a4af6f87243195f7/result.mp4",
+        "metadata": {
+          "duration": 10.555604,
+          "width": 720,
+          "height": 1280,
+          "audio": true,
+          "color_transfer": null,
+          "color_primaries": null,
+          "color_space": null,
+          "pixel_format": "yuv420p"
+        },
+        "second_unconfirmed_http": 400,
+        "repeated_clip_http": 400
+      }
+    },
+    {
+      "id": "normal_fade_and_AI",
+      "passed": true,
+      "elapsed_seconds": 4.798,
+      "result": {
+        "recovered_good_ranges": [
+          [
+            0.167,
+            8.0
+          ]
+        ],
+        "not_falsely_semantic_blocked": true,
+        "video": "/media/53a0b4713e3a4c85923ddc160be1981d/result.mp4"
+      }
+    },
+    {
+      "id": "T08_HDR",
+      "passed": true,
+      "elapsed_seconds": 2.905,
+      "result": {
+        "HDR_rejected": true,
+        "message": "检测到HDR（PQ/HLG）素材。当前版本请先导出为普通SDR / BT.709视频再上传，以保证颜色可核对。原文件已保留。",
+        "legacy_HDR_message": "检测到HDR（PQ/HLG）素材。当前版本请先导出为普通SDR / BT.709视频再上传，以保证颜色可核对。原文件已保留。",
+        "SDR_positive_video": "/media/185cfd00fd0f45ff9ffec395a24d78f0/result.mp4",
+        "automatic_tone_mapping": false
+      }
+    }
+  ]
+}

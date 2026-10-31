@@ -127,6 +127,24 @@ def frame_paths(shot):
         paths.append(path);evidence.append({'time':frame['time'],'url':f'/media/{mid}/{name}'})
     return paths,evidence
 
+def semantic_risk(paths,frames,rows):
+    """Flag visible content change toward unsupported classes, not a calibrated truth test."""
+    import numpy as np
+    from PIL import Image
+    keys=list(PROMPTS);winners=[keys[int(np.argmax(r))] for r in rows]
+    supported=[i for i,k in enumerate(winners) if k not in ('person','other')]
+    if len(supported)<2 or not any(k in ('person','other') for k in winners):return None
+    with Image.open(paths[supported[0]]) as im:reference=np.asarray(im.convert('RGB').resize((32,32)),dtype=float)
+    for i,k in enumerate(winners):
+        if k not in ('person','other'):continue
+        with Image.open(paths[i]) as im:current=np.asarray(im.convert('RGB').resize((32,32)),dtype=float)
+        a=reference.mean(axis=2);b=current.mean(axis=2);a=a-a.mean();b=b-b.mean()
+        norm=float(np.linalg.norm(a)*np.linalg.norm(b));correlation=float((a*b).sum())/norm if norm>1 else 0
+        # Exposure/fade changes alone preserve structure and should not be a semantic veto.
+        if float(np.abs(current-reference).mean())/255>.12 and correlation<.85:
+            return f'约{frames[i]["time"]:.2f}秒出现明显内容切换，模型同时给出无关/人物风险。请使用不含混入内容的区间或重新上传；当前区间不能直接确认。'
+    return None
+
 def analyze_project(project,progress=lambda _:None):
     from planner import clean_project
     global _engine,_load_failure,_engine_fingerprint
@@ -154,8 +172,17 @@ def analyze_project(project,progress=lambda _:None):
         else:
             try:
                 paths,frames=frame_paths(shot);rows=[]
-                for start in range(0,len(paths),3):rows.extend(_engine.score(paths[start:start+3]))
-                candidate=decide(rows,shot['quality']);outcome='succeeded'
+                from review_store import load_review,store_review
+                cached=load_review(shot)
+                if cached:candidate=deepcopy(cached['candidate'])
+                else:
+                    for start in range(0,len(paths),3):rows.extend(_engine.score(paths[start:start+3]))
+                    candidate=decide(rows,shot['quality'])
+                    risk=semantic_risk(paths,frames,rows)
+                    if risk:candidate.update(semantic_issue=risk,tags=['other'],abstained=True,description=risk,review_reasons=[risk])
+                    # Persist only canonical, real media; direct structural tests have no source record.
+                    if shot.get('analysis_version') and shot.get('source_sha256'):store_review(shot,candidate)
+                shot['semantic_issue']=candidate.get('semantic_issue');outcome='succeeded'
             except Exception:
                 problem='本镜头抽帧或分析失败，请重新上传此素材；其他镜头继续分析。';outcome='failed'
         counts[outcome]+=1
@@ -174,6 +201,6 @@ def analyze_project(project,progress=lambda _:None):
     p['vision_analysis']={'engine':REPO,'revision':REVISION,'weights_sha256':WEIGHT_SHA,
                           'runtime':'onnxruntime CPU','elapsed_seconds':round(time.perf_counter()-begun,3),'remote_requests':0,
                           'shots':len(p['shots']),'summary':counts,'failures':failures,'status':'partial' if counts['failed'] or counts['skipped'] else 'complete',
-                          'prompts':PROMPTS,'thresholds':{'min_frames':3,'margin':1.5,'agreement':'all','sampling':'includes_boundaries; not_full_semantic_coverage'},
+                          'prompts':PROMPTS,'thresholds':{'min_frames':3,'margin':1.5,'agreement':'all','sampling':'max_0.5_second_gap; not_full_semantic_coverage'},
                           'scope':'用途候选；不识别价格、地址、优惠或确切商品，不自动确认事实。'}
     return p

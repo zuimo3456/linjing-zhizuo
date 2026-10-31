@@ -2,6 +2,7 @@
 from __future__ import annotations
 import math
 from copy import deepcopy
+from text_rules import display_text,supported_text
 
 TAGS = ('storefront', 'product', 'process', 'interior', 'person', 'other')
 TAG_NAMES = dict(zip(TAGS, ('门头 / 路线', '商品', '制作过程', '环境', '人物', '其他')))
@@ -15,6 +16,18 @@ CTA = {'visit': '到店前，请确认营业情况。', 'attract': '感兴趣可
 
 class PlanError(ValueError):
     pass
+
+def segment_clips(seg):
+    if 'clips' not in seg:return [{k:seg.get(k) for k in ('shot_id','start','end')}]
+    clips=seg['clips']
+    if not isinstance(clips,list) or not 2<=len(clips)<=4 or any(not isinstance(c,dict) for c in clips):
+        raise PlanError('连续旁白组必须包含2—4个有效片段。')
+    if any(seg.get(k)!=clips[0].get(k) for k in ('shot_id','start','end')):
+        raise PlanError('旁白组首片段记录不一致，请重新编排。')
+    return clips
+
+def segment_seconds(seg):
+    return sum(c['end']-c['start'] for c in segment_clips(seg))
 
 def clean_project(project):
     if not isinstance(project,dict):raise PlanError('项目格式无效，请导入正确的项目文件。')
@@ -32,6 +45,7 @@ def clean_project(project):
         ids.add(f['id'])
         if f.get('kind') not in FACT_NAMES or not isinstance(f.get('value'),str) or len(f['value'])>100:
             raise PlanError('事实字段无效或超过100字。')
+        if not supported_text(f['value']):raise PlanError('事实包含不支持的控制字符，请重新填写；不要删除必要条件。')
         if f.get('confirmed') is True and (not isinstance(f.get('source'),str) or not f['source'].strip()):
             raise PlanError('确认事实时请填写来源。')
     confirmed = [f for f in facts if f.get('confirmed') is True and f['value'].strip()]
@@ -53,7 +67,7 @@ def clean_project(project):
     return p
 
 def caption_for(role, facts, goal):
-    by_kind = {f['kind']:f for f in facts if f.get('confirmed') is True and f.get('value','').strip()}
+    by_kind = {f['kind']:{**f,'value':display_text(f['value'])} for f in facts if f.get('confirmed') is True and f.get('value','').strip()}
     kinds = {'product':['shop','product'], 'storefront':['address'], 'process':[], 'interior':[]}.get(role,[])
     if goal=='promo' and role=='product':
         kinds=['shop','product','offer','validity']
@@ -92,7 +106,7 @@ def make_plan(project, method='evidence', speech_lengths=None):
     if goal=='promo' and not missing_facts:
         from validity import period_problem
         date_problem=period_problem(next(f['value'] for f in facts if f['kind']=='validity'))
-    eligible=[s for s in p['shots'] if s.get('confirmed') is True and not s.get('quality_issues') and not s.get('unavailable') and s['quality']>=0.25 and s['end']-s['start']>=1]
+    eligible=[s for s in p['shots'] if s.get('confirmed') is True and not s.get('quality_issues') and not s.get('semantic_issue') and not s.get('unavailable') and s['quality']>=0.25 and s['end']-s['start']>=1]
     # Maximum-coverage weighted assignment, O(shots * roles * 2^roles).
     # A versatile shot must not greedily consume the only evidence for a later role.
     roles=spec['roles'];timing_verified=speech_lengths is not None
@@ -178,23 +192,24 @@ def validate_plan(project, plan):
     segments=plan.get('segments',[])
     if not isinstance(segments,list) or not 1<=len(segments)<=10:
         raise PlanError('剪辑方案必须包含1—10个镜头。')
-    used=set(); roles=set()
+    used=set(); roles=set();physical_count=0
     for i,seg in enumerate(segments):
         if not isinstance(seg,dict) or not isinstance(seg.get('shot_id'),str) or not isinstance(seg.get('role'),str):
             raise PlanError(f'第{i+1}段方案格式无效，请重新生成方案。')
-        s=shots.get(seg.get('shot_id'))
-        if not s or s.get('confirmed') is not True or s.get('quality_issues') or s.get('unavailable') or s['quality']<0.25 or s['id'] in used:
-            raise PlanError('镜头不存在、未确认、质量过低或被重复使用。')
-        used.add(s['id']); role=seg.get('role'); roles.add(role)
-        if role not in GOALS[p['goal']]['roles'] or role not in s['tags']:
-            raise PlanError('镜头标签无法支持本段表达。')
-        if role=='product' and not product_matches(s,list(facts.values())):
-            raise PlanError('请确认画面中的商品与当前事实卡一致。')
-        for k in ('start','end'):
-            if not isinstance(seg.get(k),(int,float)) or isinstance(seg[k],bool) or not math.isfinite(seg[k]):
-                raise PlanError('剪辑时间不是有限数值。')
-        if seg['start']<s['start'] or seg['end']>s['end']+0.001 or not 1<=seg['end']-seg['start']<=8:
-            raise PlanError('剪辑片段超出素材范围或不在1—8秒内。')
+        role=seg['role'];roles.add(role);clips=segment_clips(seg);physical_count+=len(clips)
+        if physical_count>10:raise PlanError('一个视频最多使用10个实际片段。')
+        for clip in clips:
+            if not isinstance(clip.get('shot_id'),str):raise PlanError('片段编号格式无效。')
+            s=shots.get(clip['shot_id'])
+            if not s or s.get('confirmed') is not True or s.get('quality_issues') or s.get('semantic_issue') or s.get('unavailable') or s['quality']<0.25 or s['id'] in used:
+                raise PlanError('镜头不存在、未确认、质量过低或被重复使用。')
+            used.add(s['id'])
+            if role not in GOALS[p['goal']]['roles'] or role not in s['tags']:raise PlanError('镜头标签无法支持本段表达。')
+            if role=='product' and not product_matches(s,list(facts.values())):raise PlanError('请确认画面中的商品与当前事实卡一致。')
+            for k in ('start','end'):
+                if not isinstance(clip.get(k),(int,float)) or isinstance(clip[k],bool) or not math.isfinite(clip[k]):raise PlanError('剪辑时间不是有限数值。')
+            if clip['start']<s['start'] or clip['end']>s['end']+.001 or not 1<=clip['end']-clip['start']<=8:raise PlanError('剪辑片段超出素材范围或不在1—8秒内。')
+        if len(clips)>1 and segment_seconds(seg)>16.000001:raise PlanError('同一旁白组的画面总长不能超过16秒。')
         text,refs=caption_for(role,list(facts.values()),p['goal'])
         if i==len(segments)-1: text+=CTA[p['goal']]
         if seg.get('text')!=text or seg.get('fact_ids')!=refs:
