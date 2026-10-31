@@ -1,0 +1,2 @@
+# Preserve the intentional CR bytes that reproduce subtitle truncation.
+carriage-return.ass binary
