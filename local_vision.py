@@ -172,13 +172,13 @@ def analyze_project(project,progress=lambda _:None):
         else:
             try:
                 paths,frames=frame_paths(shot);rows=[]
-                from review_store import load_review,store_review
+                from review_store import load_review,store_review,semantic_issue as saved_issue
                 cached=load_review(shot)
                 if cached:candidate=deepcopy(cached['candidate'])
                 else:
                     for start in range(0,len(paths),3):rows.extend(_engine.score(paths[start:start+3]))
                     candidate=decide(rows,shot['quality'])
-                    risk=semantic_risk(paths,frames,rows)
+                    risk=semantic_risk(paths,frames,rows) or saved_issue(shot)
                     if risk:candidate.update(semantic_issue=risk,tags=['other'],abstained=True,description=risk,review_reasons=[risk])
                     # Persist only canonical, real media; direct structural tests have no source record.
                     if shot.get('analysis_version') and shot.get('source_sha256'):store_review(shot,candidate)

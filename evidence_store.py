@@ -110,7 +110,7 @@ def reconcile(project):
             risk=semantic_issue(source)
             if risk:shot['semantic_issue']=risk;shot.update(confirmed=False,product_binding=None)
             else:shot.pop('semantic_issue',None)
-            shot.update({k:deepcopy(source[k]) for k in ('quality','quality_issues','frames','thumb','analysis_version','review_url') if k in source})
+            shot.update({k:deepcopy(source[k]) for k in ('quality','quality_issues','frames','thumb','analysis_version','review_url','review_start','review_end') if k in source})
             shot['source_sha256']=sha;shot.pop('unavailable',None)
             if shot.get('quality_issues'):
                 shot['confirmed']=False

@@ -4,6 +4,7 @@ from copy import deepcopy
 from evidence_store import DATA,reconcile
 from pipeline import preflight
 from planner import PlanError
+from text_rules import quarantine_text
 _lock=threading.RLock()
 
 def context_id(project):
@@ -25,7 +26,9 @@ def prepare_session(project,plan=None,method='evidence'):
     return p
 
 def restore_session(raw):
-    p=reconcile(raw);edit=p.pop('saved_edit',None)
+    p=reconcile(quarantine_text(raw));edit=p.pop('saved_edit',None)
+    issues=[f['text_issue'] for f in p['facts'] if f.get('text_issue')]
+    if issues:p['warnings']=list(dict.fromkeys(p.get('warnings',[])+['部分事实含隐藏方向字符，已保留原文并取消确认，请重新填写。']))
     if not edit:return p
     try:
         if not isinstance(edit,dict) or edit.get('version')!=1 or edit.get('method') not in ('evidence','chronological'):

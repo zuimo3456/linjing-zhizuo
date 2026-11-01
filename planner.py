@@ -2,7 +2,7 @@
 from __future__ import annotations
 import math
 from copy import deepcopy
-from text_rules import display_text,supported_text
+from text_rules import display_text,supported_text,direction_problem,visible_controls
 
 TAGS = ('storefront', 'product', 'process', 'interior', 'person', 'other')
 TAG_NAMES = dict(zip(TAGS, ('门头 / 路线', '商品', '制作过程', '环境', '人物', '其他')))
@@ -43,9 +43,15 @@ def clean_project(project):
         if not isinstance(f,dict) or not isinstance(f.get('id'),str) or not f['id'] or f['id'] in ids:
             raise PlanError('事实编号缺失或重复。')
         ids.add(f['id'])
-        if f.get('kind') not in FACT_NAMES or not isinstance(f.get('value'),str) or len(f['value'])>100:
+        raw=f.get('original_value');pending=isinstance(raw,str) and f.get('text_review_value')==f.get('value') and visible_controls(raw)==f.get('value')
+        if f.get('kind') not in FACT_NAMES or not isinstance(f.get('value'),str) or len(raw if pending else f['value'])>100:
             raise PlanError('事实字段无效或超过100字。')
         if not supported_text(f['value']):raise PlanError('事实包含不支持的控制字符，请重新填写；不要删除必要条件。')
+        issue=direction_problem(f['value'])
+        if issue:raise PlanError(FACT_NAMES[f['kind']]+issue)
+        if f.get('text_review_value')==f['value'] and f.get('confirmed') is True:
+            raise PlanError(FACT_NAMES[f['kind']]+'仍是带字符标记的待核对文字，请重新填写并确认。')
+        if f.get('text_review_value')!=f['value']:f.pop('text_issue',None)
         if f.get('confirmed') is True and (not isinstance(f.get('source'),str) or not f['source'].strip()):
             raise PlanError('确认事实时请填写来源。')
     confirmed = [f for f in facts if f.get('confirmed') is True and f['value'].strip()]

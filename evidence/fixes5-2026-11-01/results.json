@@ -1,0 +1,230 @@
+{
+  "date": "2026-11-01",
+  "scope": "Original/authorized technical fixtures; human listening and merchant acceptance pending.",
+  "passed": 9,
+  "total": 9,
+  "cases": [
+    {
+      "id": "price_quarantine",
+      "passed": true,
+      "seconds": 2.62,
+      "result": {
+        "raw_input_http": 400,
+        "message": "优惠及使用条件包含隐藏方向控制字符（U+202C、U+202E），网页与字幕可能显示不同数字。请重新填写可见文字并确认；系统不会静默删除字符。",
+        "imported_draft": {
+          "id": "offer",
+          "kind": "offer",
+          "value": "单杯[U+202E]19[U+202C]元",
+          "confirmed": false,
+          "source": "程序构造的模拟事实，不对应真实商户",
+          "original_value": "单杯‮19‬元",
+          "text_review_value": "单杯[U+202E]19[U+202C]元",
+          "text_issue": "包含隐藏方向控制字符（U+202C、U+202E），网页与字幕可能显示不同数字。请重新填写可见文字并确认；系统不会静默删除字符。"
+        },
+        "forged_confirmation_http": 400
+      }
+    },
+    {
+      "id": "price_retyped_confirmed",
+      "passed": true,
+      "seconds": 7.953,
+      "result": {
+        "copy": "街角咖啡。手冲咖啡。单杯91元。2026年10月31日至2026年11月7日。",
+        "raw_preserved": "单杯‮19‬元",
+        "video": "/media/384494897b584245916a0b2547382cbd/result.mp4"
+      }
+    },
+    {
+      "id": "timeline_delayed_video",
+      "passed": true,
+      "seconds": 3.126,
+      "result": {
+        "range": [
+          2.0,
+          8.0
+        ],
+        "review_range": [
+          0,
+          6.0
+        ],
+        "frames": 15,
+        "mapping": {
+          "source_start": 2.0,
+          "proxy_start": 0,
+          "time_scale": 1
+        },
+        "distance_to_correct_time": 1.2704857248794956,
+        "distance_to_wrong_time": 2.578049684835002,
+        "video": "/media/948eda3c15454004a8d4661ae482f4eb/result.mp4",
+        "metadata": {
+          "duration": 12.229417,
+          "video_duration": 12.2,
+          "format_start": 0.0,
+          "video_start": 0.021016,
+          "video_offset": 0.021016,
+          "width": 720,
+          "height": 1280,
+          "audio": true,
+          "color_transfer": null,
+          "color_primaries": null,
+          "color_space": null,
+          "pixel_format": "yuv420p"
+        }
+      }
+    },
+    {
+      "id": "timeline_shared_absolute_shift",
+      "passed": true,
+      "seconds": 2.877,
+      "result": {
+        "metadata": {
+          "duration": 6.0,
+          "video_duration": 6.0,
+          "format_start": 7.0,
+          "video_start": 7.0,
+          "video_offset": 0.0,
+          "width": 720,
+          "height": 1280,
+          "audio": false,
+          "color_transfer": null,
+          "color_primaries": null,
+          "color_space": null,
+          "pixel_format": "yuv420p"
+        },
+        "video": "/media/45f149fd9a524abaa8c6e5c059ce2e00/result.mp4"
+      }
+    },
+    {
+      "id": "timeline_late_audio_preserved",
+      "passed": true,
+      "seconds": 0.963,
+      "result": {
+        "metadata": {
+          "duration": 6.0,
+          "video_duration": 6.0,
+          "format_start": 0.0,
+          "video_start": 0.0,
+          "video_offset": 0.0,
+          "width": 720,
+          "height": 1280,
+          "audio": true,
+          "color_transfer": null,
+          "color_primaries": null,
+          "color_space": null,
+          "pixel_format": "yuv420p"
+        },
+        "early_audio_rms": 0.0,
+        "later_audio_rms": 2904.495350874227,
+        "review": "/media/2bafdfed528a45c9a25565acea766578/review.mp4"
+      }
+    },
+    {
+      "id": "non_adjacent_combo",
+      "passed": true,
+      "seconds": 3.184,
+      "result": {
+        "group": {
+          "shot_id": "22ca0870a17049bebda63ad3825534ca-0",
+          "start": 0.0,
+          "end": 8.0,
+          "role": "product",
+          "text": "街角咖啡。手冲咖啡。第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享。2026年10月31日至2026年11月7日。参与前，请核对活动条件。",
+          "fact_ids": [
+            "shop",
+            "product",
+            "offer",
+            "validity"
+          ],
+          "reason": "2个已确认片段共同承载一段旁白。",
+          "speech_seconds": 15.242646,
+          "minimum_seconds": 12.997,
+          "clips": [
+            {
+              "shot_id": "22ca0870a17049bebda63ad3825534ca-0",
+              "start": 0.0,
+              "end": 8.0
+            },
+            {
+              "shot_id": "57cb9a0bf3bf4538b9ce6f5b2d8e5c3b-0",
+              "start": 0.0,
+              "end": 8.0
+            }
+          ]
+        },
+        "search": {
+          "algorithm": "bounded_grouped_fallback",
+          "score": 1.586,
+          "max_clips_per_role": 4,
+          "max_total_clips": 10,
+          "attempts": 10,
+          "attempt_limit": 100000,
+          "candidate_pool_limited": false,
+          "exhausted": false
+        },
+        "video": "/media/b5e747136858453ea444f00f24b06033/result.mp4",
+        "metadata": {
+          "duration": 18.627333,
+          "video_duration": 18.606016,
+          "format_start": 0.0,
+          "video_start": 0.021016,
+          "video_offset": 0.021016,
+          "width": 720,
+          "height": 1280,
+          "audio": true,
+          "color_transfer": null,
+          "color_primaries": null,
+          "color_space": null,
+          "pixel_format": "yuv420p"
+        }
+      }
+    },
+    {
+      "id": "legacy_upgrade",
+      "passed": true,
+      "seconds": 0.032,
+      "result": {
+        "facts_preserved": true,
+        "old_confirmations_revoked": true,
+        "old_plan_invalidated": true,
+        "warnings": [
+          "素材分析已升级并列出完整镜头，请重新查看和确认；旧确认未自动沿用。",
+          "素材与事实已恢复；原剪辑方案需重新核对：素材、事实或确认状态已经变化。"
+        ]
+      }
+    },
+    {
+      "id": "format_regression",
+      "passed": true,
+      "seconds": 2.773,
+      "result": {
+        "VFR_video": "/media/24199111c0f54e8c8f2d6ab6ec3e7393/result.mp4",
+        "VFR_metadata": {
+          "duration": 5.983333,
+          "video_duration": 5.983333,
+          "format_start": 0.0,
+          "video_start": 0.0,
+          "video_offset": 0.0,
+          "width": 600,
+          "height": 400,
+          "audio": false,
+          "color_transfer": null,
+          "color_primaries": null,
+          "color_space": null,
+          "pixel_format": "yuv420p"
+        },
+        "HDR_still_rejected": "检测到HDR（PQ/HLG）素材。当前版本请先导出为普通SDR / BT.709视频再上传，以保证颜色可核对。原文件已保留。"
+      }
+    },
+    {
+      "id": "existing_rejections",
+      "passed": true,
+      "seconds": 4.911,
+      "result": {
+        "long_conditions_still_rejected": true,
+        "unconfirmed_required_source_still_rejected": true,
+        "known_source_risk_still_blocked": 400,
+        "message": "约2.50秒出现明显内容切换，模型同时给出无关/人物风险。请使用不含混入内容的区间或重新上传；当前区间不能直接确认。"
+      }
+    }
+  ]
+}

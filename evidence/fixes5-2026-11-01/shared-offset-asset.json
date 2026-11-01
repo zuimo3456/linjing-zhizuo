@@ -1,0 +1,124 @@
+{
+  "id": "c2e18a9ed0f243bfaa289b0c7e8943f6",
+  "name": "counter-all-shifted7.mp4",
+  "meta": {
+    "duration": 6.0,
+    "video_duration": 6.0,
+    "format_start": 7.0,
+    "video_start": 7.0,
+    "video_offset": 0.0,
+    "width": 720,
+    "height": 1280,
+    "audio": false,
+    "color_transfer": null,
+    "color_primaries": null,
+    "color_space": null,
+    "pixel_format": "yuv420p"
+  },
+  "shots": [
+    {
+      "id": "c2e18a9ed0f243bfaa289b0c7e8943f6-0",
+      "media_id": "c2e18a9ed0f243bfaa289b0c7e8943f6",
+      "start": 0.0,
+      "end": 6.0,
+      "review_start": 0,
+      "review_end": 6.0,
+      "tags": [
+        "other"
+      ],
+      "confirmed": false,
+      "quality": 0.831,
+      "brightness": 182.19,
+      "sharpness": 2155.2,
+      "label_source": "unlabeled",
+      "name": "counter-all-shifted7.mp4",
+      "thumb": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/thumb-0.jpg",
+      "frames": [
+        {
+          "time": 0.025,
+          "url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/frame-0-0.jpg"
+        },
+        {
+          "time": 0.5,
+          "url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/frame-0-1.jpg"
+        },
+        {
+          "time": 1.0,
+          "url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/thumb-0.jpg"
+        },
+        {
+          "time": 1.2,
+          "url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/frame-0-3.jpg"
+        },
+        {
+          "time": 1.5,
+          "url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/frame-0-4.jpg"
+        },
+        {
+          "time": 2.0,
+          "url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/frame-0-5.jpg"
+        },
+        {
+          "time": 2.5,
+          "url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/frame-0-6.jpg"
+        },
+        {
+          "time": 3.0,
+          "url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/frame-0-7.jpg"
+        },
+        {
+          "time": 3.5,
+          "url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/frame-0-8.jpg"
+        },
+        {
+          "time": 4.0,
+          "url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/frame-0-9.jpg"
+        },
+        {
+          "time": 4.5,
+          "url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/frame-0-10.jpg"
+        },
+        {
+          "time": 4.8,
+          "url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/frame-0-11.jpg"
+        },
+        {
+          "time": 5.0,
+          "url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/frame-0-12.jpg"
+        },
+        {
+          "time": 5.5,
+          "url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/frame-0-13.jpg"
+        },
+        {
+          "time": 5.94,
+          "url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/frame-0-14.jpg"
+        }
+      ],
+      "analysis_version": 7,
+      "quality_issues": [],
+      "review_url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/review.mp4",
+      "source_sha256": "373c65f73a6b16f1726d1920600e934bfe2afba15570e055a372362c56b27fdc"
+    }
+  ],
+  "synthetic": false,
+  "analysis_version": 7,
+  "review_url": "/media/c2e18a9ed0f243bfaa289b0c7e8943f6/review.mp4",
+  "review_mapping": {
+    "source_start": 0.0,
+    "proxy_start": 0,
+    "time_scale": 1
+  },
+  "source_sha256": "373c65f73a6b16f1726d1920600e934bfe2afba15570e055a372362c56b27fdc",
+  "source_bytes": 180894,
+  "source_mtime_ns": 1793509379315759700,
+  "coverage": {
+    "total_seconds": 6.0,
+    "source_start": 0.0,
+    "source_end": 6.0,
+    "analyzed_end": 6.0,
+    "short_or_unusable_intervals": [],
+    "truncated": false,
+    "sampling": "boundaries_and_max_0.5_second_gap; not_full_semantic_coverage"
+  }
+}

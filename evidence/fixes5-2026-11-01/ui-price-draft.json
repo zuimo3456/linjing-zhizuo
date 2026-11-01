@@ -1,0 +1,578 @@
+{
+  "name": "街角咖啡 · 模拟案例",
+  "goal": "promo",
+  "synthetic": true,
+  "facts": [
+    {
+      "id": "shop",
+      "kind": "shop",
+      "value": "街角咖啡",
+      "confirmed": true,
+      "source": "程序构造的模拟事实，不对应真实商户"
+    },
+    {
+      "id": "product",
+      "kind": "product",
+      "value": "手冲咖啡",
+      "confirmed": true,
+      "source": "程序构造的模拟事实，不对应真实商户"
+    },
+    {
+      "id": "address",
+      "kind": "address",
+      "value": "示例街道18号",
+      "confirmed": true,
+      "source": "程序构造的模拟事实，不对应真实商户"
+    },
+    {
+      "id": "offer",
+      "kind": "offer",
+      "value": "单杯[U+202E]19[U+202C]元",
+      "confirmed": false,
+      "source": "程序构造的模拟事实，不对应真实商户",
+      "original_value": "单杯‮19‬元",
+      "text_review_value": "单杯[U+202E]19[U+202C]元",
+      "text_issue": "包含隐藏方向控制字符（U+202C、U+202E），网页与字幕可能显示不同数字。请重新填写可见文字并确认；系统不会静默删除字符。"
+    },
+    {
+      "id": "validity",
+      "kind": "validity",
+      "value": "2026年10月31日至2026年11月7日",
+      "confirmed": true,
+      "source": "程序构造的模拟事实，不对应真实商户"
+    }
+  ],
+  "shots": [
+    {
+      "id": "07b40ea6445c45f69fca432ede5cdb32-0",
+      "media_id": "07b40ea6445c45f69fca432ede5cdb32",
+      "start": 0.0,
+      "end": 6.0,
+      "review_start": 0,
+      "review_end": 6.0,
+      "tags": [
+        "interior"
+      ],
+      "confirmed": true,
+      "quality": 0.804,
+      "brightness": 190.58,
+      "sharpness": 1322.46,
+      "label_source": "unlabeled",
+      "name": "模拟镜头 1 · 慢一点，也很好",
+      "thumb": "/media/07b40ea6445c45f69fca432ede5cdb32/thumb-0.jpg",
+      "frames": [
+        {
+          "time": 0.025,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-0.jpg"
+        },
+        {
+          "time": 0.5,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-1.jpg"
+        },
+        {
+          "time": 1.0,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/thumb-0.jpg"
+        },
+        {
+          "time": 1.2,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-3.jpg"
+        },
+        {
+          "time": 1.5,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-4.jpg"
+        },
+        {
+          "time": 2.0,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-5.jpg"
+        },
+        {
+          "time": 2.5,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-6.jpg"
+        },
+        {
+          "time": 3.0,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-7.jpg"
+        },
+        {
+          "time": 3.5,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-8.jpg"
+        },
+        {
+          "time": 4.0,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-9.jpg"
+        },
+        {
+          "time": 4.5,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-10.jpg"
+        },
+        {
+          "time": 4.8,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-11.jpg"
+        },
+        {
+          "time": 5.0,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-12.jpg"
+        },
+        {
+          "time": 5.5,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-13.jpg"
+        },
+        {
+          "time": 5.94,
+          "url": "/media/07b40ea6445c45f69fca432ede5cdb32/frame-0-14.jpg"
+        }
+      ],
+      "analysis_version": 7,
+      "quality_issues": [],
+      "review_url": "/media/07b40ea6445c45f69fca432ede5cdb32/review.mp4",
+      "source_sha256": "8e2c74e25c0b4bf16b51d19c3934dd823943409287d4e1cced894b41c4845e8e",
+      "attestation": {
+        "version": 2,
+        "evidence_id": "07cc78130facc4f41b4218bacfd4d2ede70884b809018ad574f83d2a8adfc7c6",
+        "tags": [
+          "interior"
+        ],
+        "signature": "5be4eb76eefeba26fbaa664e2c23f630c978927ca70fc9b808ea4783736f26fe",
+        "confirmed": true
+      },
+      "product_binding": null
+    },
+    {
+      "id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+      "media_id": "ca53435da8024ba0aa5453fdc40a6a09",
+      "start": 0.0,
+      "end": 6.0,
+      "review_start": 0,
+      "review_end": 6.0,
+      "tags": [
+        "storefront"
+      ],
+      "confirmed": true,
+      "quality": 0.826,
+      "brightness": 183.68,
+      "sharpness": 1313.21,
+      "label_source": "unlabeled",
+      "name": "模拟镜头 3 · 街角咖啡",
+      "thumb": "/media/ca53435da8024ba0aa5453fdc40a6a09/thumb-0.jpg",
+      "frames": [
+        {
+          "time": 0.025,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-0.jpg"
+        },
+        {
+          "time": 0.5,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-1.jpg"
+        },
+        {
+          "time": 1.0,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/thumb-0.jpg"
+        },
+        {
+          "time": 1.2,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-3.jpg"
+        },
+        {
+          "time": 1.5,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-4.jpg"
+        },
+        {
+          "time": 2.0,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-5.jpg"
+        },
+        {
+          "time": 2.5,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-6.jpg"
+        },
+        {
+          "time": 3.0,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-7.jpg"
+        },
+        {
+          "time": 3.5,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-8.jpg"
+        },
+        {
+          "time": 4.0,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-9.jpg"
+        },
+        {
+          "time": 4.5,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-10.jpg"
+        },
+        {
+          "time": 4.8,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-11.jpg"
+        },
+        {
+          "time": 5.0,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-12.jpg"
+        },
+        {
+          "time": 5.5,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-13.jpg"
+        },
+        {
+          "time": 5.94,
+          "url": "/media/ca53435da8024ba0aa5453fdc40a6a09/frame-0-14.jpg"
+        }
+      ],
+      "analysis_version": 7,
+      "quality_issues": [],
+      "review_url": "/media/ca53435da8024ba0aa5453fdc40a6a09/review.mp4",
+      "source_sha256": "d8181b364ed5ea63ad0ec24f649c81b745b2e3e1029a951295e4cc6ac008036a",
+      "attestation": {
+        "version": 2,
+        "evidence_id": "a966cd7ca8f493ea84cacc3e2697c3f3b708be32509b3e316b8d7c9d8bfbaf46",
+        "tags": [
+          "storefront"
+        ],
+        "signature": "e16db39461ac3707b18d7c868c1184ea7500f4c872ea6085c5921d2f5050f1db",
+        "confirmed": true
+      },
+      "product_binding": null
+    },
+    {
+      "id": "0d370453b76e4c6fbb87dcd0e890f366-0",
+      "media_id": "0d370453b76e4c6fbb87dcd0e890f366",
+      "start": 0.0,
+      "end": 6.0,
+      "review_start": 0,
+      "review_end": 6.0,
+      "tags": [
+        "process"
+      ],
+      "confirmed": true,
+      "quality": 0.75,
+      "brightness": 207.94,
+      "sharpness": 773.39,
+      "label_source": "unlabeled",
+      "name": "模拟镜头 4 · 认真做一杯",
+      "thumb": "/media/0d370453b76e4c6fbb87dcd0e890f366/thumb-0.jpg",
+      "frames": [
+        {
+          "time": 0.025,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-0.jpg"
+        },
+        {
+          "time": 0.5,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-1.jpg"
+        },
+        {
+          "time": 1.0,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/thumb-0.jpg"
+        },
+        {
+          "time": 1.2,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-3.jpg"
+        },
+        {
+          "time": 1.5,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-4.jpg"
+        },
+        {
+          "time": 2.0,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-5.jpg"
+        },
+        {
+          "time": 2.5,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-6.jpg"
+        },
+        {
+          "time": 3.0,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-7.jpg"
+        },
+        {
+          "time": 3.5,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-8.jpg"
+        },
+        {
+          "time": 4.0,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-9.jpg"
+        },
+        {
+          "time": 4.5,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-10.jpg"
+        },
+        {
+          "time": 4.8,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-11.jpg"
+        },
+        {
+          "time": 5.0,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-12.jpg"
+        },
+        {
+          "time": 5.5,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-13.jpg"
+        },
+        {
+          "time": 5.94,
+          "url": "/media/0d370453b76e4c6fbb87dcd0e890f366/frame-0-14.jpg"
+        }
+      ],
+      "analysis_version": 7,
+      "quality_issues": [],
+      "review_url": "/media/0d370453b76e4c6fbb87dcd0e890f366/review.mp4",
+      "source_sha256": "dc5dc5f0fc0a1391f0c0579765d73742ed899d7dbcf82827d37d8ea63e8ae4ea",
+      "attestation": {
+        "version": 2,
+        "evidence_id": "8b4761cded4fd606f7def78f3af233a09a2028f5dc391ac5a5581b1cfa6cd99c",
+        "tags": [
+          "process"
+        ],
+        "signature": "c515133225e3d688af83ad51b836ccdfd445e86e3067a95999d89c298fbf2a7e",
+        "confirmed": true
+      },
+      "product_binding": null
+    },
+    {
+      "id": "22ca0870a17049bebda63ad3825534ca-0",
+      "media_id": "22ca0870a17049bebda63ad3825534ca",
+      "start": 0.0,
+      "end": 8.0,
+      "review_start": 0,
+      "review_end": 8.0,
+      "tags": [
+        "product"
+      ],
+      "confirmed": true,
+      "quality": 0.79,
+      "brightness": 195.29,
+      "sharpness": 912.62,
+      "label_source": "unlabeled",
+      "name": "eight-0.mp4",
+      "thumb": "/media/22ca0870a17049bebda63ad3825534ca/thumb-0.jpg",
+      "frames": [
+        {
+          "time": 0.025,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-0.jpg"
+        },
+        {
+          "time": 0.5,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-1.jpg"
+        },
+        {
+          "time": 1.0,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/thumb-0.jpg"
+        },
+        {
+          "time": 1.5,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-3.jpg"
+        },
+        {
+          "time": 1.6,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-4.jpg"
+        },
+        {
+          "time": 2.0,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-5.jpg"
+        },
+        {
+          "time": 2.5,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-6.jpg"
+        },
+        {
+          "time": 3.0,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-7.jpg"
+        },
+        {
+          "time": 3.5,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-8.jpg"
+        },
+        {
+          "time": 4.0,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-9.jpg"
+        },
+        {
+          "time": 4.5,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-10.jpg"
+        },
+        {
+          "time": 5.0,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-11.jpg"
+        },
+        {
+          "time": 5.5,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-12.jpg"
+        },
+        {
+          "time": 6.0,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-13.jpg"
+        },
+        {
+          "time": 6.4,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-14.jpg"
+        },
+        {
+          "time": 6.5,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-15.jpg"
+        },
+        {
+          "time": 7.0,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-16.jpg"
+        },
+        {
+          "time": 7.5,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-17.jpg"
+        },
+        {
+          "time": 7.94,
+          "url": "/media/22ca0870a17049bebda63ad3825534ca/frame-0-18.jpg"
+        }
+      ],
+      "analysis_version": 7,
+      "quality_issues": [],
+      "review_url": "/media/22ca0870a17049bebda63ad3825534ca/review.mp4",
+      "source_sha256": "963d6c15dd7e35eaeb79a3b5356c18c59ff2f56617bf036caa1ee160123d36ad",
+      "attestation": {
+        "version": 2,
+        "evidence_id": "c940883b96a9b6dbfd959d1f152be77be3880fdfacff3bff91279786593196d9",
+        "tags": [
+          "product"
+        ],
+        "signature": "6aaee92c325cfd3845597d09fba35bec61849f4220b6fb1b8b9635e7823357bf",
+        "confirmed": true
+      },
+      "product_binding": {
+        "version": 2,
+        "evidence_id": "c940883b96a9b6dbfd959d1f152be77be3880fdfacff3bff91279786593196d9",
+        "tags": [
+          "product"
+        ],
+        "product": {
+          "id": "product",
+          "value": "手冲咖啡"
+        },
+        "signature": "e72cf4b3ad48b3f5566c6942a60c04e5602be5d7abb40a746b71e548a42c5944",
+        "confirmed": true,
+        "fact_id": "product",
+        "value": "手冲咖啡"
+      }
+    },
+    {
+      "id": "57cb9a0bf3bf4538b9ce6f5b2d8e5c3b-0",
+      "media_id": "57cb9a0bf3bf4538b9ce6f5b2d8e5c3b",
+      "start": 0.0,
+      "end": 8.0,
+      "review_start": 0,
+      "review_end": 8.0,
+      "tags": [
+        "product"
+      ],
+      "confirmed": true,
+      "quality": 0.79,
+      "brightness": 195.29,
+      "sharpness": 912.62,
+      "label_source": "unlabeled",
+      "name": "eight-1.mp4",
+      "thumb": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/thumb-0.jpg",
+      "frames": [
+        {
+          "time": 0.025,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-0.jpg"
+        },
+        {
+          "time": 0.5,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-1.jpg"
+        },
+        {
+          "time": 1.0,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/thumb-0.jpg"
+        },
+        {
+          "time": 1.5,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-3.jpg"
+        },
+        {
+          "time": 1.6,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-4.jpg"
+        },
+        {
+          "time": 2.0,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-5.jpg"
+        },
+        {
+          "time": 2.5,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-6.jpg"
+        },
+        {
+          "time": 3.0,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-7.jpg"
+        },
+        {
+          "time": 3.5,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-8.jpg"
+        },
+        {
+          "time": 4.0,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-9.jpg"
+        },
+        {
+          "time": 4.5,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-10.jpg"
+        },
+        {
+          "time": 5.0,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-11.jpg"
+        },
+        {
+          "time": 5.5,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-12.jpg"
+        },
+        {
+          "time": 6.0,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-13.jpg"
+        },
+        {
+          "time": 6.4,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-14.jpg"
+        },
+        {
+          "time": 6.5,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-15.jpg"
+        },
+        {
+          "time": 7.0,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-16.jpg"
+        },
+        {
+          "time": 7.5,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-17.jpg"
+        },
+        {
+          "time": 7.94,
+          "url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/frame-0-18.jpg"
+        }
+      ],
+      "analysis_version": 7,
+      "quality_issues": [],
+      "review_url": "/media/57cb9a0bf3bf4538b9ce6f5b2d8e5c3b/review.mp4",
+      "source_sha256": "963d6c15dd7e35eaeb79a3b5356c18c59ff2f56617bf036caa1ee160123d36ad",
+      "attestation": {
+        "version": 2,
+        "evidence_id": "ee8099acdc220862bbac6d8b7d45dc6c1153e61c469e28b4cefd6dd5164e50f9",
+        "tags": [
+          "product"
+        ],
+        "signature": "f4101b0083d678b5eb0d76c53f9802035d57b6e5f92d2dc939237947809a398d",
+        "confirmed": true
+      },
+      "product_binding": {
+        "version": 2,
+        "evidence_id": "ee8099acdc220862bbac6d8b7d45dc6c1153e61c469e28b4cefd6dd5164e50f9",
+        "tags": [
+          "product"
+        ],
+        "product": {
+          "id": "product",
+          "value": "手冲咖啡"
+        },
+        "signature": "d5d4b8f7fc841d8f08e86fe59085105d458c7323225d9d831a93d1075cee4c16",
+        "confirmed": true,
+        "fact_id": "product",
+        "value": "手冲咖啡"
+      }
+    }
+  ],
+  "warnings": []
+}

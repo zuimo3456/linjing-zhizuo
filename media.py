@@ -1,6 +1,7 @@
 """Local media analysis and deterministic rendering. No model downloads."""
 from __future__ import annotations
-import json, shutil, subprocess, tempfile, time, uuid
+import json, math, shutil, subprocess, tempfile, time, uuid
+from fractions import Fraction
 from pathlib import Path
 from planner import validate_plan,segment_clips,segment_seconds
 from text_rules import display_text
@@ -9,7 +10,7 @@ ROOT=Path(__file__).resolve().parent
 DATA=ROOT/'data'
 FFMPEG=shutil.which('ffmpeg')
 FFPROBE=shutil.which('ffprobe')
-ANALYSIS_VERSION=6
+ANALYSIS_VERSION=7
 
 def square_pixel_scale(width,height):
     # reset_sar includes the input display aspect ratio in proportional scaling.
@@ -58,7 +59,15 @@ def probe(path):
     obj=json.loads(run([FFPROBE,'-v','error','-show_format','-show_streams','-of','json',path]))
     video=next((s for s in obj.get('streams',[]) if s['codec_type']=='video'),None)
     if not video: raise ValueError('文件中没有视频轨道。')
-    return {'duration':float(obj['format']['duration']),'width':video['width'],'height':video['height'],
+    container_duration=float(obj['format']['duration']);format_start=float(obj['format'].get('start_time',0))
+    video_start=float(video.get('start_time',format_start));offset=max(0.,video_start-format_start)
+    try:video_duration=float(video['duration'])
+    except (KeyError,ValueError,TypeError):
+        try:video_duration=float(video['duration_ts'])*float(Fraction(video['time_base']))
+        except (KeyError,ValueError,TypeError,ZeroDivisionError):video_duration=container_duration-offset
+    if not all(math.isfinite(v) for v in (container_duration,format_start,video_start,offset,video_duration)) or video_duration<=0:
+        raise ValueError('视频时间信息无效，请重新导出为统一起点的MP4。')
+    return {'duration':container_duration,'video_duration':video_duration,'format_start':format_start,'video_start':video_start,'video_offset':offset,'width':video['width'],'height':video['height'],
             'audio':any(s['codec_type']=='audio' for s in obj['streams']),
             'color_transfer':video.get('color_transfer'),'color_primaries':video.get('color_primaries'),
             'color_space':video.get('color_space'),'pixel_format':video.get('pix_fmt')}
@@ -67,14 +76,16 @@ def analyze(path, media_id, name):
     import cv2
     from scenedetect import detect, ContentDetector
     meta=probe(path)
-    if not 1<=meta['duration']<=180: raise ValueError('每段素材需要在1—180秒之间。')
+    duration=meta.get('video_duration',meta['duration']);source_offset=meta.get('video_offset',0.)
+    if not 1<=duration<=180: raise ValueError('每段视频画面需要在1—180秒之间。')
     if meta.get('color_transfer') in ('smpte2084','arib-std-b67'):
         raise ValueError('检测到HDR（PQ/HLG）素材。当前版本请先导出为普通SDR / BT.709视频再上传，以保证颜色可核对。原文件已保留。')
     folder=DATA/media_id; folder.mkdir(exist_ok=True,parents=True)
     preview=folder/'review.mp4';temporary=folder/'review-building.mp4'
     try:
-        run([FFMPEG,'-y','-v','error','-i',path,'-map','0:v:0','-map','0:a:0?',
-             '-vf',square_pixel_scale(720,1280),'-c:v','libx264','-preset','veryfast','-crf','23','-threads','2',
+        run([FFMPEG,'-y','-v','error','-copyts','-start_at_zero','-i',path,'-map','0:v:0','-map','0:a:0?',
+             '-vf','setpts=PTS-STARTPTS,'+square_pixel_scale(720,1280),'-af',f'asetpts=PTS-{source_offset:.9f}/TB,aresample=async=1:first_pts=0',
+             '-t',duration,'-c:v','libx264','-preset','veryfast','-crf','23','-threads','2',
              '-pix_fmt','yuv420p','-c:a','aac','-movflags','+faststart',temporary])
         temporary.replace(preview)
     finally:
@@ -82,10 +93,10 @@ def analyze(path, media_id, name):
     # ASCII-safe temporary proxy, including when the user folder is Chinese.
     with tempfile.TemporaryDirectory(prefix='linjing-') as tmp:
         proxy=Path(tmp)/'proxy.mp4'
-        run([FFMPEG,'-y','-v','error','-i',path,'-vf',square_pixel_scale(640,360)+',fps=12','-an','-c:v','libx264','-preset','ultrafast',proxy])
+        run([FFMPEG,'-y','-v','error','-i',path,'-vf','setpts=PTS-STARTPTS,'+square_pixel_scale(640,360)+',fps=12','-t',duration,'-an','-c:v','libx264','-preset','ultrafast',proxy])
         scenes=detect(str(proxy),ContentDetector(threshold=25,min_scene_len=1),show_progress=False)
-        ranges=[(a.get_seconds(),min(b.get_seconds(),meta['duration'])) for a,b in scenes]
-        if not ranges: ranges=[(0,meta['duration'])]
+        ranges=[(a.get_seconds(),min(b.get_seconds(),duration)) for a,b in scenes if a.get_seconds()<duration]
+        if not ranges: ranges=[(0,duration)]
         # Long static shots are broken into reviewable intervals, not semantic cuts.
         chunks=[]
         for a,b in ranges:
@@ -106,13 +117,14 @@ def analyze(path, media_id, name):
                 lights.append(light);sharps.append(sharp)
                 thumb=folder/(f'thumb-{i}.jpg' if j==2 else f'frame-{i}-{j}.jpg')
                 ok,encoded=cv2.imencode('.jpg',frame)
-                if ok:encoded.tofile(str(thumb));sampled.append({'time':round(at,3),'url':f'/media/{media_id}/{thumb.name}'})
+                if ok:encoded.tofile(str(thumb));sampled.append({'time':round(source_offset+at,3),'url':f'/media/{media_id}/{thumb.name}'})
             if not sampled:continue
             if len(sampled)<len(times):issues.append('抽帧不完整，请重新上传检查')
             quality=round(min(qualities)*.4+sum(qualities)/len(qualities)*.6,3)
             if issues:quality=min(quality,.1)
             thumb_url=next((x['url'] for x in sampled if '/thumb-' in x['url']),sampled[0]['url'])
-            shots.append({'id':f'{media_id}-{i}','media_id':media_id,'start':round(a,3),'end':round(b,3),
+            shots.append({'id':f'{media_id}-{i}','media_id':media_id,'start':round(source_offset+a,3),'end':round(source_offset+b,3),
+                          'review_start':round(a,3),'review_end':round(b,3),
                           'tags':['other'],'confirmed':False,'quality':quality,'brightness':round(sum(lights)/len(lights),2),
                           'sharpness':round(sum(sharps)/len(sharps),2),'label_source':'unlabeled','name':name,
                           'thumb':thumb_url,'frames':sampled,'analysis_version':ANALYSIS_VERSION,'quality_issues':list(dict.fromkeys(issues)),
@@ -122,11 +134,12 @@ def analyze(path, media_id, name):
     sha=file_hash(path);stat=Path(path).stat()
     for shot in shots:shot['source_sha256']=sha
     return {'id':media_id,'name':name,'meta':meta,'shots':shots,'synthetic':False,'analysis_version':ANALYSIS_VERSION,
-            'review_url':f'/media/{media_id}/review.mp4','review_mapping':{'source_start':0,'proxy_start':0,'time_scale':1},
+            'review_url':f'/media/{media_id}/review.mp4','review_mapping':{'source_start':source_offset,'proxy_start':0,'time_scale':1},
             'source_sha256':sha,'source_bytes':stat.st_size,'source_mtime_ns':stat.st_mtime_ns,
-            'coverage':{'total_seconds':meta['duration'],'analyzed_end':max((s['end'] for s in shots),default=0),
+            'coverage':{'total_seconds':duration,'source_start':source_offset,'source_end':source_offset+duration,'analyzed_end':max((s['end'] for s in shots),default=source_offset),
                         'short_or_unusable_intervals':[[s['start'],s['end']] for s in shots if s['quality_issues']],
-                        'truncated':False,'sampling':'boundaries_and_max_0.5_second_gap; not_full_semantic_coverage'}}
+                        'truncated':any('抽帧不完整，请重新上传检查' in s['quality_issues'] for s in shots) or max((s['end'] for s in shots),default=source_offset)<source_offset+duration-.001,
+                        'sampling':'boundaries_and_max_0.5_second_gap; not_full_semantic_coverage'}}
 
 def ass_time(t):
     cent=round(t*100); s,c=divmod(cent,100); m,s=divmod(s,60); h,m=divmod(m,60)

@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parent;DATA=ROOT/'data';POLICY='dense-half-second-v1'
 _lock=threading.RLock()
 
-def load_review(shot):
+def load_review(shot,prior_risk=False):
     from evidence_store import identity
     from setup_onnx_model import WEIGHT_SHA
     path=DATA/shot['media_id']/'semantic-review.json'
@@ -12,7 +12,9 @@ def load_review(shot):
     with _lock:
         try:entry=json.loads(path.read_text(encoding='utf8')).get(shot['id'])
         except (OSError,ValueError,AttributeError):return None
-    if entry and entry.get('evidence_id')==identity(shot) and entry.get('policy')==POLICY and entry.get('weights')==WEIGHT_SHA and entry.get('analysis_version')==shot.get('analysis_version'):
+    same_version=isinstance(entry,dict) and entry.get('analysis_version')==shot.get('analysis_version')
+    older_risk=isinstance(entry,dict) and prior_risk and entry.get('issue') and isinstance(entry.get('analysis_version'),int) and isinstance(shot.get('analysis_version'),int) and entry['analysis_version']<=shot['analysis_version']
+    if isinstance(entry,dict) and entry.get('evidence_id')==identity(shot) and entry.get('policy')==POLICY and entry.get('weights')==WEIGHT_SHA and (same_version or older_risk):
         return entry
     return None
 
@@ -31,5 +33,5 @@ def store_review(shot,candidate):
         finally:temporary.unlink(missing_ok=True)
 
 def semantic_issue(shot):
-    record=load_review(shot)
+    record=load_review(shot,prior_risk=True)
     return record.get('issue') if record else None
