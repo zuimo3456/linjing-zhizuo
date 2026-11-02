@@ -172,7 +172,10 @@ def render(project,plan,job_id,progress):
             from audio import synthesize
             clips=segment_clips(seg);length=segment_seconds(seg)
             wav,spoken,cues,speed=synthesize(seg['text'],tmp,f'seg-{i}',length)
-            duration=length if seg['role']=='process' or seg.get('clips') else min(length,max(2.5,spoken+.08))
+            duration=length if plan.get('pacing') or seg['role']=='process' or seg.get('clips') else min(length,max(2.5,spoken+.08))
+            from pacing import narration_offset
+            voice_offset=narration_offset(spoken,duration) if plan.get('pacing') else 0.
+            cues=[{**c,'start':round(c['start']+voice_offset,4),'end':round(c['end']+voice_offset,4)} for c in cues]
             ass=tmp/f'caption-{i}.ass';write_ass(ass,seg['text'],duration,project.get('synthetic') is True,cues)
             ass_filter=str(ass).replace('\\','/').replace(':',r'\:')
             source=DATA/shots[seg['shot_id']]['media_id']/'source.mp4';source_start=seg['start']
@@ -192,11 +195,11 @@ def render(project,plan,job_id,progress):
             # Preserve full frame. Refuse excessive narration instead of freezing.
             vf=square_pixel_scale(720,1280)+f',pad=720:1280:(ow-iw)/2:(oh-ih)/2:color=0x17251e,setsar=1,fps=25,ass=filename=\'{ass_filter}\''
             run([FFMPEG,'-y','-v','error','-ss',source_start,'-t',length,'-i',source,'-i',wav,'-vf',vf,
-                 '-map','0:v:0','-map','1:a:0','-af','apad','-t',duration,'-c:v','libx264','-preset','veryfast','-crf','22',
+                 '-map','0:v:0','-map','1:a:0','-af',f'adelay={round(voice_offset*48000)}S:all=1,apad','-t',duration,'-c:v','libx264','-preset','veryfast','-crf','22',
                  '-threads','2','-c:a','aac','-ar','48000','-ac','2','-pix_fmt','yuv420p',dest])
             rendered.append(dest); timings.append({'index':i,'start':round(cursor,3),'end':round(cursor+duration,3),'text':seg['text'],
                                                     'alignment':'measured_phrase_audio','held_frame_seconds':0,
-                                                    'voice_speed':speed,'captions':cues})
+                                                    'voice_speed':speed,'captions':cues,'voice_offset_seconds':voice_offset,'voice_seconds':spoken})
             if seg.get('clips'):
                 offset=cursor;mapping=[]
                 for clip in clips:
@@ -207,6 +210,8 @@ def render(project,plan,job_id,progress):
         listing=tmp/'parts.txt'; listing.write_text('\n'.join(f"file '{p.as_posix()}'" for p in rendered),encoding='utf8')
         run([FFMPEG,'-y','-v','error','-f','concat','-safe','0','-i',listing,'-c','copy','-movflags','+faststart',out/'result.mp4'])
     result_meta=probe(out/'result.mp4')
+    if plan.get('pacing') and not 15<=result_meta['duration']<=30:
+        raise ValueError(f'实际编码视频{result_meta["duration"]:.2f}秒，未满足15–30秒，请重新编排。')
     run([FFMPEG,'-y','-v','error','-ss','0.5','-i',out/'result.mp4','-frames:v','1',out/'cover.jpg'])
     from datetime import datetime,timezone
     report={'job_id':job_id,'created_at_utc':datetime.now(timezone.utc).isoformat(),'synthetic':project.get('synthetic') is True,

@@ -5,6 +5,7 @@ from evidence_store import DATA,reconcile
 from pipeline import preflight
 from planner import PlanError
 from text_rules import quarantine_text
+from copy_rules import recover_details
 _lock=threading.RLock()
 
 def context_id(project):
@@ -26,7 +27,11 @@ def prepare_session(project,plan=None,method='evidence'):
     return p
 
 def restore_session(raw):
-    p=reconcile(quarantine_text(raw));edit=p.pop('saved_edit',None)
+    recovered=recover_details(quarantine_text(raw))
+    detail_warnings=[w for w in recovered.get('warnings',[]) if w=='商品名称或确认状态已变化，商品特点已保留但取消确认，请按当前商品重新核对。'] if isinstance(recovered,dict) else []
+    p=reconcile(recovered)
+    if detail_warnings:p['warnings']=list(dict.fromkeys(p.get('warnings',[])+detail_warnings))
+    edit=p.pop('saved_edit',None)
     issues=[f['text_issue'] for f in p['facts'] if f.get('text_issue')]
     if issues:p['warnings']=list(dict.fromkeys(p.get('warnings',[])+['部分事实含隐藏方向字符，已保留原文并取消确认，请重新填写。']))
     if not edit:return p

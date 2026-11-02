@@ -3,6 +3,7 @@ from __future__ import annotations
 import math
 from copy import deepcopy
 from text_rules import display_text,supported_text,direction_problem,visible_controls
+from copy_rules import COPY_POLICY,copy_notes,detail_matches
 
 TAGS = ('storefront', 'product', 'process', 'interior', 'person', 'other')
 TAG_NAMES = dict(zip(TAGS, ('门头 / 路线', '商品', '制作过程', '环境', '人物', '其他')))
@@ -11,7 +12,7 @@ GOALS = {
     'attract': {'name': '引流关注', 'roles': ['product', 'process', 'interior'], 'required_facts': ['shop', 'product']},
     'promo': {'name': '优惠促销', 'roles': ['product', 'storefront'], 'required_facts': ['shop', 'product', 'offer', 'validity', 'address']},
 }
-FACT_NAMES = {'shop': '店名', 'product': '商品', 'address': '地址', 'offer': '优惠及使用条件', 'validity': '有效期'}
+FACT_NAMES = {'shop': '店名', 'product': '商品', 'product_detail':'商品特点', 'address': '地址', 'offer': '优惠及使用条件', 'validity': '有效期'}
 CTA = {'visit': '到店前，请确认营业情况。', 'attract': '感兴趣可以先收藏。', 'promo': '参与前，请核对活动条件。'}
 
 class PlanError(ValueError):
@@ -58,6 +59,9 @@ def clean_project(project):
     for kind in FACT_NAMES:
         if len([f for f in confirmed if f['kind']==kind])>1:
             raise PlanError(f'{FACT_NAMES[kind]}存在多条已确认记录，请先消除冲突。')
+    for f in confirmed:
+        if f['kind']=='product_detail' and not detail_matches(f,facts):
+            raise PlanError('商品特点尚未与当前已确认商品对应，请重新核对商品名称和特点。')
     ids=set()
     for s in shots:
         if not isinstance(s,dict) or not isinstance(s.get('id'),str) or not s['id'] or s['id'] in ids:
@@ -73,22 +77,26 @@ def clean_project(project):
     return p
 
 def caption_for(role, facts, goal):
-    by_kind = {f['kind']:{**f,'value':display_text(f['value'])} for f in facts if f.get('confirmed') is True and f.get('value','').strip()}
-    kinds = {'product':['shop','product'], 'storefront':['address'], 'process':[], 'interior':[]}.get(role,[])
+    by_kind = {f['kind']:{**f,'value':display_text(f['value'])} for f in facts if f.get('confirmed') is True and f.get('value','').strip()
+               and (f.get('kind')!='product_detail' or detail_matches(f,facts))}
+    kinds = {'product':['shop','product','product_detail'], 'storefront':['shop','address'], 'process':['shop'], 'interior':['shop']}.get(role,[])
     if goal=='promo' and role=='product':
-        kinds=['shop','product','offer','validity']
+        kinds=['shop','product','product_detail','offer','validity']
     refs=[by_kind[k]['id'] for k in kinds if k in by_kind]
+    def sentence(value):return value if value.endswith(('。','！','？','!','?')) else value+'。'
     if role=='product':
         if 'shop' in by_kind and 'product' in by_kind and goal!='promo':
             text=f"{by_kind['shop']['value']}，带你看看{by_kind['product']['value']}。"
+            if 'product_detail' in by_kind:text+=sentence(by_kind['product_detail']['value'])
         else:
-            text='。'.join(by_kind[k]['value'] for k in kinds if k in by_kind)+'。'
+            text=''.join(sentence(by_kind[k]['value']) for k in kinds if k in by_kind) or '请先确认商品信息。'
     elif role=='storefront':
-        text=('门店地址：'+by_kind['address']['value']+'。') if 'address' in by_kind else '出发前，请确认门店位置。'
+        prefix=(by_kind['shop']['value']+'，就在') if 'shop' in by_kind else '门店地址：'
+        text=(prefix+by_kind['address']['value']+'。') if 'address' in by_kind else '出发前，请确认门店位置。'
     elif role=='process':
-        text='这是制作过程。'
+        text=('接着看看'+by_kind['shop']['value']+'的制作画面。') if 'shop' in by_kind else '这是制作过程。'
     elif role=='interior':
-        text='这是店内环境。'
+        text=('也看看'+by_kind['shop']['value']+'的店内环境。') if 'shop' in by_kind else '这是店内环境。'
     else:
         text=CTA[goal]
     return text,refs
@@ -175,7 +183,7 @@ def make_plan(project, method='evidence', speech_lengths=None):
     for seg in segments:
         seg['speech_seconds']=speech_lengths.get(seg['text']) if timing_verified else None
         seg['minimum_seconds']=round(seg['speech_seconds']/1.18+.08,3) if seg['speech_seconds'] is not None else None
-    return {'schema_version':'2.0','goal':goal,'method':method,'synthetic':p.get('synthetic') is True,
+    return {'schema_version':'2.0','copy_policy':COPY_POLICY,'copy_notes':copy_notes(facts),'goal':goal,'method':method,'synthetic':p.get('synthetic') is True,
             'segments':segments,'missing':missing,'renderable':bool(segments) and not missing,'timing_verified':timing_verified,'warnings':p.get('warnings',[]),
             'limitations':['质量分来自抽帧检测，不能证明语义正确。','人工确认仅表示本次输入状态，不能自动证明商户陈述真实。'],
             'assignment':{'algorithm':'speech_feasible_maximum_coverage','score':round(score,4),'quality_weight':1,'duration_weight':0.01},
@@ -188,6 +196,9 @@ def validate_plan(project, plan):
     if plan.get('goal')!=p['goal'] or plan.get('synthetic')!=(p.get('synthetic') is True):
         raise PlanError('目标或模拟样本标记与项目不一致。')
     if plan.get('timing_verified') is not True:raise PlanError('请先完成配音时长预检，再生成视频。')
+    if 'pacing' in plan:
+        from pacing import valid_duration_plan
+        valid_duration_plan(plan)
     if p['goal']=='promo':
         from validity import period_problem
         validity=next((f['value'] for f in p['facts'] if f['kind']=='validity' and f.get('confirmed') is True),'')

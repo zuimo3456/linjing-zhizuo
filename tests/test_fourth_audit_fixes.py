@@ -57,7 +57,8 @@ class FourthAuditFixes(unittest.TestCase):
     def test_unicode_layout_separators_preserve_raw_fact_and_visible_words(self):
         p=sample();raw='示例路18号\u2028\u202999室';p['facts'][2]['value']=raw
         clean_project(p);text,_=caption_for('storefront',p['facts'],p['goal'])
-        self.assertEqual(text,'门店地址：示例路18号 99室。');self.assertEqual(p['facts'][2]['value'],raw)
+        self.assertIn('示例路18号 99室。',text);self.assertNotIn('\u2028',text);self.assertNotIn('\u2029',text)
+        self.assertEqual(p['facts'][2]['value'],raw)
 
     def test_ass_normalizes_unicode_line_and_paragraph_separators(self):
         with tempfile.TemporaryDirectory() as folder:

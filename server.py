@@ -47,9 +47,10 @@ class Handler(BaseHTTPRequestHandler):
             if path=='/api/health':
                 from local_vision import status as local_status
                 from qwen_voice import status as voice_status
+                from copy_rules import COPY_POLICY
                 return self.reply({'ok':bool(FFMPEG and FFPROBE),'ffmpeg':bool(FFMPEG),'ffprobe':bool(FFPROBE),
                                    'version':'local-ai-prototype-8','vision_configured':False,'local_vision':local_status(),
-                                   'tts':'qwen3_tts_local','voice':voice_status()})
+                                   'tts':'qwen3_tts_local','voice':voice_status(),'copy_policy':COPY_POLICY})
             if path.startswith('/api/jobs/'):
                 with jobs_lock: item=jobs.get(path.rsplit('/',1)[-1])
                 return self.reply(item or {'error':'任务不存在'},200 if item else 404)

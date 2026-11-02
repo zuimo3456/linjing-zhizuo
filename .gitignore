@@ -15,3 +15,14 @@ evidence/open-source-snapshots/
 .env
 .env.*
 *.log
+# Local experiment outputs may contain project exports and third-party frames.
+# Existing tracked evidence stays in history; new dated runs remain local.
+evidence/*-20??-??-??/
+evidence/**/runtime-*/
+evidence/**/before/
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519

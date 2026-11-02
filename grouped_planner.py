@@ -8,7 +8,7 @@ MAX_COMBINATION_ATTEMPTS=100000
 def choice_score(bundle):
     return sum(s['quality'] for s in bundle)/len(bundle)-.03*(len(bundle)-1)
 
-def grouped_fallback(project,original,lengths,method):
+def grouped_fallback(project,original,lengths,method,duration_policy=None):
     p=project;roles=GOALS[p['goal']]['roles'];order={s['id']:i for i,s in enumerate(p['shots'])}
     eligible=[s for s in p['shots'] if s.get('confirmed') is True and not any(s.get(k) for k in ('quality_issues','semantic_issue','unavailable')) and s['quality']>=.25 and s['end']-s['start']>=1]
     candidates={};pool_limited=False
@@ -23,18 +23,32 @@ def grouped_fallback(project,original,lengths,method):
             for bundle in combinations(groupable,count):
                 if sum(min(8,s['end']-s['start']) for s in bundle)<=16.000001:choices.append(list(bundle))
         base=caption_for(role,p['facts'],p['goal'])[0];minimum=lengths.get(base,float('inf'))/1.18+.08
-        candidates[role]=sorted(choices,key=lambda bundle:(sum(min(8,s['end']-s['start']) for s in bundle)>=minimum,choice_score(bundle)),reverse=True)
+        if duration_policy:
+            target=duration_policy['preferred_seconds']/len(roles)
+            choices=[b for b in choices if sum(min(8,s['end']-s['start']) for s in b)>=minimum]
+            candidates[role]=sorted(choices,key=lambda b:(abs(sum(min(8,s['end']-s['start']) for s in b)-target),-choice_score(b),len(b)))
+        else:candidates[role]=sorted(choices,key=lambda bundle:(sum(min(8,s['end']-s['start']) for s in bundle)>=minimum,choice_score(bundle)),reverse=True)
     suffix_best=[0.]*(len(roles)+1)
     for i in range(len(roles)-1,-1,-1):suffix_best[i]=suffix_best[i+1]+max((choice_score(b) for b in candidates[roles[i]]),default=0)
-    best=None;best_score=-1;closest=None;closest_key=None;attempts=0;exhausted=False
+    best=None;best_score=-1;best_key=None;closest=None;closest_key=None;attempts=0;exhausted=False;longest=0.
     def visit(index,assigned,used,count,partial_score=0.):
-        nonlocal best,best_score,closest,closest_key,attempts,exhausted
-        if best is not None and partial_score+suffix_best[index]<=best_score+1e-10:return
+        nonlocal best,best_score,best_key,closest,closest_key,attempts,exhausted,longest
+        if not duration_policy and best is not None and partial_score+suffix_best[index]<=best_score+1e-10:return
         if index==len(roles):
             selected=list(assigned.items())
             if method=='chronological':
                 selected.sort(key=lambda item:min(order[s['id']] for s in item[1]))
                 if any(max(order[s['id']] for s in a[1])>=min(order[s['id']] for s in b[1]) for a,b in zip(selected,selected[1:])):return
+            elif duration_policy:
+                # Keep the usual order when its final role can carry the CTA.
+                # Otherwise close on another already-confirmed role; don't ask
+                # for new footage merely because the last environment shot is short.
+                def can_close(item):
+                    role,bundle=item;text=caption_for(role,p['facts'],p['goal'])[0]+CTA[p['goal']]
+                    return lengths.get(text,float('inf'))/1.18+.08<=sum(min(8,s['end']-s['start']) for s in bundle)+.000001
+                if not can_close(selected[-1]):
+                    closer=next((item for item in selected if can_close(item)),None)
+                    if closer is not None:selected=[item for item in selected if item[0]!=closer[0]]+[closer]
             segments=[];score=0;diagnostics=[]
             for n,(role,bundle) in enumerate(selected):
                 clips=[{'shot_id':s['id'],'start':s['start'],'end':min(s['end'],s['start']+8)} for s in bundle]
@@ -53,7 +67,13 @@ def grouped_fallback(project,original,lengths,method):
                 key=(sum(d['shortfall_seconds'] for d in failed),len(failed),-score)
                 if closest_key is None or key<closest_key:closest_key=key;closest=diagnostics
                 return
-            if score>best_score:best_score=score;best=segments
+            if duration_policy:
+                from pacing import PLANNING_MAX
+                total=sum(c['end']-c['start'] for s in segments for c in s.get('clips',[s]));longest=max(longest,total)
+                if not duration_policy['min_seconds']<=total<=PLANNING_MAX+.000001:return
+                key=(round(abs(total-duration_policy['preferred_seconds']),3),-score,count)
+                if best_key is None or key<best_key:best_key=key;best_score=score;best=segments
+            elif score>best_score:best_score=score;best=segments
             return
         role=roles[index]
         for bundle in candidates[role]:
@@ -64,6 +84,15 @@ def grouped_fallback(project,original,lengths,method):
             visit(index+1,{**assigned,role:bundle},used|ids,count+len(bundle),partial_score+choice_score(bundle))
     visit(0,{},set(),0)
     if best is None:
+        if duration_policy:
+            result=deepcopy(original);result.update(renderable=False,pacing=deepcopy(duration_policy))
+            result['search']={'attempts':attempts,'attempt_limit':MAX_COMBINATION_ATTEMPTS,'candidate_pool_limited':pool_limited,'exhausted':exhausted}
+            if exhausted or pool_limited:
+                message='本次有界搜索未找到15–30秒方案，不能据此认定素材不足；请精简候选或确认更多同用途画面。'
+            elif longest and longest<duration_policy['min_seconds']:
+                message=f'已确认且能承载旁白的不同画面最多组合{longest:.1f}秒，至少需要15秒；请补充或确认更多商品、制作或环境镜头。'
+            else:message='当前已确认画面无法同时满足完整旁白、必需用途及15–30秒时长，请补充镜头后重新编排。'
+            result['missing']=list(dict.fromkeys(original.get('missing',[])+[message]));return result
         if closest is None or not original.get('timing_verified'):
             if not (exhausted or pool_limited):return original
             result=deepcopy(original);result['missing']=['本次有界组合搜索未找到方案，不能据此认定现有素材一定不足。请减少候选素材后重试。'];return result
@@ -76,6 +105,10 @@ def grouped_fallback(project,original,lengths,method):
         result['search']={'attempts':attempts,'attempt_limit':MAX_COMBINATION_ATTEMPTS,'candidate_pool_limited':pool_limited,'exhausted':exhausted}
         return result
     result=deepcopy(original);result.update(segments=best,missing=[],renderable=True,timing_verified=True)
+    if duration_policy:
+        result['pacing']=deepcopy(duration_policy)
+        result['estimated_seconds']=round(sum(c['end']-c['start'] for s in best for c in s.get('clips',[s])),3)
+        result['closing_role']=best[-1]['role']
     result['assignment']={'algorithm':'bounded_grouped_fallback','score':round(best_score,3),'max_clips_per_role':4,'max_total_clips':10,
                           'attempts':attempts,'attempt_limit':MAX_COMBINATION_ATTEMPTS,'candidate_pool_limited':pool_limited,'exhausted':exhausted}
     result['coverage']={'roles':len(roles),'required_roles':len(roles),'facts':len(GOALS[p['goal']]['required_facts']),'required_facts':len(GOALS[p['goal']]['required_facts'])}
