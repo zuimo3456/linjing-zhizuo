@@ -1,10 +1,11 @@
 const $=id=>document.getElementById(id);
+const onlinePreview=window.LINJING_PREVIEW_MODE===true;
 const names={shop:'店名',product:'具体商品名称',product_detail:'商品特点（可选）',address:'门店地址',offer:'优惠及完整使用条件',validity:'有效期'};
 const factExamples={shop:'例如：梧桐咖啡（请填实际店名）',product:'例如：生椰拿铁，而不只是“咖啡”',product_detail:'例如：使用椰乳；只填已核实的特点，不写推测',address:'填写真实门店地址',offer:'填写价格和完整使用条件',validity:'填写完整起止日期'};
 const tags={storefront:'门头 / 路线',product:'商品',process:'制作过程',interior:'环境',person:'人物',other:'待判断 / 其他'};
 const cta={visit:'到店前，请确认营业情况。',attract:'感兴趣可以先收藏。',promo:'参与前，请核对活动条件。'};
 let project=blank(),plan=null,busy=false,revision=0,statusTimer,reviewRecords=JSON.parse(localStorage.getItem('linjing-reviews')||'[]');
-function blank(){return {name:'真实店铺项目',goal:'visit',synthetic:false,facts:Object.keys(names).map(k=>({id:k,kind:k,value:'',source:'',confirmed:false})),shots:[]};}
+function blank(){return {name:onlinePreview?'在线预览草稿':'真实店铺项目',goal:'visit',synthetic:false,facts:Object.keys(names).map(k=>({id:k,kind:k,value:'',source:'',confirmed:false})),shots:[]};}
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const directionControls=/[\u061c\u200e\u200f\u202a-\u202e\u2066-\u2069]/g;
 const visibleControls=value=>value.replace(directionControls,c=>'[U+'+c.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')+']');
@@ -13,10 +14,25 @@ function refreshFactWarnings(){const message='部分事实含隐藏方向字符�
 const reviewWindow=s=>`${s.review_start??s.start},${s.review_end??s.end}`;
 const shotTiming=s=>(s.review_start!==undefined&&Math.abs(s.start-s.review_start)>.001?`原片 ${s.start.toFixed(1)}–${s.end.toFixed(1)}s · 复核 ${s.review_start.toFixed(1)}–${s.review_end.toFixed(1)}s`:`${s.start.toFixed(1)}–${s.end.toFixed(1)}s`);
 function status(text,error=false,sticky=false){clearTimeout(statusTimer);$('status').textContent=text;$('status').className='status'+(error?' error':'');$('status').hidden=false;if(!sticky)statusTimer=setTimeout(()=>$('status').hidden=true,6500);}
-async function request(path,obj){const r=await fetch(path,obj===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(obj)});const result=await r.json();if(!r.ok)throw Error(result.error||'请求未成功');return result;}
+async function request(path,obj){if(onlinePreview)throw Error('当前是在线页面预览，素材处理与视频生成请在本地版使用。');const r=await fetch(path,obj===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(obj)});const result=await r.json();if(!r.ok)throw Error(result.error||'请求未成功');return result;}
 async function task(path,obj){if(busy)throw Error('请等待当前任务完成。');busy=true;buttons();try{const res=await request(path,obj);return await watch(res.job_id);}finally{busy=false;buttons();}}
 async function watch(id){for(;;){const j=await request('/api/jobs/'+id);if(j.status==='done'){status('处理完成');return j.result;}if(j.status==='error')throw Error(j.message);status(j.message,false,true);await new Promise(r=>setTimeout(r,1000));}}
-function buttons(){document.querySelectorAll('#facts input,#goal,#method,#shots select,#shots input,#shots button,.projectbar button,.projectbar input,#videoFiles,#labelsFile,#contextBtn').forEach(el=>el.disabled=busy);$('demoBtn').disabled=busy;$('planBtn').disabled=busy;$('newBtn').disabled=busy;$('localAnalyzeBtn').disabled=busy||!project.shots.length;$('renderBtn').disabled=busy||!plan?.renderable;$('busyHint').hidden=!busy;document.querySelectorAll('#plan button').forEach(el=>el.disabled=busy||(el.dataset.up!==undefined&&+el.dataset.up===0)||(el.dataset.down!==undefined&&+el.dataset.down===plan?.segments.length-1));}
+function buttons(){
+ document.querySelectorAll('#facts input,#goal,#method,#shots select,#shots input,#shots button,.projectbar button,.projectbar input,#videoFiles,#labelsFile,#contextBtn').forEach(el=>el.disabled=busy);
+ $('demoBtn').disabled=busy;$('planBtn').disabled=busy;$('newBtn').disabled=busy;$('localAnalyzeBtn').disabled=busy||!project.shots.length;$('renderBtn').disabled=busy||!plan?.renderable;$('busyHint').hidden=!busy;
+ document.querySelectorAll('#plan button').forEach(el=>el.disabled=busy||(el.dataset.up!==undefined&&+el.dataset.up===0)||(el.dataset.down!==undefined&&+el.dataset.down===plan?.segments.length-1));
+ if(onlinePreview)document.querySelectorAll('#demoBtn,#saveBtn,#planBtn,#renderBtn,#localAnalyzeBtn,#videoFiles,#projectFile,#labelsFile,#contextBtn').forEach(el=>el.disabled=true);
+}
+function showOnlinePreview(){
+ $('onlinePreviewNotice').hidden=false;
+ document.querySelector('header .local').innerHTML='<i></i> 在线页面预览';
+ $('demoBtn').textContent='模拟案例（本地版）';$('newBtn').textContent='新建页面草稿';$('saveBtn').textContent='保存项目（本地版）';$('exportProjectBtn').textContent='导出页面草稿';
+ const upload=document.querySelector('label[for="videoFiles"]');upload.classList.add('preview-disabled');upload.setAttribute('aria-disabled','true');upload.querySelector('strong').textContent='素材上传请使用本地版';upload.querySelector('span:last-of-type').textContent='在线预览可以查看页面与拍摄流程，不接收素材';
+ $('modelStatus').textContent='在线预览不运行素材分析；完整处理功能请在本地版使用。';
+ $('voiceStatus').textContent='在线预览不运行配音和视频生成。';
+ document.querySelector('footer span:last-child').textContent='在线预览 · 不上传素材';
+}
+async function projectForExport(){return onlinePreview?{...structuredClone(project),preview_only:true}:locked(()=>request('/api/export-project',{project,plan:plan?.renderable?plan:null,method:$('method').value}));}
 function resetResult(){$('result').hidden=true;$('preview').pause();$('preview').removeAttribute('src');$('preview').load();}
 function applyProject(value){const edit=value.saved_edit;project=value;delete project.saved_edit;revision++;resetResult();plan=edit?.plan||null;if(edit?.method)$('method').value=edit.method;draw();}
 function invalidate(){revision++;plan=null;resetResult();renderPlan();}
@@ -71,9 +87,10 @@ function showResult(data){$('result').hidden=false;$('preview').src=data.video;$
  const m=data.metrics;$('resultMeta').textContent=`${m.synthetic?'模拟技术样片 · ':''}${m.metadata.duration.toFixed(1)} 秒 · ${m.metadata.width} × ${m.metadata.height} · 本次处理 ${m.elapsed_seconds.toFixed(1)} 秒 · 付费 API 调用 ${m.api_calls} 次`;
  $('timings').innerHTML=m.timings.map(t=>`<div class="timing">${t.start.toFixed(1)}–${t.end.toFixed(1)}s / ${esc(t.text)}${t.held_frame_seconds>0?` / 末帧停留 ${t.held_frame_seconds}s`:''}</div>`).join('');$('result').scrollIntoView({behavior:'smooth',block:'start'});}
 $('saveBtn').onclick=guard(async()=>{const r=await locked(()=>request('/api/save',{project,plan:plan?.renderable?plan:null,method:$('method').value}));status(r.plan_saved?'项目与剪辑方案已保存，重开会重新核验并恢复当前顺序。':'素材与事实已保存；当前没有可恢复的有效剪辑方案。');});
-$('exportProjectBtn').onclick=guard(async()=>{const packed=await locked(()=>request('/api/export-project',{project,plan:plan?.renderable?plan:null,method:$('method').value}));download('linjing-project.json',JSON.stringify(packed,null,2));});
+$('exportProjectBtn').onclick=guard(async()=>{const packed=await projectForExport();download('linjing-project.json',JSON.stringify(packed,null,2));});
 $('projectFile').onchange=guard(async e=>{const f=e.target.files[0];if(!f)return;const restored=await locked(async()=>request('/api/reconcile',{project:JSON.parse(await f.text())}));applyProject(restored);status(plan?'已导入项目并重新核验剪辑方案，顺序已恢复。':'项目已导入并核对素材；失效确认或方案请重新完成。');e.target.value='';});
 $('videoFiles').onchange=guard(async e=>{
+ if(onlinePreview)throw Error('在线预览不接收视频，请在本地版上传素材。');
  const files=[...e.target.files];if(!files.length)return;if(busy)throw Error('请等待当前处理完成。');
  // Keep the current edit and preview until the first real asset is usable.
  const uploadProject=project.synthetic?blank():project;let switchedProject=false;
@@ -101,11 +118,11 @@ $('videoFiles').onchange=guard(async e=>{
 $('contextBtn').onclick=guard(async()=>{if(!project.shots.length)throw Error('请先添加素材。');const res=await request('/api/context',{project});const a=document.createElement('a');a.href=res.url;a.download='linjing-context.zip';a.click();status(`已导出 ${res.frames} 张抽帧及标注提示词。发给模型前，请确认素材可以分享。`);});
 $('labelsFile').onchange=guard(async e=>{const f=e.target.files[0];if(!f)return;const labels=JSON.parse(await f.text());const res=await request('/api/labels',{project,candidates:labels});for(const item of res.labels){const s=project.shots.find(s=>s.id===item.shot_id);Object.assign(s,item,{label_source:'model_candidate',confirmed:false});}invalidate();drawShots();status('候选标签已导入，需要逐个查看并确认。');e.target.value='';});
 function switchTab(which){$('workspace').hidden=which!=='work';$('research').hidden=which!=='research';$('workTab').classList.toggle('active',which==='work');$('researchTab').classList.toggle('active',which==='research');}
-$('workTab').onclick=()=>switchTab('work');$('researchTab').onclick=guard(async()=>{switchTab('research');const b=await request('/api/benchmark');$('benchmark').innerHTML=b.cases?`<div class="bench-big">${b.passed}<small> / ${b.total} 个用例通过</small></div><p class="hint">${esc(b.scope)} · ${esc(b.created_at)}</p><div class="case-list">${b.cases.map(c=>`${c.passed?'✓':'✗'} ${esc(c.name)}`).join('<br>')}</div>`:'尚未运行约束测试';updateReviews();});
+$('workTab').onclick=()=>switchTab('work');$('researchTab').onclick=guard(async()=>{switchTab('research');if(onlinePreview){$('benchmark').textContent='在线预览不读取本地测试记录。验证方法与结果说明请查看代码仓库。';updateReviews();return;}const b=await request('/api/benchmark');$('benchmark').innerHTML=b.cases?`<div class="bench-big">${b.passed}<small> / ${b.total} 个用例通过</small></div><p class="hint">${esc(b.scope)} · ${esc(b.created_at)}</p><div class="case-list">${b.cases.map(c=>`${c.passed?'✓':'✗'} ${esc(c.name)}`).join('<br>')}</div>`:'尚未运行约束测试';updateReviews();});
 function updateReviews(){$('reviewCount').textContent=`当前浏览器已保存 ${reviewRecords.length} 条复核记录。保存于浏览器，建议及时导出。`;}
 $('reviewForm').onsubmit=e=>{e.preventDefault();const record=Object.fromEntries(new FormData(e.target));record.created_at=new Date().toISOString();reviewRecords.push(record);localStorage.setItem('linjing-reviews',JSON.stringify(reviewRecords));updateReviews();status('复核记录已保存。');};
 $('exportReviewsBtn').onclick=()=>{const keys=['sample_id','reviewer_id','data_type','correctness','alignment','naturalness','edit_seconds','publish','notes','created_at'];const quote=x=>'"'+String(x??'').replace(/^[=+@-]/,"'$&").replace(/"/g,'""')+'"';download('linjing-reviews.csv','\ufeff'+[keys.join(','),...reviewRecords.map(r=>keys.map(k=>quote(r[k])).join(','))].join('\r\n'),'text/csv;charset=utf-8');};
-const workspaceReady=guard(async()=>{draw();const health=await request('/api/health');$('modelStatus').textContent=health.local_vision?.ready?`本地模型${health.local_vision.state==='loaded'?'已加载':'文件已校验 · 首次分析时加载'} · 素材不上传云端 · 候选需人工确认`:`${health.local_vision?.reason||'本地模型未就绪'} 可先手工标注。`;$('voiceStatus').textContent=health.voice?.ready?'Vivian · 本地轻快女声 · 720 × 1280 · MP4。首次生成需加载声音，请稍候。':(health.voice?.reason||'本地女声尚未就绪，请检查配音环境。');const saved=await request('/api/saved');if(saved){applyProject(saved);if(!$('workspace').hidden)status(plan?'已恢复项目和剪辑顺序，并重新通过核验。':'已恢复上次保存的素材与事实，请检查方案提示。');}else draw();})();
+const workspaceReady=guard(async()=>{draw();if(onlinePreview){showOnlinePreview();return;}const health=await request('/api/health');$('modelStatus').textContent=health.local_vision?.ready?`本地模型${health.local_vision.state==='loaded'?'已加载':'文件已校验 · 首次分析时加载'} · 素材不上传云端 · 候选需人工确认`:`${health.local_vision?.reason||'本地模型未就绪'} 可先手工标注。`;$('voiceStatus').textContent=health.voice?.ready?'Vivian · 本地轻快女声 · 720 × 1280 · MP4。首次生成需加载声音，请稍候。':(health.voice?.reason||'本地女声尚未就绪，请检查配音环境。');const saved=await request('/api/saved');if(saved){applyProject(saved);if(!$('workspace').hidden)status(plan?'已恢复项目和剪辑顺序，并重新通过核验。':'已恢复上次保存的素材与事实，请检查方案提示。');}else draw();})();
 
 // The entry flow supplies a draft; it never supplies fact or material confirmation.
 window.linjingStudio={
@@ -117,7 +134,7 @@ window.linjingStudio={
   await workspaceReady;
   if(busy)throw Error('请等待当前处理完成，再开始新的创作。');
   if(backup){
-   const packed=await locked(()=>request('/api/export-project',{project,plan:plan?.renderable?plan:null,method:$('method').value}));
+   const packed=await projectForExport();
    download('邻镜智作-开始新创作前的项目备份.json',JSON.stringify(packed,null,2));
   }
   const next=blank();next.name=`${brief.shop} · ${brief.intent_name}`;next.goal=brief.goal;next.creative_brief=structuredClone(brief);
