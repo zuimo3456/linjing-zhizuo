@@ -1,0 +1,211 @@
+{
+  "video": "/media/684b444bdaa3406d9a8c3fe51736f74d/result.mp4",
+  "cover": "/media/684b444bdaa3406d9a8c3fe51736f74d/cover.jpg",
+  "report": "/media/684b444bdaa3406d9a8c3fe51736f74d/report.json",
+  "bundle": "/media/684b444bdaa3406d9a8c3fe51736f74d/evidence.zip",
+  "metrics": {
+    "job_id": "684b444bdaa3406d9a8c3fe51736f74d",
+    "created_at_utc": "2026-11-02T08:38:35.882912+00:00",
+    "synthetic": true,
+    "status": "technical_export_only",
+    "metadata": {
+      "duration": 18.821333,
+      "video_duration": 18.8,
+      "format_start": 0.0,
+      "video_start": 0.021016,
+      "video_offset": 0.021016,
+      "width": 720,
+      "height": 1280,
+      "audio": true,
+      "color_transfer": null,
+      "color_primaries": null,
+      "color_space": null,
+      "pixel_format": "yuv420p"
+    },
+    "elapsed_seconds": 3.071,
+    "api_calls": 0,
+    "api_direct_cost_cny": 0,
+    "total_cost_cny": null,
+    "cost_note": "本次本地运行没有付费API调用；电力、设备与人工成本未计量。",
+    "tts": "Qwen3-TTS-1.7B CustomVoice · Vivian · local CUDA",
+    "timings": [
+      {
+        "index": 0,
+        "start": 0,
+        "end": 2.787,
+        "text": "门店地址：示例街道18号。",
+        "alignment": "measured_phrase_audio",
+        "held_frame_seconds": 0,
+        "voice_speed": 1,
+        "captions": [
+          {
+            "start": 0.0,
+            "end": 2.7068,
+            "text": "门店地址：示例街道18号。"
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "start": 2.787,
+        "end": 18.787,
+        "text": "街角咖啡。手冲咖啡。第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享。2026年10月31日至2026年11月7日。参与前，请核对活动条件。",
+        "alignment": "measured_phrase_audio",
+        "held_frame_seconds": 0,
+        "voice_speed": 1.01528,
+        "captions": [
+          {
+            "start": 0.0,
+            "end": 0.7995,
+            "text": "街角咖啡。"
+          },
+          {
+            "start": 0.9374,
+            "end": 2.0421,
+            "text": "手冲咖啡。"
+          },
+          {
+            "start": 2.18,
+            "end": 7.4883,
+            "text": "第二杯半价，仅限同款饮品，每人每天限购一次，"
+          },
+          {
+            "start": 7.6262,
+            "end": 9.2054,
+            "text": "不与其他优惠同享。"
+          },
+          {
+            "start": 9.3433,
+            "end": 13.4327,
+            "text": "2026年10月31日至2026年11月7日。"
+          },
+          {
+            "start": 13.5706,
+            "end": 15.9199,
+            "text": "参与前，请核对活动条件。"
+          }
+        ],
+        "visual_clips": [
+          {
+            "shot_id": "22ca0870a17049bebda63ad3825534ca-0",
+            "start": 0.0,
+            "end": 8.0,
+            "output_start": 2.787,
+            "output_end": 10.787
+          },
+          {
+            "shot_id": "57cb9a0bf3bf4538b9ce6f5b2d8e5c3b-0",
+            "start": 0.0,
+            "end": 8.0,
+            "output_start": 10.787,
+            "output_end": 18.787
+          }
+        ]
+      }
+    ],
+    "plan": {
+      "schema_version": "2.0",
+      "goal": "promo",
+      "method": "chronological",
+      "synthetic": true,
+      "segments": [
+        {
+          "shot_id": "ca53435da8024ba0aa5453fdc40a6a09-0",
+          "start": 0.0,
+          "end": 6.0,
+          "role": "storefront",
+          "text": "门店地址：示例街道18号。",
+          "fact_ids": [
+            "address"
+          ],
+          "reason": "1个已确认片段共同承载一段旁白。",
+          "speech_seconds": 2.714938,
+          "minimum_seconds": 2.381
+        },
+        {
+          "shot_id": "22ca0870a17049bebda63ad3825534ca-0",
+          "start": 0.0,
+          "end": 8.0,
+          "role": "product",
+          "text": "街角咖啡。手冲咖啡。第二杯半价，仅限同款饮品，每人每天限购一次，不与其他优惠同享。2026年10月31日至2026年11月7日。参与前，请核对活动条件。",
+          "fact_ids": [
+            "shop",
+            "product",
+            "offer",
+            "validity"
+          ],
+          "reason": "2个已确认片段共同承载一段旁白。",
+          "speech_seconds": 16.163188,
+          "minimum_seconds": 13.778,
+          "clips": [
+            {
+              "shot_id": "22ca0870a17049bebda63ad3825534ca-0",
+              "start": 0.0,
+              "end": 8.0
+            },
+            {
+              "shot_id": "57cb9a0bf3bf4538b9ce6f5b2d8e5c3b-0",
+              "start": 0.0,
+              "end": 8.0
+            }
+          ]
+        }
+      ],
+      "missing": [],
+      "renderable": true,
+      "timing_verified": true,
+      "warnings": [],
+      "limitations": [
+        "质量分来自抽帧检测，不能证明语义正确。",
+        "人工确认仅表示本次输入状态，不能自动证明商户陈述真实。"
+      ],
+      "assignment": {
+        "algorithm": "bounded_grouped_fallback",
+        "score": 1.586,
+        "max_clips_per_role": 4,
+        "max_total_clips": 10,
+        "attempts": 10,
+        "attempt_limit": 100000,
+        "candidate_pool_limited": false,
+        "exhausted": false
+      },
+      "coverage": {
+        "roles": 2,
+        "required_roles": 2,
+        "facts": 5,
+        "required_facts": 5
+      },
+      "voice_profile": "d0f46c50ff5f8fbdba60b4cded1efc577a37a4a03cad8d30767422858453db6f",
+      "estimated_seconds": 18.787
+    },
+    "acceptance": {
+      "playback": "pending_browser_check",
+      "human_audio_visual_quality": "pending",
+      "merchant_willingness": "not_measured"
+    },
+    "analysis": null,
+    "limitations": [
+      "画外音路径，不包含原声保留。",
+      "短句字幕按实际语音段测时，不是逐字对齐。",
+      "语义仍需确认；本地图文相似度不是商业事实验证。"
+    ],
+    "voice": {
+      "engine": "qwen3-tts",
+      "model": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
+      "revision": "0c0e3051f131929182e2c023b9537f8b1c68adfe",
+      "speaker": "Vivian",
+      "language": "Chinese",
+      "instruct": "用轻快、活泼、有亲和力的年轻女声说话，像向朋友介绍一家小店。吐字清楚，语速适中，语气自然明亮。",
+      "seed_policy": "sha256-text-v1",
+      "sampling": {
+        "temperature": 0.7,
+        "top_p": 0.9,
+        "top_k": 50,
+        "repetition_penalty": 1.05
+      },
+      "audio_pipeline": "measured-phrases-v3",
+      "profile_id": "d0f46c50ff5f8fbdba60b4cded1efc577a37a4a03cad8d30767422858453db6f",
+      "human_listening": "pending"
+    }
+  }
+}

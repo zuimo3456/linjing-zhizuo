@@ -212,10 +212,12 @@ def render(project,plan,job_id,progress):
     report={'job_id':job_id,'created_at_utc':datetime.now(timezone.utc).isoformat(),'synthetic':project.get('synthetic') is True,
             'status':'technical_export_only','metadata':result_meta,'elapsed_seconds':round(time.perf_counter()-begun,3),
             'api_calls':0,'api_direct_cost_cny':0,'total_cost_cny':None,'cost_note':'本次本地运行没有付费API调用；电力、设备与人工成本未计量。',
-            'tts':'Windows Microsoft Huihui Desktop offline','timings':timings,'plan':plan,
+            'tts':'Qwen3-TTS-1.7B CustomVoice · Vivian · local CUDA','timings':timings,'plan':plan,
             'acceptance':{'playback':'pending_browser_check','human_audio_visual_quality':'pending','merchant_willingness':'not_measured'},
             'analysis':project.get('vision_analysis'),
             'limitations':['画外音路径，不包含原声保留。','短句字幕按实际语音段测时，不是逐字对齐。','语义仍需确认；本地图文相似度不是商业事实验证。']}
+    from qwen_voice import PROFILE,PROFILE_ID
+    report['voice']={**PROFILE,'profile_id':PROFILE_ID,'human_listening':'pending'}
     (out/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf8')
     (out/'project.json').write_text(json.dumps(project,ensure_ascii=False,indent=2),encoding='utf8')
     import zipfile

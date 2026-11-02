@@ -38,15 +38,18 @@ class Handler(BaseHTTPRequestHandler):
         return json.loads(self.rfile.read(n))
     def same_origin(self):
         origin=self.headers.get('Origin')
-        if origin and origin not in ('http://127.0.0.1:4180','http://localhost:4180'):
+        port=self.server.server_port
+        if origin and origin not in (f'http://127.0.0.1:{port}',f'http://localhost:{port}'):
             raise ValueError('不接受来自其他网站的写入请求。')
     def do_GET(self):
         try:
             url=urlsplit(self.path); path=unquote(url.path)
             if path=='/api/health':
                 from local_vision import status as local_status
+                from qwen_voice import status as voice_status
                 return self.reply({'ok':bool(FFMPEG and FFPROBE),'ffmpeg':bool(FFMPEG),'ffprobe':bool(FFPROBE),
-                                   'version':'local-ai-prototype-7','vision_configured':False,'local_vision':local_status(),'tts':'offline_windows'})
+                                   'version':'local-ai-prototype-8','vision_configured':False,'local_vision':local_status(),
+                                   'tts':'qwen3_tts_local','voice':voice_status()})
             if path.startswith('/api/jobs/'):
                 with jobs_lock: item=jobs.get(path.rsplit('/',1)[-1])
                 return self.reply(item or {'error':'任务不存在'},200 if item else 404)

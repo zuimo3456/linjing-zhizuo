@@ -1,6 +1,8 @@
 """Offline, phrase-timed narration with bounded speed and no long held frames."""
 import json,re,shutil,subprocess,hashlib,tempfile,threading
 from pathlib import Path
+from qwen_voice import PROFILE,PROFILE_ID,generate as generate_neural_voice
+from text_rules import display_text
 
 FFMPEG=shutil.which('ffmpeg');FFPROBE=shutil.which('ffprobe')
 ROOT=Path(__file__).resolve().parent
@@ -29,13 +31,19 @@ def _synthesize_uncached(text,work,prefix,available):
     cues=[];parts=[];cursor=0
     chunks=phrases(text)
     for i,phrase in enumerate(chunks):
-        txt=work/f'{prefix}-{i}.txt';raw=work/f'{prefix}-{i}-raw.wav';trim=work/f'{prefix}-{i}.wav'
-        txt.write_text(phrase,encoding='utf8')
-        run(['powershell','-NoProfile','-NonInteractive','-File',ROOT/'synthesize.ps1','-InputPath',txt,'-OutputPath',raw])
+        raw=work/f'{prefix}-{i}-raw.wav';trim=work/f'{prefix}-{i}.wav'
+        phrase_key=hashlib.sha256((PROFILE_ID+'\0'+phrase).encode('utf8')).hexdigest()
+        phrase_folder=ROOT/'data/voice-phrases';phrase_folder.mkdir(parents=True,exist_ok=True)
+        cached=phrase_folder/(phrase_key+'.wav');metrics=phrase_folder/(phrase_key+'.json')
+        if not (cached.is_file() and metrics.is_file()):
+            info=generate_neural_voice(phrase,raw)
+            shutil.copyfile(raw,cached)
+            metrics.write_text(json.dumps({**info,'text':phrase,'profile_id':PROFILE_ID},ensure_ascii=False),encoding='utf8')
+        else:shutil.copyfile(cached,raw)
         filt='silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.04,areverse,silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.04,areverse'
         run([FFMPEG,'-y','-v','error','-i',raw,'-af',filt,'-ar','48000','-ac','1',trim])
         length=duration(trim)
-        if length<.08:raise ValueError('没有生成可用的人声，请检查系统中文语音。')
+        if length<.08:raise ValueError('开源女声没有生成可用的人声，请重试或检查配音日志。')
         cues.append({'start':cursor,'end':cursor+length,'text':phrase})
         parts.append(trim);cursor+=length
         if i<len(chunks)-1:
@@ -59,7 +67,10 @@ _voice_lock=threading.RLock()
 
 def prepare_voice(text):
     """Measure the real speech once; reuse the same audio for planning/rendering."""
-    key=hashlib.sha256(('huihui-phrase-v2\0'+text).encode('utf8')).hexdigest()
+    text=display_text(text)
+    if not text.strip():raise ValueError('旁白不能为空。')
+    if '<|' in text or '|>' in text:raise ValueError('旁白含模型控制标记，请改为普通文字后重新确认。')
+    key=hashlib.sha256((PROFILE_ID+'\0'+text).encode('utf8')).hexdigest()
     folder=ROOT/'data/voice-cache';folder.mkdir(parents=True,exist_ok=True)
     wav=folder/(key+'.wav');meta=folder/(key+'.json')
     with _voice_lock:
@@ -67,7 +78,7 @@ def prepare_voice(text):
             with tempfile.TemporaryDirectory(prefix='linjing-preflight-') as tmp:
                 natural,length,cues,_=_synthesize_uncached(text,Path(tmp),'natural',10000)
                 shutil.copyfile(natural,wav)
-                meta.write_text(json.dumps({'duration':length,'cues':cues,'text':text},ensure_ascii=False),encoding='utf8')
+                meta.write_text(json.dumps({'duration':length,'cues':cues,'text':text,'voice':PROFILE,'profile_id':PROFILE_ID},ensure_ascii=False),encoding='utf8')
         info=json.loads(meta.read_text(encoding='utf8'))
     return wav,info['duration'],info['cues']
 

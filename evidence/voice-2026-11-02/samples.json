@@ -1,0 +1,83 @@
+{
+  "voice": {
+    "engine": "qwen3-tts",
+    "model": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
+    "revision": "0c0e3051f131929182e2c023b9537f8b1c68adfe",
+    "speaker": "Vivian",
+    "language": "Chinese",
+    "instruct": "用轻快、活泼、有亲和力的年轻女声说话，像向朋友介绍一家小店。吐字清楚，语速适中，语气自然明亮。",
+    "seed_policy": "sha256-text-v1",
+    "sampling": {
+      "temperature": 0.7,
+      "top_p": 0.9,
+      "top_k": 50,
+      "repetition_penalty": 1.05
+    },
+    "audio_pipeline": "measured-phrases-v3"
+  },
+  "samples": [
+    {
+      "name": "01-活泼女声试听",
+      "text": "欢迎来到街角咖啡！手冲咖啡，陪你开启元气满满的一天。",
+      "seconds": 6.234042,
+      "generation_seconds": 0.001,
+      "cached_seconds": 0.0005,
+      "cues": [
+        {
+          "start": 0.0,
+          "end": 1.7494,
+          "text": "欢迎来到街角咖啡！"
+        },
+        {
+          "start": 1.8894,
+          "end": 6.234,
+          "text": "手冲咖啡，陪你开启元气满满的一天。"
+        }
+      ],
+      "audio": "D:\\zuimo\\Desktop\\大创\\邻镜智作-重构版\\交付\\开源活泼女声\\01-活泼女声试听.wav",
+      "human_listening": "pending"
+    },
+    {
+      "name": "02-价格日期试听",
+      "text": "单杯19元，每人限购一杯。活动时间：2026年11月2日至11月8日。",
+      "seconds": 9.640208,
+      "generation_seconds": 0.0,
+      "cached_seconds": 0.0004,
+      "cues": [
+        {
+          "start": 0.0,
+          "end": 3.1245,
+          "text": "单杯19元，每人限购一杯。"
+        },
+        {
+          "start": 3.2645,
+          "end": 9.6402,
+          "text": "活动时间：2026年11月2日至11月8日。"
+        }
+      ],
+      "audio": "D:\\zuimo\\Desktop\\大创\\邻镜智作-重构版\\交付\\开源活泼女声\\02-价格日期试听.wav",
+      "human_listening": "pending"
+    },
+    {
+      "name": "03-地址条件试听",
+      "text": "地址是学院路99号，A1室。参与前，请核对活动条件。",
+      "seconds": 5.248458,
+      "generation_seconds": 0.0,
+      "cached_seconds": 0.0004,
+      "cues": [
+        {
+          "start": 0.0,
+          "end": 2.7277,
+          "text": "地址是学院路99号，A1室。"
+        },
+        {
+          "start": 2.8678,
+          "end": 5.2485,
+          "text": "参与前，请核对活动条件。"
+        }
+      ],
+      "audio": "D:\\zuimo\\Desktop\\大创\\邻镜智作-重构版\\交付\\开源活泼女声\\03-地址条件试听.wav",
+      "human_listening": "pending"
+    }
+  ]
+}
