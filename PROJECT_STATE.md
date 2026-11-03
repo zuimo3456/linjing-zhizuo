@@ -1,14 +1,16 @@
 # 邻镜智作项目交接与当前状态
 
-最后更新：2026年11月2日。当前协作基线已提交并推送至GitHub公开仓库zuimo3456/linjing-zhizuo，main分支。饭店首页独立预览4193，具体商品文案4191，15–30秒优化4192。用户页面验收、听感与商户效果仍待完成。后续工作必须核对本文件与实际代码。
+最后更新：2026年11月3日。在线页面预览已上线：https://zuimo3456.github.io/linjing-zhizuo/ ，本次复核返回200。main前端更新自动部署；视频上传与生成仍在本地版。代码仓库zuimo3456/linjing-zhizuo公开。原本机预览端口4193／4191／4192的服务状态需重新核查。用户页面验收、听感与商户效果仍待完成。
 
 ## 最新交接：本地版已可试用（优先阅读）
 
-### 同学查看用在线预览部署（2026年11月2日，进行中）
+### 同学查看用在线预览已上线（2026年11月2日部署，11月3日复核）
 
 用户希望部署服务器供同学查看网站。本轮采用现有公开仓库的GitHub Pages部署可交互前端预览，main前端更新后自动发布；不迁移Python／FFmpeg／GPU生成服务。首页、筛选、三类拍摄清单、工作台表单及浏览器草稿导出可交互；顶部提示在线预览，视频上传、分析、配音、生成、服务器保存／导入均停用。在线模式不请求本地API，不上传素材，也不伪装生成结果；本地模式保持原行为。
 
-新增scripts/build_web_preview.py、.github/workflows/pages.yml、tests/test_web_preview.py、verify_web_preview_browser.py及docs/网站部署与更新.md。构建只允许6个公开文件，拒绝夹带未知输出，公开入口单独注入预览标志，资源改为相对路径以支持仓库子路径，version.json记录部署提交。程序150/150通过（原146+4项构建测试），原本地版10组浏览器流程及真实静态子路径5组流程通过，无JS异常、资源错误或在线API请求；已查看桌面和手机截图。证据evidence/pages-2026-11-02/留在本地。GitHub Pages已配置，待提交推送并完成首次工作流／公网复核后记录最终网址和实际状态。未租服务器、未更改原服务公网监听，未上传素材／模型／项目。
+新增scripts/build_web_preview.py、.github/workflows/pages.yml、tests/test_web_preview.py、verify_web_preview_browser.py及docs/网站部署与更新.md。构建只允许6个公开文件，拒绝夹带未知输出，公开入口单独注入预览标志，资源改为相对路径以支持仓库子路径，version.json记录部署提交。程序150/150通过（原146+4项构建测试），原本地版10组浏览器流程、真实静态子路径5组及公网地址5组流程通过，无JS异常、资源错误或在线API请求；已查看桌面和手机截图。证据evidence/pages-2026-11-02/留在本地。
+
+部署代码提交90c99c88df250bfe42b8eda1b5093c1ae181f161；GitHub Actions运行41423598039全部步骤成功，地址https://github.com/zuimo3456/linjing-zhizuo/actions/runs/41423598039 。正式公开网址https://zuimo3456.github.io/linjing-zhizuo/ ，首页、app.js、style.css、preview-config.js公网均200，version.json与部署代码提交一致。2026年11月3日再次复核首页200、公开仓库has_pages=true、默认分支main、最新发布工作流success且线上版本仍为90c99c8。仓库About已设置该网站入口；后续仅交接文档提交不触发页面重建，代码版本仍以version.json为准。未租服务器、未更改原服务公网监听，未上传素材／模型／项目。下一步同学直接访问网址试用并反馈；需要完整云端成片时另行设计部署。
 
 ### Git公开协作基线已推送（2026年11月2日）
 
