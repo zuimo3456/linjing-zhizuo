@@ -85,6 +85,20 @@ class StoreCopy(unittest.TestCase):
             text,refs=caption_for(role,p['facts'],'visit')
             self.assertNotIn('梧桐咖啡',text);self.assertNotIn('f1',refs)
 
+    def test_environment_copy_does_not_invent_indoor_seating(self):
+        p=self.project(shop='街角小吃档',product='炸豆腐',detail=None)
+        text,refs=caption_for('interior',p['facts'],'visit')
+        self.assertIn('街角小吃档',text);self.assertIn('门店环境',text)
+        self.assertNotIn('店内',text);self.assertNotIn('堂食',text);self.assertNotIn('包间',text)
+        self.assertEqual(refs,['f1'])
+
+    def test_old_indoor_environment_text_requires_replanning(self):
+        p=self.project();plan=make_plan(p)
+        self.assertTrue(validate_plan(p,plan))
+        segment=next(segment for segment in plan['segments'] if segment['role']=='interior')
+        segment['text']=segment['text'].replace('门店环境','店内环境')
+        with self.assertRaisesRegex(PlanError,'文案'):validate_plan(p,plan)
+
     def test_malformed_import_still_reaches_project_validation(self):
         p=self.project();p['facts'].insert(0,None)
         recovered=recover_details(p)

@@ -37,7 +37,7 @@ async def main(url):
         await page.screenshot(path=str(OUT/'online-home-desktop.png'), full_page=True, animations='disabled')
         await page.locator('#startBriefBtn').click()
         assert '双人火锅套餐' in await page.locator('#guideTitle').inner_text()
-        assert await page.locator('.shoot-task').count() == 4
+        assert await page.locator('.shoot-task').count() == 5
         await page.reload()
         await page.locator('#shooting').wait_for(state='visible')
         assert '双人火锅套餐' in await page.locator('#guideTitle').inner_text()
@@ -93,4 +93,6 @@ async def main(url):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--url', default='http://127.0.0.1:4195/web-preview/')
-    asyncio.run(main(parser.parse_args().url))
+    parser.add_argument('--out', default=str(OUT))
+    args=parser.parse_args();OUT=Path(args.out)
+    asyncio.run(main(args.url))

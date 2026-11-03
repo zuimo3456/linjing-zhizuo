@@ -1,8 +1,9 @@
 """Exercise the restaurant entry with real Edge and real local APIs; never save a project."""
+import argparse
 import asyncio
 import hashlib
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 from playwright.async_api import async_playwright
@@ -63,7 +64,7 @@ async def main():
         assert page.url.endswith('#shoot/signature')
         assert '砂锅牛肉' in await page.locator('#guideTitle').inner_text()
         assert '翻炒、浇汁或出锅' in await page.locator('#guideChecklist').inner_text()
-        assert await page.locator('.shoot-task').count() == 4
+        assert await page.locator('.shoot-task').count() == 5
         await page.reload()
         await page.evaluate('linjingStudio.ready')
         assert await page.locator('#shooting').is_visible()
@@ -83,11 +84,11 @@ async def main():
                 await page.locator('#startBriefBtn').click()
                 await page.locator('#shooting').wait_for(state='visible')
                 assert page.url.endswith('#shoot/'+intent)
-                assert await page.locator('.shoot-task').count() == 4
+                assert await page.locator('.shoot-task').count() == 5
                 guide = await page.locator('#guideChecklist').inner_text()
                 assert ('制作镜头' in guide) == (intent == 'signature')
-                assert ('套餐完整亮相' in guide) == (intent == 'offer')
-                assert ('先认识这家店' in guide) == (intent == 'restaurant')
+                assert await page.locator('[data-shot-key$=".package"]').count() == int(intent == 'offer')
+                assert await page.locator('#guideGoal').inner_text() == {'signature':'菜品推荐','offer':'套餐推广','restaurant':'门店介绍'}[intent]
                 await page.locator('#editBriefBtn').click()
         passed('六种饭店类型与三种目标共18组清单')
 
@@ -203,7 +204,7 @@ async def main():
 
     assert saved_before == (hashlib.sha256(saved.read_bytes()).hexdigest(), saved.stat().st_mtime_ns)
     (OUT/'browser-checks.json').write_text(json.dumps({
-        'date':'2026-11-02', 'url':URL, 'browser':'Installed Edge / isolated Playwright context',
+        'date':datetime.now(timezone(timedelta(hours=8))).date().isoformat(), 'url':URL, 'browser':'Installed Edge / isolated Playwright context',
         'checks':checks, 'page_errors':page_errors, 'post_requests':writes,
         'saved_project_unchanged':True, 'sample_videos':'Not recorded; UI labels this as pending',
         'automated_reference_comparison':'Not implemented by this frontend change',
@@ -213,4 +214,9 @@ async def main():
 
 
 if __name__ == '__main__':
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--url',default=URL)
+    parser.add_argument('--out',default=str(OUT))
+    args=parser.parse_args()
+    URL=args.url;OUT=Path(args.out)
     asyncio.run(main())

@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-03",
+  "scope": "现有六类餐饮与三种宣传目标；不扩展其他行业",
+  "method": "公开网页、检索可读文字与浏览器局部画面观察。未完整听写所有视频，未获取广告投放、到店或成交数据。未把平台原片用于项目成片或示例。",
+  "conclusion_limit": "支持改进拍摄清单的设计，不证明最优、准确率或转化提升。",
+  "references": [
+    {"id":"DY-OFFICIAL","platform":"抖音生活服务","title":"生活服务团购达人成长手册-美食小白篇","url":"https://life.douyin.com/support/content/124147?menu=1&spaceId=123","published":"历史指引，具体日期未核对","verification":"检索可读正文；直接页面无可读正文","used":true,"observation":"以门店特色和本次内容目的安排素材；同时考虑菜品、套餐、服务和环境。只采用基础方法，不沿用历史运营政策或承诺。","adaptation":"区分菜品、套餐和门店目标，并将事实来源与拍摄用途分开。"},
+    {"id":"B-TECH","platform":"bilibili","author":"二麦科技","title":"第096期：五个超好用的美食拍摄技巧","url":"https://www.bilibili.com/video/BV1xb411C7Z2/","published":"2019-01-28","verification":"页面说明与局部画面；观察到橙子组织的近景细节","used":true,"observation":"完整主体与细节特写承担不同信息，近景需要主体清晰。未逐条核对视频全部五项技巧。","adaptation":"每类餐饮都区分全貌与质感，不规定所有食物都要拉丝或爆汁。"},
+    {"id":"B-HOME","platform":"bilibili","author":"弗弗的Young","title":"美食拍摄：餐饮店是练手的最佳选择2","url":"https://www.bilibili.com/video/BV1sP4y1379S/","published":"2021-12-09","verification":"页面设备说明与约一分钟处后厨人员画面","used":true,"observation":"专业灯光器材与后厨场景有实际拍摄成本；人员中景提供操作场景信息，不能仅凭标题认定广告有效。","adaptation":"降低为手机固定机位；制作只记录得到允许的一个动作，和成品近景互补。"},
+    {"id":"B-HOTPOT","platform":"bilibili","author":"苏州大时代传媒","title":"火锅店宣传片怎么拍","url":"https://www.bilibili.com/video/BV1qbcLeAEux/","published":"2025-01-11","verification":"页面说明、约00:23摆盘片段","used":true,"observation":"食材摆盘有独立表现价值；画面提示配合节奏，但没有取得效果数据。","adaptation":"拍锅底与食材关系、套餐盘数，节奏只作为剪辑建议，不要求商家复杂运镜。"},
+    {"id":"B-GRILL","platform":"bilibili","title":"烤肉店宣传片／创意宣传片","url":"https://www.bilibili.com/video/BV1B54y1C7M4/","published":"2020-09-17","verification":"页面与约00:20近景上料／烤制画面","used":true,"observation":"烤制动作可以与成品展示区分；样片为专业横屏形式，不能直接当作普通商家竖屏最优模板。","adaptation":"熟成品烤痕、一个完整翻面／刷料动作与串盘数量分别采集。"},
+    {"id":"B-NOODLES","platform":"bilibili","author":"丁大雄530","title":"浙江杭州泽泽面道面馆宣传视频","url":"https://www.bilibili.com/video/BV1BE411r7Es/","published":"2019-10-18","verification":"约00:30品牌细节及约01:01锅中面条片段","used":true,"observation":"品牌细节和制作变化属于不同信息；较长品牌片的开头不能直接照搬到短促销视频。","adaptation":"粉面要求整碗关系和真实制作变化；门头不再机械固定为所有推荐视频的开头。"},
+    {"id":"B-BREAKFAST","platform":"bilibili","author":"冷皓读历史","title":"人间烟火气：东莞道滘友谊早餐店","url":"https://www.bilibili.com/video/BV1YsxMzbEQH/","published":"2025-10-05","verification":"公开页面及约01:01门店价目表片段","used":true,"observation":"价目表与门店信息具有辨认用途；本轮没有核实其中具体价格、经营历史或现场速度。","adaptation":"早餐套餐要交代实际组成、数量和取餐方式，价格仍需商家核实，不能从画面猜。"},
+    {"id":"B-SNACK","platform":"bilibili","author":"KC宣传片","title":"美食宣传片汉堡","url":"https://www.bilibili.com/video/BV16xvneuEPB/","published":"2024-08-01","verification":"公开页面与约00:18完整汉堡层次画面","used":true,"observation":"侧面可展示层叠食物的结构，但汉堡不是所有小吃的代表。","adaptation":"小吃按实际形态选择整份、表面或切面；不强制炸串、粥或甜品采用同一个动作。"},
+    {"id":"DY-STRUCTURE","platform":"抖音","author":"老许说餐饮","title":"短视频怎么拍，我来教大家","url":"https://www.douyin.com/video/7507502564683025721","published":"2025-05-23","verification":"原作者页面、局部讲解画面和检索文字；约01:30可见固定时长建议","used":true,"observation":"讲解区分产品、门店和找店内容。其固定时长、流量及经营观点没有独立验证，不作为硬规则。","adaptation":"套餐组成、完整优惠信息和门店识别各有要求；保持项目现有15–30秒工程目标。"},
+    {"id":"DY-MOVE","platform":"抖音","title":"基础运镜教你拍美食大片","url":"https://jingxuan.douyin.com/m/video/7646349339363900038","published":"2026-06-01","verification":"抖音实际页面与约00:13端盘画面；实际播放器约15秒，与索引时长不同","used":true,"observation":"原机位和食物动作可形成画面变化；检索建议包含超广角等具体技法，不将其当作通用最优规则。","adaptation":"优先稳定机位让菜品或手部完成一个动作，避免要求所有商家航拍、倒置手机或超广角。"},
+    {"id":"B-EDIT-CONTEXT","platform":"bilibili","author":"锐可剪辑笔记","title":"8步剪辑法：餐厅美食宣传片上集","url":"https://www.bilibili.com/video/BV17wL36vENY/","published":"2026-05-16","verification":"16分55秒教程的简介与约00:12片段，未完整观看","used":false,"observation":"仅观察到餐桌／饮品开头，不能声称已掌握全部8步，也不据此编写细分镜头规则。"},
+    {"id":"DY-OLD-EXCLUDED","platform":"抖音","title":"历史指引引用的团购示例链接","url":"https://www.douyin.com/video/7045613694167862535","verification":"浏览器最终显示无关剧情内容，无法核对原案例","used":false,"observation":"排除，不计入有效餐饮案例，不用最终推荐页补充原案例的观察。"}
+  ]
+}

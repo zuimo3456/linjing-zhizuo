@@ -96,7 +96,7 @@ def caption_for(role, facts, goal):
     elif role=='process':
         text=('接着看看'+by_kind['shop']['value']+'的制作画面。') if 'shop' in by_kind else '这是制作过程。'
     elif role=='interior':
-        text=('也看看'+by_kind['shop']['value']+'的店内环境。') if 'shop' in by_kind else '这是店内环境。'
+        text=('也看看'+by_kind['shop']['value']+'的门店环境。') if 'shop' in by_kind else '这是门店环境。'
     else:
         text=CTA[goal]
     return text,refs
