@@ -198,9 +198,13 @@ window.linjingStudio={
   const guideVersion='restaurant-shooting-v2-2026-11-03';
   const selectedBrief = () => ({version:2, guide_version:guideVersion, industry:'restaurant', category:state.category, category_name:category().name, intent:state.intent, intent_name:intent().short, capture_mode:state.intent==='signature'?state.captureMode:'finished', goal:state.intent==='signature'&&state.captureMode==='finished'?'visit':intent().goal, shop:clean(state.shop), product:clean(state.subject)});
 
+  let greetingTimer;
   function updateGreeting() {
-    const hour = new Date().getHours();
-    byId('timeGreeting').textContent = hour >= 5 && hour < 11 ? '早上好，' : hour >= 11 && hour < 18 ? '中午好，' : '晚上好，';
+    const now = new Date();
+    const minutes = now.getHours() * 60 + now.getMinutes();
+    byId('timeGreeting').textContent = minutes >= 300 && minutes < 630 ? '早上好，' : minutes >= 630 && minutes < 780 ? '中午好，' : minutes >= 780 && minutes < 1020 ? '下午好，' : '晚上好，';
+    clearTimeout(greetingTimer);
+    greetingTimer = setTimeout(updateGreeting, 60000 - now.getSeconds() * 1000 - now.getMilliseconds());
   }
 
   function updateSelection() {
@@ -428,7 +432,6 @@ window.linjingStudio={
   };
   window.addEventListener('hashchange', route);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) updateGreeting(); });
-  setInterval(updateGreeting, 60000);
   updateGreeting();
   updateSelection();
   route();

@@ -13,7 +13,7 @@ OUT = ROOT / 'evidence/home-2026-11-02'
 URL = 'http://127.0.0.1:4193'
 
 
-async def main():
+async def main(greeting_only=False):
     OUT.mkdir(parents=True, exist_ok=True)
     saved = ROOT / 'data/saved-project.json'
     saved_before = (hashlib.sha256(saved.read_bytes()).hexdigest(), saved.stat().st_mtime_ns)
@@ -38,13 +38,45 @@ async def main():
         assert not await page.locator('#workspace').is_visible()
         assert await page.locator('#startBriefBtn').is_disabled()
         assert await page.locator('#timeGreeting').inner_text() == '早上好，'
-        await page.clock.set_fixed_time(datetime(2026, 11, 2, 4, 0, tzinfo=timezone.utc))
-        await page.get_by_role('button', name='开始创作', exact=True).click()
-        assert await page.locator('#timeGreeting').inner_text() == '中午好，'
-        await page.clock.set_fixed_time(datetime(2026, 11, 2, 12, 0, tzinfo=timezone.utc))
-        await page.get_by_role('button', name='开始创作', exact=True).click()
-        assert await page.locator('#timeGreeting').inner_text() == '晚上好，'
-        passed('首页默认展示与早中晚问候')
+        local_zone = timezone(timedelta(hours=8))
+        greeting_cases = [
+            (0, 0, '晚上好，'), (4, 59, '晚上好，'),
+            (5, 0, '早上好，'), (10, 29, '早上好，'),
+            (10, 30, '中午好，'), (12, 59, '中午好，'),
+            (13, 0, '下午好，'), (16, 59, '下午好，'),
+            (17, 0, '晚上好，'), (23, 59, '晚上好，')
+        ]
+        for hour, minute, expected in greeting_cases:
+            await page.clock.set_system_time(datetime(2026, 11, 3, hour, minute, tzinfo=local_zone))
+            await page.get_by_role('button', name='开始创作', exact=True).click()
+            assert await page.locator('#timeGreeting').inner_text() == expected, (hour, minute)
+        # Leave the page open across each boundary: no click or reload to refresh.
+        for hour, minute, before, after in [
+            (4, 59, '晚上好，', '早上好，'),
+            (10, 29, '早上好，', '中午好，'),
+            (12, 59, '中午好，', '下午好，'),
+            (16, 59, '下午好，', '晚上好，')
+        ]:
+            await page.clock.set_system_time(datetime(2026, 11, 3, hour, minute, 59, 500000, tzinfo=local_zone))
+            await page.get_by_role('button', name='开始创作', exact=True).click()
+            assert await page.locator('#timeGreeting').inner_text() == before
+            await page.clock.run_for(500)
+            assert await page.locator('#timeGreeting').inner_text() == after
+        passed('本地时间四段问候、10个时间点与4次跨边界自动更新')
+        await page.clock.resume()
+        if greeting_only:
+            assert not page_errors, page_errors
+            assert not writes, writes
+            await page.screenshot(path=str(OUT/'greeting.png'), full_page=True, animations='disabled')
+            await browser.close()
+            assert saved_before == (hashlib.sha256(saved.read_bytes()).hexdigest(), saved.stat().st_mtime_ns)
+            (OUT/'greeting-checks.json').write_text(json.dumps({
+                'url':URL, 'timezone':'Asia/Shanghai', 'boundary_time_cases':len(greeting_cases),
+                'automatic_boundary_changes':4, 'page_errors':page_errors, 'post_requests':writes,
+                'saved_project_unchanged':True
+            }, ensure_ascii=False, indent=2), encoding='utf8')
+            print('GREETING BROWSER PASS', flush=True)
+            return
 
         await page.locator('[data-restaurant-category="home"]').click()
         await page.locator('[data-restaurant-intent="signature"]').click()
@@ -217,6 +249,7 @@ if __name__ == '__main__':
     parser=argparse.ArgumentParser()
     parser.add_argument('--url',default=URL)
     parser.add_argument('--out',default=str(OUT))
+    parser.add_argument('--greeting-only',action='store_true')
     args=parser.parse_args()
     URL=args.url;OUT=Path(args.out)
-    asyncio.run(main())
+    asyncio.run(main(args.greeting_only))
