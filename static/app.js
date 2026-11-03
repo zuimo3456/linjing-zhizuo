@@ -319,7 +319,7 @@ window.linjingStudio={
     const sourceIds=['DY-OFFICIAL','B-TECH',profile.source,'DY-MOVE'];
     if(brief.intent==='offer')sourceIds.push('DY-STRUCTURE');
     return {version:guideVersion,recipeId:`${brief.category}.${brief.intent}${finished?'.finished':''}`,signal:profile.signal,backendGoal,tasks,order,facts,sourceIds,
-      setup:['竖屏 9:16，普通 SDR；1080p 可作起点，当前本地版不接受 HDR／杜比视界。','先擦镜头、清理无关杂物，选稳定光线；先固定机位，动作前后各留约一秒。','原片建议 6–8 秒；当前单个剪辑片段最多 8 秒。长过程拆成若干独立动作拍，不加速员工操作，也不靠倒放伪造变化。','只拍本次门店与同一真实菜品／套餐，展示状态和售卖一致；不拼其他店、其他订单的画面。'],
+      setup:['样例、拍摄素材与最终成片统一为 9:16 竖屏。建议拍摄 1080×1920；当前本地成片输出 720×1280，同为 9:16。使用普通 SDR，当前不接受 HDR／杜比视界。','先擦镜头、清理无关杂物，选稳定光线；先固定机位，动作前后各留约一秒。','原片建议 6–8 秒；当前单个剪辑片段最多 8 秒。长过程拆成若干独立动作拍，不加速员工操作，也不靠倒放伪造变化。','只拍本次门店与同一真实菜品／套餐，展示状态和售卖一致；不拼其他店、其他订单的画面。'],
       modeNote:finished?'成品路线使用“到店”结构，需要门头／入口、实际环境和地址；没有制作镜头也不会把吃播冒充制作。':'必拍用于准备当前工作台所需用途；选拍只补充信息。拍完仍需逐段查看、核实并确认。'};
   }
   window.restaurantGuideLibrary={version:guideVersion,build:buildShootingGuide};
